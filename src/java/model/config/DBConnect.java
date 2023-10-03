@@ -20,7 +20,7 @@ public interface DBConnect {
     public static String dbName = "vh_express";
     public static String portNumber = "3306";
     public static String userID = "root";
-    public static String password = "12345"; 
+    public static String password = "1234"; 
     
     public static Connection getConnection() {
         try {
