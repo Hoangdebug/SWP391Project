@@ -1,27 +1,29 @@
 <%-- 
     Document   : login
-    Created on : Sep 30, 2023, 11:49:37 PM
+    Created on : Oct 2, 2023, 2:46:15 PM
     Author     : ADMIN
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>JSP Page</title>
     </head>
-    <body>
-        <div class="log-form">
-            <h2>Login to your account</h2>
-            <form method="POST" action="login">
-                <input type="text" id="email" name="email" title="email" placeholder="email" />
-                <input type="password" id="password" name="password" title="password" placeholder="password" />
-                <button type="submit" class="btn">Login</button>
-                <a class="forgot" href="#">Forgot Username?</a>
-            </form>
-        </div><!--end log form -->
-    </body>
+</head>    
+<body>    
+    <form action="login" method="post">  
+        <div class="container">   
+            <label>Email : </label>   
+            <input type="text" placeholder="Enter Email" name="email" required>  
+            <label>Password : </label>   
+            <input type="password" placeholder="Enter Password" name="password" required>  
+            <button type="submit">Login</button>   
+            <input type="checkbox" checked="checked"> Remember me   
+            <button type="button" class="cancelbtn"> Cancel</button>   
+            Forgot <a href="#"> password? </a>   
+        </div>   
+    </form>     
+</body>     
 </html>

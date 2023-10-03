@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import model.config.DBConnect;
 import model.entity.SendingEmail;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -66,36 +67,71 @@ public class UserRepository {
         }
         return false; // Trả về false nếu có lỗi xảy ra
     }
-    
-    public static String login(LoginDao ld){
-        
+
+    public String login(LoginDao ld) {
+
         String email = ld.getEmail();
         String pass = ld.getPassword();
         String newPass = ld.getNewPass();
-        
-        try(Connection conn = DBConnect.getConnection()) {
-            String query = "Select * from users where email = ?, password = ?, active = 1";
+
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "Select * from users where email = ? and\n"
+                    + " password = ? and active = '1'";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, newPass);
-            
+
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
-                String emaildb = rs.getString("email");
-                String passdb = rs.getString("password");
-                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
-                    return "success";
-                }
-                return "error";
+            while (rs.next()) {
+                
+//                ps.setString(1, rs.getString("email"));
+//                ps.setString(2, rs.getString("password"));
+//                String emaildb = rs.getString("email");
+////                String emaildb = rs.getString(3);
+//                String passdb = rs.getString("password");
+                String auth = rs.getString("authority");
+//                if (emaildb.equalsIgnoreCase(email)) {
+//                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
+                    if ("ROLE_MEMBER".equals(auth)) {
+                        return "success_member";
+                    } else if ("ROLE_ADMIN".equals(auth)) {
+                        return "success_admin";
+                    }
+//                } 
             }
-            
             rs.close();
             ps.close();
             conn.close();
-            
+
         } catch (Exception e) {
+            System.out.println("khong nhan database");
         }
-        
-        return "error"; 
+
+        return "error";
     }
+
+    // Phương thức để lấy thông tin quyền của người dùng từ cơ sở dữ liệu
+    public String getUserAuthority(String email) {
+        String authority = null;
+
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "SELECT authority FROM users WHERE email = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                authority = rs.getString("authority");
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+
+        return authority;
+    }
+
 }

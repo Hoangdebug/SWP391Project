@@ -30,6 +30,8 @@ public class Users {
         this.address = address;
         this.gender = gender;
     }
+    
+    
 
     public int getId() {
         return id;

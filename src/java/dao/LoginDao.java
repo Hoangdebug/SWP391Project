@@ -14,6 +14,7 @@ public class LoginDao {
     private String email;
     private String password;
     private String newPass;
+    private String authority;
 //    private String authority;
 
     public String getEmail() {
@@ -40,15 +41,12 @@ public class LoginDao {
         this.newPass = newPass;
     }
 
-//    public String getAuthority() {
-//        return authority;
-//    }
-//
-//    public void setAuthority(String authority) {
-//        this.authority = authority;
-//    }
-    
-    
-    
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
     
 }
