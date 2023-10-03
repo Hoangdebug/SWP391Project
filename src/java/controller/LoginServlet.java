@@ -83,10 +83,10 @@ public class LoginServlet extends HttpServlet {
             if (getdb.contains("success")) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("session_user", email);
-
+                
                 // Kiểm tra quyền của người dùng và chuyển hướng tương ứng
                 if ("ROLE_MEMBER".equals(userAuthority)) {
-                    response.sendRedirect("welcome_member.jsp");
+                    response.sendRedirect("welcome_admin.jsp");
                 } else if ("ROLE_ADMIN".equals(userAuthority)) {
                     response.sendRedirect("welcome_admin.jsp");
                 } else {

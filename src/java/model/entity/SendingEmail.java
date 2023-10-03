@@ -57,7 +57,7 @@ public class SendingEmail {
             message.setFrom(new InternetAddress(email));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
             message.setSubject("VHExpress Email Varification Link ");
-            message.setText("Varification Link...... Your Varification Link:: http://localhost:8084/vh_express/ActiveAccount?key1=" + userEmail + "&key2=" + myHash);
+            message.setText("Varification Link...... Your Varification Link:: http://localhost:8080/vh_express/ActiveAccount?key1=" + userEmail + "&key2=" + myHash);
             Transport.send(message);
 
         } catch (Exception e) {

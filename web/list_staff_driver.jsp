@@ -1,7 +1,7 @@
 <%-- 
-    Document   : welcome_member
-    Created on : Oct 3, 2023, 12:38:16 AM
-    Author     : ADMIN
+    Document   : list_staff_driver
+    Created on : Oct 4, 2023, 4:56:19 AM
+    Author     : tuna
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,8 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <!--<link rel="stylesheet" href="css/sidebar.css"/>-->
-        <link rel="stylesheet" href="css/member.css"/>
+        <link rel="stylesheet" href="css/list_staff.css"/>
 
         <link
             rel="stylesheet"
@@ -34,7 +33,7 @@
             </form>
             
             <div class="title-page">
-                Car Route List
+                Create Page Staff and Driver
             </div>
             
             <div class="table">
@@ -42,25 +41,27 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Date</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                            <th>Price</th>
-                            <th>Buy</th>
+                            <th>Authority</th>
+                            <th>Full Name</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>                   
+                            <td>Member</td>
+                            <td class="fullname">Nguyen Anh Tu</td>
+                            <td>tu123</td>
+                            <td>tuna1.dev@gmail.com</td>
+                            <td>0912644974</td>
                             <td>Da Nang</td>
-                            <td>Kon Tum</td>
-                            <td>20/10/2023</td>
-                            <td>7:00 AM</td>
-                            <td>14:00 PM</td>
-                            <td>240 000</td>
-                            <td><a href="#">Buy</a></td>
+                            <td><a href="#">Edit</a></td>
+                            <td><a href="#">Delete</a></td>
                         </tr>
                     </tbody>
                 </table>

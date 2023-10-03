@@ -10,7 +10,8 @@ import dao.RegisterDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import model.config.DBConnect;
+import model.config.DBContext;
+//import model.config.DBConnect;
 import model.entity.SendingEmail;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -20,19 +21,24 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class UserRepository {
 
-    public static String Register(RegisterDao rd) {
-        try (Connection conn = DBConnect.getConnection()) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
+    public String Register(RegisterDao rd) {
+        String sql = "Insert into users(fullname, email, password, hashkey, authority) values (?, ?, ?, ?, ?)";
+
+//        try ( Connection conn = DBConnect.getConnection()) {
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
             String name = rd.getFullname();
             String email = rd.getEmail();
             String pass = rd.getPassword();
             String hash = rd.getHash();
             String authority = rd.getAuthority();
 
-            String query = "Insert into users(fullname, email, password, hashkey, authority) values (?, ?, ?, ?, ?)";
-
-            PreparedStatement ps = conn.prepareStatement(query);
-
+//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, name);
             ps.setString(2, email);
             ps.setString(3, pass);
@@ -54,10 +60,14 @@ public class UserRepository {
         return "error";
     }
 
-    public static boolean isEmailExists(String email) {
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT email FROM users WHERE email = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+    public boolean isEmailExists(String email) {
+        String sql = "SELECT email FROM users WHERE email = ?";
+
+//        try ( Connection conn = DBConnect.getConnection()) {
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
@@ -74,16 +84,17 @@ public class UserRepository {
         String pass = ld.getPassword();
         String newPass = ld.getNewPass();
 
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "Select * from users where email = ? and\n"
-                    + " password = ? and active = '1'";
-            PreparedStatement ps = conn.prepareStatement(query);
+        String sql = "Select * from users where email = ? and password = ? and active = '0'";
+//        try ( Connection conn = DBConnect.getConnection()) {
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, newPass);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                
+                System.out.println("vao roi do");
 //                ps.setString(1, rs.getString("email"));
 //                ps.setString(2, rs.getString("password"));
 //                String emaildb = rs.getString("email");
@@ -92,16 +103,16 @@ public class UserRepository {
                 String auth = rs.getString("authority");
 //                if (emaildb.equalsIgnoreCase(email)) {
 //                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
-                    if ("ROLE_MEMBER".equals(auth)) {
-                        return "success_member";
-                    } else if ("ROLE_ADMIN".equals(auth)) {
-                        return "success_admin";
-                    }
+                if ("ROLE_MEMBER".equals(auth)) {
+                    return "success_member";
+                } else if ("ROLE_ADMIN".equals(auth)) {
+                    return "success_admin";
+                }
 //                } 
             }
             rs.close();
             ps.close();
-            conn.close();
+//            conn.close();
 
         } catch (Exception e) {
             System.out.println("khong nhan database");
@@ -113,10 +124,13 @@ public class UserRepository {
     // Phương thức để lấy thông tin quyền của người dùng từ cơ sở dữ liệu
     public String getUserAuthority(String email) {
         String authority = null;
+        String sql = "SELECT authority FROM users WHERE email = ?";
 
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT authority FROM users WHERE email = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+//        try ( Connection conn = DBConnect.getConnection()) {
+//            PreparedStatement ps = conn.prepareStatement(query);
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
@@ -132,6 +146,25 @@ public class UserRepository {
         }
 
         return authority;
+    }
+
+    public static void main(String[] args) {
+        UserRepository ur = new UserRepository();
+        String fullName = new String("Nguyen Anh Tu");
+        String email = new String("nnguyenttu1@gmail.com");
+        String pass = new String("tu123");
+        String newPass = DigestUtils.md5Hex(pass);
+
+        String authority = new String("ROLE_MEMBER");
+//        LoginDao ld = new LoginDao(email,pass);        
+//        LoginDao ld = new LoginDao();
+//        ld.setEmail(email);
+//        ld.setNewPass(newPass);
+//        System.out.println(newPass);
+//        System.out.println(ur.login(ld));
+        RegisterDao rd = new RegisterDao(fullName,email,pass,authority);
+        System.out.println(ur.Register(rd));
+
     }
 
 }

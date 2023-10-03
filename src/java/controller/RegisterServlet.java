@@ -80,8 +80,11 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String name = request.getParameter("fullname");
+            System.out.println(name);
             String email = request.getParameter("email");
+            System.out.println(email);
             String password = request.getParameter("password");
+            System.out.println(password);
             String newPass = DigestUtils.md5Hex(password);
             
             String authStr = Authority.ROLE_MEMBER.toString();
@@ -100,6 +103,7 @@ public class RegisterServlet extends HttpServlet {
 
                 //Create a dataBean 
                 RegisterDao rd = new RegisterDao();
+                System.out.println(rd);
                 rd.setFullname(name);
                 rd.setEmail(email);
                 rd.setPassword(newPass);
