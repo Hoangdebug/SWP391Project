@@ -89,8 +89,10 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("welcome_member.jsp");
                 } else if ("ROLE_ADMIN".equals(userAuthority)) {
                     response.sendRedirect("welcome_admin.jsp");
-                } else {
-                    response.sendRedirect("welcome.jsp"); // Trường hợp mặc định
+                } else if("ROLE_DRIVER".equals(userAuthority)){
+                    response.sendRedirect("welcome_driver.jsp"); // Trường hợp mặc định
+                } else if("ROLE_STAFF".equals(userAuthority)){
+                    response.sendRedirect("welcome_staff.jsp");
                 }
             } else {
                 response.sendRedirect("login");
