@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+M<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <%-- Kiểm tra xem có thông báo lỗi trong session không --%>
@@ -22,7 +22,7 @@
                     <div class="container">
         <%-- Hiển thị thông báo lỗi nếu có --%>
         <div class="error-message">
-        <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
+        <%--<%= (emailExistsMessage !=  //null) ? emailExistsMessage : ""%>--%>
     </div>
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>

@@ -10,9 +10,9 @@ package model.entity;
  * @author ADMIN
  */
 public class Users {
-    
+
     private int id, active;
-    
+
     private String email, password, fullname, age, phone, authority, address, gender;
 
     public Users() {
@@ -30,8 +30,14 @@ public class Users {
         this.address = address;
         this.gender = gender;
     }
-    
-    
+
+    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender, int idUser) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public int getId() {
         return id;
@@ -112,8 +118,5 @@ public class Users {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
-    
-    
-    
+
 }

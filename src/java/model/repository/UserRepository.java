@@ -10,8 +10,13 @@ import dao.RegisterDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import model.config.DBConnect;
 import model.entity.SendingEmail;
+import model.entity.Users;
+import org.apache.catalina.User;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -19,6 +24,10 @@ import org.apache.commons.codec.digest.DigestUtils;
  * @author ADMIN
  */
 public class UserRepository {
+
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     public static String Register(RegisterDao rd) {
         try (Connection conn = DBConnect.getConnection()) {
@@ -54,6 +63,35 @@ public class UserRepository {
         return "error";
     }
 
+    public int checkValidEmail(String email) throws SQLException {
+        try {
+            Connection conn = DBConnect.getConnection();
+            if (conn != null) {
+                String sql = "select id from users where email = ?";
+
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, email);
+
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return -1;
+    }
+
     public static boolean isEmailExists(String email) {
         try (Connection conn = DBConnect.getConnection()) {
             String query = "SELECT email FROM users WHERE email = ?";
@@ -83,7 +121,7 @@ public class UserRepository {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                
+
 //                ps.setString(1, rs.getString("email"));
 //                ps.setString(2, rs.getString("password"));
 //                String emaildb = rs.getString("email");
@@ -92,11 +130,11 @@ public class UserRepository {
                 String auth = rs.getString("authority");
 //                if (emaildb.equalsIgnoreCase(email)) {
 //                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
-                    if ("ROLE_MEMBER".equals(auth)) {
-                        return "success_member";
-                    } else if ("ROLE_ADMIN".equals(auth)) {
-                        return "success_admin";
-                    }
+                if ("ROLE_MEMBER".equals(auth)) {
+                    return "success_member";
+                } else if ("ROLE_ADMIN".equals(auth)) {
+                    return "success_admin";
+                }
 //                } 
             }
             rs.close();
@@ -132,6 +170,33 @@ public class UserRepository {
         }
 
         return authority;
+    }
+
+    public static ArrayList<Users> getListUser() {
+        ArrayList<Users> list = new ArrayList<>();
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "SELECT * FROM `users`";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery(query);
+            while (rs.next()) {
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                int idUser = rs.getInt(1);
+                Users users = new Users(fullname, email, age,phone,authority,address,gender,idUser);
+                list.add(users);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return list;
+
     }
 
 }
