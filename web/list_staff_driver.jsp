@@ -1,9 +1,5 @@
-<%-- 
-    Document   : list_staff_driver
-    Created on : Oct 4, 2023, 4:56:19 AM
-    Author     : tuna
---%>
-
+<jsp:useBean class="model.repository.UserRepository" id="show"></jsp:useBean>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -47,7 +43,6 @@
                             <th>ID</th>
                             <th>Authority</th>
                             <th>Full Name</th>
-                            <th>User Name</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
@@ -56,17 +51,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user" items="${user}">
-                            <tr>
-                                <td>${user.getFullname()}</td>
-                                <td>${user.getPassword()}</td>
-                                <td>${user.getGender()}</td>
-                                <td class="wrapper">${user.getAddress()}</td>
-                                <td>${user.getPhoneNum()}</td>
-                                <td>${user.getRole()}</td>
-                                <td>${user.getEmail()}</td>
+                        <c:forEach var="user" items="${show.getListUser()}">
+                            <tr id="row${user.id}">
+                                <td>${user.id}</td>
+                                <td>${user.fullname}</td>
+                                <td>${user.email}</td>
+                                <td>${user.age}</td>
+                                <td>${user.phone}</td>
+                                <td >${user.address}</td>
+                                <td>${user.gender}</td>
                                 <td><a
-                                        href="${pageContext.request.contextPath}/UpdateUserServlet?idUser=${user.getIdUser()}">Update</a></td>
+                                        href="#">Update</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

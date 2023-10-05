@@ -31,12 +31,22 @@ public class Users {
         this.gender = gender;
     }
 
-    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Users(int id, String email, String fullname, String age, String phone, String authority, String address, String gender) {
+        this.id = id;
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
     }
 
-    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender, int idUser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Users(int id, String name, String author) {
+        this.id = id;
+        this.fullname = name;
+        this.authority = authority;
+
     }
 
     public int getId() {

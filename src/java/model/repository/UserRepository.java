@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import model.config.DBConnect;
 import model.entity.SendingEmail;
 import model.entity.Users;
@@ -161,7 +162,6 @@ public class UserRepository {
             if (rs.next()) {
                 authority = rs.getString("authority");
             }
-
             rs.close();
             ps.close();
         } catch (Exception e) {
@@ -172,13 +172,14 @@ public class UserRepository {
         return authority;
     }
 
-    public static ArrayList<Users> getListUser() {
-        ArrayList<Users> list = new ArrayList<>();
+    public static List<Users> getListUser() {
+        List<Users> list = new ArrayList<>();
         try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT * FROM `users`";
+            String query = "SELECT * FROM users";
             PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery(query);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                int idUser = rs.getInt("id");
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String age = rs.getString("age");
@@ -186,17 +187,41 @@ public class UserRepository {
                 String authority = rs.getString("authority");
                 String address = rs.getString("address");
                 String gender = rs.getString("gender");
-                int idUser = rs.getInt(1);
-                Users users = new Users(fullname, email, age,phone,authority,address,gender,idUser);
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
                 list.add(users);
             }
-
         } catch (Exception e) {
-
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
         }
 
         return list;
 
+    }
+
+    public static ArrayList<Users> getDriverById() {
+        List<Users> list = new ArrayList<>();
+        try (Connection conn = DBConnect.getConnection()) {
+
+            String query = "SELECT * FROM users WHERE id = ? and authority = 'ROLE_DRIVER'";
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("fullname");
+                String author = rs.getString("authority");
+                Users user = new Users(id, name, author);
+                list.add(user);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI GET ID Driver trong UsersRepository------------");
+        }
+        return null;
     }
 
 }

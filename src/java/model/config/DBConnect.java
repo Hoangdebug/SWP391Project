@@ -24,7 +24,7 @@ public interface DBConnect {
     
     public static Connection getConnection() {
         try {
-            String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + dbName;
+            String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + dbName+"?useUnicode=true&characterEncoding=UTF-8";
             Class.forName("com.mysql.cj.jdbc.Driver"); // Sử dụng MySQL JDBC Driver
 
             // Kết nối đến MySQL bằng tên người dùng và mật khẩu
