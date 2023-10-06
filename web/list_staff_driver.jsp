@@ -15,25 +15,51 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     </head>
     <body>
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
+
         <div class="body">
-            <form action="showAllUser" method="get">
-                <table width="100%" cellspacing="0" class="table-search">
-                    <input type="text" class="form-control"
-                           placeholder="Tìm kiếm " autocomplete="off" name="keySearch">
-                    <a
-                        href="${pageContext.request.contextPath}/showAllUser" >
-                        <button type="submit" class="btn-search"
-                                value="Tìm kiếm người dùng">Tìm kiếm</button>
-                    </a>
-                </table>
-            </form>
+            <!--            <form action="showAllUser" method="get">
+                            <table width="100%" cellspacing="0" class="table-search">
+                                <input type="text" class="form-control"
+                                       placeholder="Tìm kiếm " autocomplete="off" name="keySearch">
+                                <a
+                                    href="${pageContext.request.contextPath}/showAllUser" >
+                                    <button type="submit" class="btn-search"
+                                            value="Tìm kiếm người dùng">Tìm kiếm</button>
+                                </a>
+                            </table>
+                        </form>--><h1>Chọn ghế</h1>
+            <button id="showTextButton">Hiển thị Văn Bản</button>
+            <div id="textContainer" style="display: none;"></div>
+
+            <script>
+                $(document).ready(function () {
+                    // Khai báo một mảng để lưu trữ userId
+                    var userIds = [];
+
+                    // Lặp qua các dòng và lưu trữ user.id vào mảng
+                <c:forEach var="user" items="${show.getListUser()}">
+                    userIds.push("${user.id}");
+                </c:forEach>
+
+                    // Bắt sự kiện khi nút được nhấp
+                    $("#showTextButton").click(function () {
+                        // Lấy giá trị đầu tiên trong mảng userIds và hiển thị trong thẻ div
+                        var firstUserId = userIds[0];
+                        console.log(firstUserId);
+                        $("#textContainer").text(firstUserId);
+                        $("#textContainer").show();
+                    });
+                });
+            </script>
+
 
             <div class="title-page">
-                Create Page Staff and Driver
+                List Staff Driver and Member
             </div>
 
             <div class="table">
@@ -45,6 +71,8 @@
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Age</th>
+                            <th>Gender</th>
                             <th>Address</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -54,14 +82,15 @@
                         <c:forEach var="user" items="${show.getListUser()}">
                             <tr id="row${user.id}">
                                 <td>${user.id}</td>
+                                <td>${user.authority}</td>
                                 <td>${user.fullname}</td>
                                 <td>${user.email}</td>
-                                <td>${user.age}</td>
-                                <td>${user.phone}</td>
-                                <td >${user.address}</td>
+                                <td>${user.phone}</td>      
+                                <td>${user.age}</td>      
                                 <td>${user.gender}</td>
-                                <td><a
-                                        href="#">Update</a></td>
+                                <td >${user.address}</td>
+                                <td><a href="#">Edit</a></td>
+                                <td><a href="deletestaff?id=${user.id}">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

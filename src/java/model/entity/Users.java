@@ -49,6 +49,16 @@ public class Users {
 
     }
 
+    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender) {
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
+    }
+
     public int getId() {
         return id;
     }

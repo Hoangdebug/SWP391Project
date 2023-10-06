@@ -22,8 +22,7 @@
 
                 </c:if>
                 <c:if test="${role=='ROLE_ADMIN'}">
-                    <a href="add_car.jsp" class="">Create Staff/Driver</a>
-
+                    <a href="add_car.jsp" class="">Create Car</a>
                     <a href="list_staff_driver.jsp" class="">List Staff/Driver</a>
                     <a href="add_staff.jsp" class="">Create Staff/Driver</a>
                     <a href="create_route.jsp" class="">Create Car Route</a>

@@ -14,8 +14,14 @@
         <form action="car-route" method="POST">
             <label for="car_id">ID Xe:</label>
             <select name="car_id" class="form-control" id="car_id">
-                <c:forEach items="${getCar.findCarById()}" var="g">
+                <c:forEach items="${getCar.getAllCar()}" var="g">
                     <option value="${g.getId()}">${g.getName()}</option>
+                </c:forEach>
+            </select>
+            <label for="user_id">Driver:</label>
+            <select name="user_id" class="form-control" id="car_id">
+                <c:forEach items="${getDriver.getDriverById()}" var="c">
+                    <option value="${c.getId()}">${c.getFullname()}</option>
                 </c:forEach>
             </select>
             <label >Điểm Đi:</label>
@@ -38,5 +44,6 @@
 
             <input type="submit" value="Thêm Tuyến Đường">
         </form>
+
     </body>
 </html>

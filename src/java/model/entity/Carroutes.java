@@ -28,16 +28,20 @@ public class Carroutes {
 
     private int id;
     private int car_id;
+    private int users_id;
     private String from;
     private String to;
     private float price;
     private String start;
     private String end;
     private Date datastart;
+    private String carname;
+    private String driver;
 
-    public Carroutes(int id, int car_id, String from, String to, float price, String start, String end, Date datastart) {
+    public Carroutes(int id, int car_id, int users_id, String from, String to, float price, String start, String end, Date datastart) {
         this.id = id;
         this.car_id = car_id;
+        this.users_id = users_id;
         this.from = from;
         this.to = to;
         this.price = price;
@@ -55,6 +59,48 @@ public class Carroutes {
         this.end = end;
         this.datastart = datastart;
     }
+
+    public Carroutes(int id, int car_id, String from, String to, float price, String start, String end, Date datestart, int user_id) {
+        this.id = id;
+        this.car_id = car_id;
+        this.from = from;
+        this.to = to;
+        this.price = price;
+        this.start = start;
+        this.end = end;
+        this.datastart = datestart;
+        this.users_id = user_id;
+    }
+
+    public Carroutes(int id, String from, String to, float price, String start, String end, Date datastart, String carname, String driver) {
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.price = price;
+        this.start = start;
+        this.end = end;
+        this.datastart = datastart;
+        this.carname = carname;
+        this.driver = driver;
+    }
+
+    public String getCarname() {
+        return carname;
+    }
+
+    public void setCarname(String carname) {
+        this.carname = carname;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -118,6 +164,14 @@ public class Carroutes {
 
     public void setDatastart(Date datastart) {
         this.datastart = datastart;
+    }
+
+    public int getUsers_id() {
+        return users_id;
+    }
+
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
     }
 
 }

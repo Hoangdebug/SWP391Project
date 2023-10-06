@@ -31,7 +31,7 @@
 
                 <div class="header__cont-user">
                     <i class="fa-solid fa-bars"></i>
-                    <c:if test="${role=='ROLE_MEMBER'}">
+<!--                   a <c:if test="${role=='ROLE_MEMBER'}">
                         <div class="role-name">MEMBER</div>
                     </c:if>
                     <c:if test="${role=='ROLE_ADMIN'}">
@@ -42,7 +42,9 @@
                     </c:if>
                     <c:if test="${role=='ROLE_DRIVER'}">
                         <div class="role-name">DRIVER</div>
-                    </c:if>
+                    </c:if>a-->
+                    
+                    <div class="role-name">${cur_name}</div>
 
 
                     <div class="user-info">

@@ -64,6 +64,26 @@ public class UserRepository {
         return "error";
     }
 
+    public String getUserName(String email) {
+        String fullname = null;
+        String sql = "SELECT fullname FROM users WHERE email = ?";
+
+        try (Connection conn = DBConnect.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return fullname = rs.getString("fullname");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+
     public int checkValidEmail(String email) throws SQLException {
         try {
             Connection conn = DBConnect.getConnection();
@@ -198,12 +218,25 @@ public class UserRepository {
         return list;
 
     }
+    public static void deleteUser(int id) {
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "Delete from users WHERE id = ?\n";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI Delete User trong UserRepository------------");
+        }
+    }
 
-    public static ArrayList<Users> getDriverById() {
+    public static List<Users> getDriverById() {
         List<Users> list = new ArrayList<>();
         try (Connection conn = DBConnect.getConnection()) {
 
-            String query = "SELECT * FROM users WHERE id = ? and authority = 'ROLE_DRIVER'";
+            String query = "SELECT * FROM users where authority = 'ROLE_DRIVER'";
 
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -221,7 +254,56 @@ public class UserRepository {
             System.out.println(e);
             System.out.println("----------LOI GET ID Driver trong UsersRepository------------");
         }
-        return null;
+        return list;
     }
 
+    public void insertStaff(Users u) {
+        try (Connection conn = DBConnect.getConnection()) {
+            String sql = "INSERT INTO users (fullname, email, password, hashkey, active, age, phone, authority, address, gender) VALUES (?,?,'202cb962ac59075b964b07152d234b70','hashkey1',1,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, u.getFullname());
+            ps.setString(2, u.getEmail());
+            ps.setString(3, u.getAge());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getAuthority());
+            ps.setString(6, u.getAddress());
+            ps.setString(7, u.getGender());
+
+            int i = ps.executeUpdate();
+
+            ps.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI DANG KY user trong userRepository------------");
+        }
+    }
+
+    public static void main(String[] args) {
+        UserRepository ur = new UserRepository();
+        String fullname = new String("Nguyen Anh Tu");
+        String email = new String("anhnnde170283@fpt.edu.vn");
+        String age = new String("20");
+        String phone = new String("0915215288");
+        String authority = new String("ROLE_ADMIN");
+        String gender = new String("MEMBER");
+        String address = new String("90 Nguyen Thuc Tu");
+        String pass = new String("123");
+        String newPass = DigestUtils.md5Hex(pass);
+
+//        String authority = new String("ROLE_MEMBER");
+//        LoginDao ld = new LoginDao(email,pass);        
+//        LoginDao ld = new LoginDao();
+//        ld.setEmail(email);
+//        ld.setNewPass(newPass);
+//        System.out.println(newPass);
+//        System.out.println(ur.login(ld));
+//        RegisterDao rd = new RegisterDao(fullName, email, pass, authority);
+//        System.out.println("123" + ur.Register(rd));
+        System.out.println(ur.getUserName(email));
+//        System.out.println(ur.getListUser());
+//        Users u = new Users(fullname, email, age, phone, authority, address, gender);
+//        ur.insertStaff(u);
+    }
 }
