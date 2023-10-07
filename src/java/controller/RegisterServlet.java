@@ -80,21 +80,22 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String name = request.getParameter("fullname");
-            System.out.println(name);
+//            System.out.println(name);
             String email = request.getParameter("email");
-            System.out.println(email);
+//            System.out.println(email);
             String password = request.getParameter("password");
-            System.out.println(password);
+//            System.out.println(password);
             String newPass = DigestUtils.md5Hex(password);
             
             String authStr = Authority.ROLE_MEMBER.toString();
 
             if (isEmailExists(email)) {
+                System.out.println("kkk");
                 HttpSession session = request.getSession();
                 session.setAttribute("emailExistsMessage", "Email đã tồn tại, vui lòng chọn email khác.");
                 response.sendRedirect("register"); // Chuyển hướng về trang đăng ký
             } else {
-
+                System.out.println("kkk1");
                 //HashGenerate
                 String hash;
                 Random rand = new Random();
@@ -112,6 +113,7 @@ public class RegisterServlet extends HttpServlet {
 
                 UserRepository ur = new UserRepository();
                 String str = ur.Register(rd);
+                System.out.println(str);
                 if (str.equals("SUCCESS")) {
                     response.sendRedirect("verifired.jsp");
                 } else {

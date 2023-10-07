@@ -18,6 +18,18 @@ public class Users {
     public Users() {
     }
 
+    public Users(String email, String fullname, String age, String phone, String authority, String address, String gender) {
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
+    }
+
+    
+    
     public Users(int id, int active, String email, String password, String fullname, String age, String phone, String authority, String address, String gender) {
         this.id = id;
         this.active = active;
@@ -30,6 +42,19 @@ public class Users {
         this.address = address;
         this.gender = gender;
     }
+
+    public Users(int id, String email, String fullname, String age, String phone, String authority, String address, String gender) {
+        this.id = id;
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
+    }
+
+    
     
     
 
@@ -112,8 +137,11 @@ public class Users {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Users{" + "id=" + id + ", active=" + active + ", email=" + email + ", password=" + password + ", fullname=" + fullname + ", age=" + age + ", phone=" + phone + ", authority=" + authority + ", address=" + address + ", gender=" + gender + '}';
+    }
     
     
 }

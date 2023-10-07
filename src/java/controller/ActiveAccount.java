@@ -72,7 +72,7 @@ public class ActiveAccount extends HttpServlet {
         String email = request.getParameter("key1");
         String hash = request.getParameter("key2");
         String sql = "Select email, hashkey, active from users where email = ? and hashkey = ? and active = '0' ";
-        String query1 = "update users set active = '1' where email =? and hashkey = ?";
+        String sql1 = "update users set active = '1' where email =? and hashkey = ?";
 
 //        try(Connection conn = DBConnect.getConnection()) {
         try {
@@ -84,8 +84,7 @@ public class ActiveAccount extends HttpServlet {
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                ps1 = con.prepareStatement(sql);
-
+                ps1 = con.prepareStatement(sql1);
 //                PreparedStatement ps1 = conn.prepareStatement(query1);
                 ps1.setString(1, email);
                 ps1.setString(2, hash);

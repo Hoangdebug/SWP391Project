@@ -1,11 +1,9 @@
 <%-- 
-    Document   : add_car_route
-    Created on : Oct 4, 2023, 5:21:40 AM
+    Document   : add_car
+    Created on : Oct 4, 2023, 10:16:58 PM
     Author     : tuna
 --%>
-<jsp:useBean class="model.repository.CarRepository" id="showcar"></jsp:useBean>
-<jsp:useBean class="model.repository.UserRepository" id="showuser"></jsp:useBean>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,6 +27,9 @@
                 --dark: #419197;
                 --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
+            *{
+                font-family: sans-serif;
+            }
 
             .body{
                 display: flex;
@@ -38,12 +39,11 @@
             }
             .title-page{
                 color: white;
-                margin-bottom: 20px;
             }
 
             .form-box{
                 margin-top: 100px;
-                width: 70%;
+                width: 50%;
                 height: auto;
                 display: flex;
                 flex-direction: column;
@@ -63,26 +63,21 @@
                 color: white;
                 gap: 10px;
             }
-
+            
             .double-form-items{
                 display: flex;
                 width: 70%;
                 justify-content: space-between;
                 gap: 20px;
-            }
-
-            .double-form-items div{
-                width: 50%;
+                
             }
 
             .form-items-select{
-                /*                width: 40%;
-                                display: flex;
-                                justify-content: start;*/
                 font-size: 16px;
                 color: white;
                 gap: 20px;
             }
+
 
             input{
                 padding: 5px 20px;
@@ -111,79 +106,44 @@
                 padding: 5px;
                 border-radius: 10px;
             }
+
         </style>
     </head>
     <body>
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <form action="car-route" method="POST" class="form-box">
+            <form action="addcar" method="POST" class="form-box">
                 <div class="title-page">
-                    Add New Car Route
+                    Add New Car
                 </div>
-                <div class="double-form-items">
-                    <div class="form-items-select">
-                        <label for="types">Xe:</label>
-                        <select name="car_id" id="car_id">
-                            <c:forEach var="car" items="${showcar.getListCars()}">
-                                <option value="${car.id}">${car.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-items-select">
-                        <label for="types">Tài xế:</label>
-                        <select name="driver_id" id="driver_id">
-                            
-                            <option value="tai2">Tài xế 2</option>
-                        </select>
-                    </div>
+                <div class="form-items">
+                    <label for="name">Tên Xe:</label>
+                    <input type="text" id="name" name="name" required>
                 </div>
 
                 <div class="double-form-items">
                     <div class="form-items-select">
-                        <label for="from">Điểm đi:</label>
-                        <select name="from" id="from">
-                            <option value="from1">Đà Nẵng</option>
-                            <option value="from2">Kon Tum</option>
+                        <label for="type">Loai xe:</label>
+                        <select name="type" id="type">
+                            <option value="VIP">VIP</option>
+                            <option value="STANDARD">STANDARD</option>
                         </select>
                     </div>
                     <div class="form-items-select">
-                        <label for="to">Điểm đến:</label>
-                        <select name="to" id="to">
-                            <option value="to1">Quãng Bình</option>
-                            <option value="to2">Quãng Nam</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="double-form-items">
-                    <div class="form-items-select">
-                        <label for="price">Giá Vé:</label>
-                        <input type="text" id="price" name="price" required>
-                    </div>
-                    <div class="form-items-select">
-                        <label for="datestart">Ngày Khởi Hành:</label>
-                        <input type="date"  name="datestart" required>
-                    </div>
-                </div>
-
-                <div class="double-form-items">
-                    <div class="form-items-select">
-                        <label for="start">Giờ Khởi Hành:</label>
-                        <select name="start" id="start">
-                            <option value="start1">10:00 AM</option>
-                            <option value="start2">10:30 AM</option>
-                        </select>
-                    </div>
-                    <div class="form-items-select">
-                        <label for="end">Giờ Đến:</label>
-                        <select name="end" id="end">
-                            <option value="end1">5:30 PM</option>
-                            <option value="end2">6:00 PM</option>
+                        <label for="countseat">Số ghế:</label>
+                        <select name="countseat" id="countseat">
+                            <option value="45">45</option>
+                            <option value="22">22</option>
                         </select>
                     </div>
                 </div>
-                <input class="button-form" type="submit" value="Thêm Tuyến Đường">
+                
+                <div class="form-items">
+                    <label for="licenseplate">Biển Số Xe:</label>
+                    <input type="text" id="licenseplate" name="licenseplate" required>
+                </div>
+                <input class="button-form" type="submit" value="Thêm Xe">
             </form>
         </div>
     </body>

@@ -1,11 +1,10 @@
 <%-- 
-    Document   : list_staff_driver
-    Created on : Oct 4, 2023, 4:56:19 AM
+    Document   : list_carroute
+    Created on : Oct 5, 2023, 10:23:43 PM
     Author     : tuna
 --%>
 
-<%@page import="org.apache.catalina.User"%>
-<%--<jsp:useBean class="model.repository.UserRepository" id="show"></jsp:useBean>--%>
+<jsp:useBean class="model.repository.CarRouteRepository" id="show"></jsp:useBean>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,38 +39,42 @@
             </form>
 
             <div class="title-page">
-                List Staff Driver and Member
+                List Car Route
             </div>
 
             <div class="table">
                 <table border="2">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Authority</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>Address</th>
+                            <th>Id</th>
+                            <th>Car Id</th>
+                            <th>User Id</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Price</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Date Start</th>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <th>Booking</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user" items="${ulistS}">
-                            <tr id="row${user.id}">
-                                <td>${user.id}</td>
-                                <td>${user.authority}</td>
-                                <td>${user.fullname}</td>
-                                <td>${user.email}</td>
-                                <td>${user.phone}</td>      
-                                <td>${user.age}</td>      
-                                <td>${user.gender}</td>
-                                <td >${user.address}</td>
+                        <c:forEach var="carroute" items="${show.getListCarroutes()}">
+                            <tr id="row${carroute.id}">
+                                <td>${carroute.id}</td>
+                                <td>${carroute.car_id}</td>
+                                <td>${carroute.user_id}</td>
+                                <td>${carroute.from}</td>
+                                <td>${carroute.to}</td>
+                                <td>${carroute.price}</td>
+                                <td>${carroute.start}</td>
+                                <td>${carroute.end}</td>
+                                <td>${carroute.datestart}</td>
                                 <td><a href="#">Edit</a></td>
-                                <td><a href="deleteuser? sid=${user.id}">Delete</a></td>
+                                <td><a href="#">Delete</a></td>
+                                <td><a href="#">Booking</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

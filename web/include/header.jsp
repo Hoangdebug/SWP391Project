@@ -28,17 +28,28 @@
                     <a href="add.jsp" class="nav-item">Add</a>
                 </c:if>
                 </nav>-->
-                
+
                 <div class="header__cont-user">
                     <i class="fa-solid fa-bars"></i>
-                    <div class="role-name">Role Name</div>
+<!--                a    <c:if test="${authority=='ROLE_MEMBER'}">
+                        <div class="role-name">MEMBER</div>
+                    </c:if>
+                    <c:if test="${authority=='ROLE_ADMIN'}">
+                        <div class="role-name">ADMIN</div>
+                    </c:if>
+                    <c:if test="${authority=='ROLE_STAFF'}">
+                        <div class="role-name">STAFF</div>
+                    </c:if>
+                    <c:if test="${authority=='ROLE_DRIVER'}">
+                        <div class="role-name">DRIVER</div>
+                    </c:if>
+                        a-->
+                    <div class="role-name">${cur_name}</div>
                     <div class="user-info">
-                        <a href="#" class="user-info-item">Edit profile</a>
+                        <c:if test="${authority=='ROLE_MEMBER'}">
+                            <a href="edit_profile.jsp" class="user-info-item">Edit profile</a>
+                        </c:if>
                         <a href="login" class="user-info-item">Log out</a>
-<!--                    a    <c:if test="${logined==null}">
-                            <a href="addAccount" class="user-info-item">Registed</a>
-                            <a href="login" class="user-info-item">Log in</a>
-                        </c:if> -->
                     </div>
                 </div>
             </div>

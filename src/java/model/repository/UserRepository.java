@@ -10,9 +10,10 @@ import dao.RegisterDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import model.config.DBContext;
-//import model.config.DBConnect;
 import model.entity.SendingEmail;
+import model.entity.Users;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -28,7 +29,6 @@ public class UserRepository {
     public String Register(RegisterDao rd) {
         String sql = "Insert into users(fullname, email, password, hashkey, authority) values (?, ?, ?, ?, ?)";
 
-//        try ( Connection conn = DBConnect.getConnection()) {
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
@@ -38,7 +38,6 @@ public class UserRepository {
             String hash = rd.getHash();
             String authority = rd.getAuthority();
 
-//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, name);
             ps.setString(2, email);
             ps.setString(3, pass);
@@ -46,7 +45,6 @@ public class UserRepository {
             ps.setString(5, authority);
 
             int i = ps.executeUpdate();
-
             if (i != 0) {
                 SendingEmail se = new SendingEmail(email, hash);
                 se.sendMail();
@@ -63,11 +61,9 @@ public class UserRepository {
     public boolean isEmailExists(String email) {
         String sql = "SELECT email FROM users WHERE email = ?";
 
-//        try ( Connection conn = DBConnect.getConnection()) {
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
@@ -84,35 +80,26 @@ public class UserRepository {
         String pass = ld.getPassword();
         String newPass = ld.getNewPass();
 
-        String sql = "Select * from users where email = ? and password = ? and active = '0'";
-//        try ( Connection conn = DBConnect.getConnection()) {
+        String sql = "Select * from users where email = ? and password = ? and active = '1'";
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, newPass);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 System.out.println("vao roi do");
-//                ps.setString(1, rs.getString("email"));
-//                ps.setString(2, rs.getString("password"));
-//                String emaildb = rs.getString("email");
-////                String emaildb = rs.getString(3);
-//                String passdb = rs.getString("password");
                 String auth = rs.getString("authority");
-//                if (emaildb.equalsIgnoreCase(email)) {
-//                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
                 if ("ROLE_MEMBER".equals(auth)) {
                     return "success_member";
                 } else if ("ROLE_ADMIN".equals(auth)) {
                     return "success_admin";
+                } else if ("ROLE_STAFF".equals(auth)) {
+                    return "success_staff";
                 }
-//                } 
             }
             rs.close();
             ps.close();
-//            conn.close();
 
         } catch (Exception e) {
             System.out.println("khong nhan database");
@@ -126,8 +113,6 @@ public class UserRepository {
         String authority = null;
         String sql = "SELECT authority FROM users WHERE email = ?";
 
-//        try ( Connection conn = DBConnect.getConnection()) {
-//            PreparedStatement ps = conn.prepareStatement(query);
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
@@ -148,23 +133,206 @@ public class UserRepository {
         return authority;
     }
 
+    public String getUserName(String email) {
+        String fullname = null;
+        String sql = "SELECT fullname FROM users WHERE email = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return fullname = rs.getString("fullname");
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+    
+    public Users getUser(String email) {
+        Users u = new Users();
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1), email, rs.getString(2), rs.getString("age"), rs.getString("phone"), rs.getString("authority"), rs.getString("address"), rs.getString("gender"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+
+    public ArrayList<Users> getListUser() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                list.add(users);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Users> getListStaff() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                list.add(users);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
+        }
+        return null;
+    }
+    
+    public ArrayList<Users> getListDriver() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users where authority = 'ROLE_DRIVER'";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                list.add(users);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
+        }
+        return null;
+    }
+
+    public void insertStaff(Users u) {
+        String sql = "INSERT INTO users (fullname, email, password, hashkey, active, age, phone, authority, address, gender) VALUES (?,?,'202cb962ac59075b964b07152d234b70','2b5d701cb0fee995eed93d7e1a851fe3',1,?,?,?,?,?)";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1,u.getFullname());
+            ps.setString(2,u.getEmail());
+            ps.setString(3,u.getAge());
+            ps.setString(4,u.getPhone());
+            ps.setString(5,u.getAuthority());
+            ps.setString(6,u.getAddress());
+            ps.setString(7,u.getGender());
+            
+            int i = ps.executeUpdate();
+            
+            ps.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI DANG KY user trong userRepository------------");
+        }
+    }
+    
+    public void deleteUser(String id){
+        String sql = "DELETE FROM users WHERE id = ?";
+        try{
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, id);
+            ps.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+            System.out.println("----------LOI Delete User trong UserRepository------------");
+        }
+    }
+
     public static void main(String[] args) {
         UserRepository ur = new UserRepository();
-        String fullName = new String("Nguyen Anh Tu");
-        String email = new String("nnguyenttu1@gmail.com");
-        String pass = new String("tu123");
+        String fullname = new String("Nguyen Anh Tu");
+        String email = new String("tranthib@example.com");
+        String age = new String("20");
+        String phone = new String("0915215288");
+        String authority = new String("ROLE_ADMIN");
+        String gender = new String("MEMBER");
+        String address = new String("90 Nguyen Thuc Tu");
+        String pass = new String("123");
         String newPass = DigestUtils.md5Hex(pass);
 
-        String authority = new String("ROLE_MEMBER");
+//        String authority = new String("ROLE_MEMBER");
 //        LoginDao ld = new LoginDao(email,pass);        
 //        LoginDao ld = new LoginDao();
 //        ld.setEmail(email);
 //        ld.setNewPass(newPass);
 //        System.out.println(newPass);
 //        System.out.println(ur.login(ld));
-        RegisterDao rd = new RegisterDao(fullName,email,pass,authority);
-        System.out.println(ur.Register(rd));
-
+//        RegisterDao rd = new RegisterDao(fullName, email, pass, authority);
+//        System.out.println("123" + ur.Register(rd));
+//        System.out.println(ur.getUserName(email));
+//        System.out.println(ur.getListUser());
+//        Users u = new Users(fullname, email, age, phone, authority, address, gender);
+//        ur.insertStaff(u);
+//        System.out.println(ur.getListDriver());
+//        int id = 12;
+//        System.out.println(ur.deleteUser(id));
+        System.out.println(ur.getUser(email));
     }
 
 }

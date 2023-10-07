@@ -1,11 +1,10 @@
 <%-- 
-    Document   : list_staff_driver
-    Created on : Oct 4, 2023, 4:56:19 AM
+    Document   : list_car
+    Created on : Oct 5, 2023, 8:35:06 PM
     Author     : tuna
 --%>
 
-<%@page import="org.apache.catalina.User"%>
-<%--<jsp:useBean class="model.repository.UserRepository" id="show"></jsp:useBean>--%>
+<jsp:useBean class="model.repository.CarRepository" id="show"></jsp:useBean>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,7 +39,7 @@
             </form>
 
             <div class="title-page">
-                List Staff Driver and Member
+                List Car 
             </div>
 
             <div class="table">
@@ -48,30 +47,26 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Authority</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>Address</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Count seat</th>
+                            <th>Active</th>
+                            <th>Licenseplate</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user" items="${ulistS}">
-                            <tr id="row${user.id}">
-                                <td>${user.id}</td>
-                                <td>${user.authority}</td>
-                                <td>${user.fullname}</td>
-                                <td>${user.email}</td>
-                                <td>${user.phone}</td>      
-                                <td>${user.age}</td>      
-                                <td>${user.gender}</td>
-                                <td >${user.address}</td>
+                        <c:forEach var="car" items="${show.getListCars()}">
+                            <tr id="row${car.id}">
+                                <td>${car.id}</td>
+                                <td>${car.name}</td>
+                                <td>${car.type}</td>
+                                <td>${car.countseat}</td>
+                                <td>${car.isactive}</td>      
+                                <td>${car.licenseplate}</td>      
                                 <td><a href="#">Edit</a></td>
-                                <td><a href="deleteuser? sid=${user.id}">Delete</a></td>
+                                <td><a href="#">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
