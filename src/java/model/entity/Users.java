@@ -10,9 +10,9 @@ package model.entity;
  * @author ADMIN
  */
 public class Users {
-    
+
     private int id, active;
-    
+
     private String email, password, fullname, age, phone, authority, address, gender;
 
     public Users() {
@@ -30,8 +30,34 @@ public class Users {
         this.address = address;
         this.gender = gender;
     }
-    
-    
+
+    public Users(int id, String email, String fullname, String age, String phone, String authority, String address, String gender) {
+        this.id = id;
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
+    }
+
+    public Users(int id, String name, String author) {
+        this.id = id;
+        this.fullname = name;
+        this.authority = authority;
+
+    }
+
+    public Users(String fullname, String email, String age, String phone, String authority, String address, String gender) {
+        this.email = email;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.authority = authority;
+        this.address = address;
+        this.gender = gender;
+    }
 
     public int getId() {
         return id;
@@ -112,8 +138,5 @@ public class Users {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
-    
-    
-    
+
 }
