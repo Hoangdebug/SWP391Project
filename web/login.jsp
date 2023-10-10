@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -59,14 +60,14 @@
                                         Remember me
                                     </label>
                                 </div>
-                                <a href="#!" class="text-body">Forgot password?</a>
+                                <a href="fogot_pass.jsp" class="text-body">Forgot password?</a>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
                                 <button type="submit" class="btn color-teal btn-lg"
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                                 <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
-                                    <a href="register.jsp" class="link-danger registed-teal">Register</a>
+                                    <a href="register" class="link-danger registed-teal">Register</a>
                                 </p>
                             </div>
 
@@ -75,10 +76,9 @@
                             </div>
                             <button type="button" class="gg-button"> 
                                 <i class="fab fa-google"></i>
-                                <p>Login with Google</p>
+                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/vh_express/login/LoginGoogleServlet&response_type=code
+                                   &client_id=638984395947-ot7n2roet029u797d2fnri9ifun9okot.apps.googleusercontent.com">Login With Google</a>  
                             </button>
-
-
                         </form>
                     </div>
                 </div>
@@ -86,9 +86,9 @@
             <div
                 class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 color-teal">
                 <!-- Copyright -->
-                <a href="index.jsp" class="text-white mb-3 mb-md-0 footer-title">
+                <div class="text-white mb-3 mb-md-0 footer-title">
                     Viet Hoang Express
-                </a>
+                </div>
                 <!-- Copyright -->
 
                 <!-- Right -->
@@ -110,11 +110,11 @@
             </div>
         </section>
         <!-- loader -->
-<!--        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                    stroke="#F96D00" />
-            </svg></div>-->
+        <!--        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+                    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+                    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                            stroke="#F96D00" />
+                    </svg></div>-->
 
 
     </body>     

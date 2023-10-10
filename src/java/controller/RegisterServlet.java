@@ -109,7 +109,9 @@ public class RegisterServlet extends HttpServlet {
                 UserRepository ur = new UserRepository();
                 String str = ur.Register(rd);
                 if (str.equals("SUCCESS")) {
-                    response.sendRedirect("verifired.jsp");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("verified", "Làm ơn hãy kiểm tra email của bạn");
+                    response.sendRedirect("login");
                 } else {
                     response.sendRedirect("register");
                 }

@@ -36,8 +36,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -78,21 +77,28 @@ public class LoginServlet extends HttpServlet {
 
             UserRepository ur = new UserRepository();
             String userAuthority = ur.getUserAuthority(email); // Lấy thông tin quyền của người dùng từ cơ sở dữ liệu
-
+            int id = ur.getIdByEmail(email);
+            String cur_name = ur.getUserName(email);
+            System.out.println(userAuthority);
             String getdb = ur.login(ld);
             if (getdb.contains("success")) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("session_user", email);
+                session.setAttribute("role", userAuthority);
+                session.setAttribute("cur_name", cur_name);
+                session.setAttribute("iduser", id);
 
                 // Kiểm tra quyền của người dùng và chuyển hướng tương ứng
                 if ("ROLE_MEMBER".equals(userAuthority)) {
                     response.sendRedirect("welcome_member.jsp");
+                } else if ("ROLE_STAFF".equals(userAuthority)) {
+                    response.sendRedirect("welcome_staff.jsp");
+                } else if ("ROLE_DRIVER".equals(userAuthority)) {
+                    response.sendRedirect("welcome_driver.jsp");
                 } else if ("ROLE_ADMIN".equals(userAuthority)) {
                     response.sendRedirect("welcome_admin.jsp");
-                } else if("ROLE_DRIVER".equals(userAuthority)){
-                    response.sendRedirect("welcome_driver.jsp"); // Trường hợp mặc định
-                } else if("ROLE_STAFF".equals(userAuthority)){
-                    response.sendRedirect("welcome_staff.jsp");
+                } else {
+                    response.sendRedirect("welcome.jsp"); // Trường hợp mặc định
                 }
             } else {
                 response.sendRedirect("login");
