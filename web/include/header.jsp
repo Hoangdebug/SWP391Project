@@ -1,6 +1,7 @@
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -31,8 +32,8 @@
 
                 <div class="header__cont-user">
                     <i class="fa-solid fa-bars"></i>
-<!--                   a <c:if test="${role=='ROLE_MEMBER'}">
-                        <div class="role-name">MEMBER</div>
+                    <!--                   a <c:if test="${role=='ROLE_MEMBER'}">
+                                            <div class="role-name">MEMBER</div>
                     </c:if>
                     <c:if test="${role=='ROLE_ADMIN'}">
                         <div class="role-name">ADMIN</div>
@@ -43,7 +44,7 @@
                     <c:if test="${role=='ROLE_DRIVER'}">
                         <div class="role-name">DRIVER</div>
                     </c:if>a-->
-                    
+
                     <div class="role-name">${cur_name}</div>
 
 

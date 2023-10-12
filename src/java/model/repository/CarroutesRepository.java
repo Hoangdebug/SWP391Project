@@ -79,4 +79,27 @@ public class CarroutesRepository {
         return null;
     }
 
+    public static Carroutes getIdCarroutes(int id) {
+        Carroutes carroutes = null;
+        try (Connection conn = DBConnect.getConnection()) {
+
+            String query = "Select * from carroutes where id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int idCarroute = rs.getInt(1);
+                Float price = rs.getFloat("price");
+                carroutes = new Carroutes(id, price);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.err.println("Loi getId theo CarrouteRepository");
+        }
+        return carroutes;
+    }
 }

@@ -218,6 +218,7 @@ public class UserRepository {
         return list;
 
     }
+
     public static void deleteUser(int id) {
         try (Connection conn = DBConnect.getConnection()) {
             String query = "Delete from users WHERE id = ?\n";
@@ -278,6 +279,30 @@ public class UserRepository {
             System.out.println(e);
             System.out.println("----------LOI DANG KY user trong userRepository------------");
         }
+    }
+
+    public int getIdByEmail(String email) {
+
+        int id = 0;
+
+        try (Connection conn = DBConnect.getConnection()) {
+
+            String query = "Select id from users where email = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("id");
+
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return id;
     }
 
     public static void main(String[] args) {

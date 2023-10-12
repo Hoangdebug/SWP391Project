@@ -84,6 +84,14 @@ public class Carroutes {
         this.driver = driver;
     }
 
+    public Carroutes(int id, String price) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Carroutes(int id, Float price) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getCarname() {
         return carname;
     }

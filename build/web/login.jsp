@@ -5,6 +5,16 @@
 --%>
 
 
+
+<%
+    String verified = (String) session.getAttribute("verified");
+    if (verified != null) {
+        // Xóa thông báo lỗi khỏi session để tránh hiển thị nhiều lần
+        session.removeAttribute("verified");
+    }
+%>
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,6 +46,10 @@
                              class="img-fluid" alt="Sample image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                        <div class="error-message">
+                            <%= (verified
+                                    != null) ? verified : ""%>
+                        </div>
                         <form action="login" method="post">
                             <p class="text-center font-weight-bold mb-2 me-3 ">Log in</p>
                             <!-- Email input -->

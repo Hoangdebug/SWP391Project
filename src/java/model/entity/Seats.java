@@ -21,6 +21,9 @@ public class Seats {
     private int seat_number;
     private int idcar;
 
+    public Seats() {
+    }
+
     public Seats(int id, int isbooked, int seat_number, int idcar) {
         this.id = id;
         this.isbooked = isbooked;
@@ -58,6 +61,11 @@ public class Seats {
 
     public void setIdcar(int idcar) {
         this.idcar = idcar;
+    }
+
+    @Override
+    public String toString() {
+        return "Seats{" + seat_number + '}';
     }
 
 }

@@ -87,4 +87,33 @@ public class CarRepository {
         }
         return null;
     }
+
+    public static Cars getIdCar(int id) {
+        Cars car = null;
+        try (Connection conn = DBConnect.getConnection()) {
+
+            String query = "Select * from cars where id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int idcar = rs.getInt(1);
+                String namecar = rs.getString(2);
+                String type = rs.getString(3);
+                int countseat = rs.getInt(4);
+                int isactive = rs.getInt(5);
+                String licenseplate = rs.getString(6);
+                car = new Cars(id, namecar, type, countseat, isactive, licenseplate);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.err.println("Loi getId theo CarRepository");
+        }
+        return car;
+    }
+
 }

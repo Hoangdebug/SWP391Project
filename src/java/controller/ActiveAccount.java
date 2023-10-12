@@ -82,6 +82,7 @@ public class ActiveAccount extends HttpServlet {
                 ps1.setString(2, hash);
                 int i = ps1.executeUpdate();
                 if(i == 1){
+                    
                     response.sendRedirect("login");
                 }else{
                     response.sendRedirect("register");

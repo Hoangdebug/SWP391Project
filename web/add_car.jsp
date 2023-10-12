@@ -203,7 +203,7 @@
                     // Sử dụng Ajax để gửi dữ liệu lên server (thay đổi URL và phương thức tùy theo yêu cầu của bạn)
                     $.ajax({
                         url: "add_car.jsp", // Thay đổi thành URL của bạn
-                        method: "POST", // Thay đổi thành phương thức của bạn (POST hoặc GET)
+                        method: "POST", 
                         data: data,
                         success: function (response) {
                             // Xử lý kết quả từ server (nếu cần)
