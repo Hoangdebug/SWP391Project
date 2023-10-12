@@ -6,7 +6,8 @@
 
 <jsp:useBean class="model.repository.CarRepository" id="show"></jsp:useBean>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,22 +22,45 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
+        <style>
+
+        </style>
     </head>
     <body>
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <form action="showAllUser" method="get">
-                <table width="100%" cellspacing="0" class="table-search">
-                    <input type="text" class="form-control"
-                           placeholder="Tìm kiếm " autocomplete="off" name="keySearch">
-                    <a
-                        href="${pageContext.request.contextPath}/showAllUser" >
-                        <button type="submit" class="btn-search"
-                                value="Tìm kiếm người dùng">Tìm kiếm</button>
-                    </a>
-                </table>
-            </form>
+            <div class="container">
+                <div class="box-search">
+                    <form action="listcarroute">
+                        <table width="100%" cellspacing="0" class="table-search">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-control col-sm-12">
+                                            <option value="Điểm đi" selected>Điểm đi</option>
+                                            <option>Sài gòn</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control col-sm-12">
+                                            <option value="Điểm đến" selected>Điểm đến</option>
+                                            <option>Cà Mau</option>
+                                        </select>
+                                    </td>
+                                    <td class="date">
+                                        <input class="form-control col-sm-12"
+                                               type="date">
+                                    </td>
+                                    <td>
+                                        <input type="submit" class="btn-find-ticket" value="Tìm vé">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
 
             <div class="title-page">
                 List Car 

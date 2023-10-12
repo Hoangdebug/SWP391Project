@@ -155,7 +155,7 @@ public class UserRepository {
         }
         return null;
     }
-    
+
     public Users getUser(String email) {
         Users u = new Users();
         String sql = "SELECT * FROM users WHERE email = ?";
@@ -178,6 +178,8 @@ public class UserRepository {
         }
         return null;
     }
+    
+    
 
     public ArrayList<Users> getListUser() {
         ArrayList<Users> list = new ArrayList<>();
@@ -207,6 +209,7 @@ public class UserRepository {
         }
         return null;
     }
+    
 
     public ArrayList<Users> getListStaff() {
         ArrayList<Users> list = new ArrayList<>();
@@ -236,7 +239,7 @@ public class UserRepository {
         }
         return null;
     }
-    
+
     public ArrayList<Users> getListDriver() {
         ArrayList<Users> list = new ArrayList<>();
         String sql = "SELECT * FROM users where authority = 'ROLE_DRIVER'";
@@ -272,16 +275,16 @@ public class UserRepository {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
 
-            ps.setString(1,u.getFullname());
-            ps.setString(2,u.getEmail());
-            ps.setString(3,u.getAge());
-            ps.setString(4,u.getPhone());
-            ps.setString(5,u.getAuthority());
-            ps.setString(6,u.getAddress());
-            ps.setString(7,u.getGender());
-            
+            ps.setString(1, u.getFullname());
+            ps.setString(2, u.getEmail());
+            ps.setString(3, u.getAge());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getAuthority());
+            ps.setString(6, u.getAddress());
+            ps.setString(7, u.getGender());
+
             int i = ps.executeUpdate();
-            
+
             ps.close();
 
         } catch (Exception e) {
@@ -289,16 +292,16 @@ public class UserRepository {
             System.out.println("----------LOI DANG KY user trong userRepository------------");
         }
     }
-    
-    public void deleteUser(String id){
+
+    public void deleteUser(String id) {
         String sql = "DELETE FROM users WHERE id = ?";
-        try{
+        try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, id);
             ps.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("----------LOI Delete User trong UserRepository------------");
         }
@@ -308,6 +311,7 @@ public class UserRepository {
         UserRepository ur = new UserRepository();
         String fullname = new String("Nguyen Anh Tu");
         String email = new String("tranthib@example.com");
+        String email1 = new String("nnguyenttu2@gmail.com");
         String age = new String("20");
         String phone = new String("0915215288");
         String authority = new String("ROLE_ADMIN");
@@ -323,7 +327,8 @@ public class UserRepository {
 //        ld.setNewPass(newPass);
 //        System.out.println(newPass);
 //        System.out.println(ur.login(ld));
-//        RegisterDao rd = new RegisterDao(fullName, email, pass, authority);
+        RegisterDao rd = new RegisterDao(fullname, email1, pass, authority);
+        System.out.println(ur.Register(rd));
 //        System.out.println("123" + ur.Register(rd));
 //        System.out.println(ur.getUserName(email));
 //        System.out.println(ur.getListUser());
@@ -332,7 +337,7 @@ public class UserRepository {
 //        System.out.println(ur.getListDriver());
 //        int id = 12;
 //        System.out.println(ur.deleteUser(id));
-        System.out.println(ur.getUser(email));
+//        System.out.println(ur.getUser(email));
     }
 
 }

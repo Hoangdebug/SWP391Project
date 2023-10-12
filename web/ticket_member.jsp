@@ -4,7 +4,8 @@
     Author     : tuna
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,12 +66,6 @@
                             <!-- <input type="checkbox" name="tickets" id="s1" />
                             <label for="s1" class="seat booked"></label> -->
                         </div>
-                        <!-- <div class="all-seats">
-                            <div class="seat-main">
-                            </div>
-                            <div class="seat-phu">
-                            </div>
-                        </div> -->
                     </div>
                     <div class="timings">
                         <div class="dates">
@@ -132,6 +127,7 @@
                             <p>Price: </p>
                             <p class="amount">0</p>
                         </div>
+                        <div class="array-seats">0</div>
 
                     </div>
                     <div class="car-route">
@@ -163,15 +159,14 @@
                         '">' + (i + 1) + '</label>'
                         );
             }
-
             let ticketMain = seatsMain.querySelectorAll("input");
             ticketMain.forEach((ticket) => {
                 ticket.addEventListener("change", () => {
                     let amount = document.querySelector(".amount").innerHTML;
                     let count = document.querySelector(".count").innerHTML;
+                    let array = document.querySelector(".array-seats").innerHTML;
                     amount = Number(amount);
                     count = Number(count);
-
                     if (ticket.checked) {
                         count += 1;
                         amount += 200;
@@ -181,6 +176,8 @@
                     }
                     document.querySelector(".amount").innerHTML = amount;
                     document.querySelector(".count").innerHTML = count;
+                    document.querySelector(".array-seats").innerHTML = array;
+
                 });
             });
 
@@ -205,6 +202,7 @@
                 ticket.addEventListener("change", () => {
                     let amount = document.querySelector(".amount").innerHTML;
                     let count = document.querySelector(".count").innerHTML;
+
                     amount = Number(amount);
                     count = Number(count);
 

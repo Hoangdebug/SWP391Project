@@ -87,7 +87,7 @@ public class AddStaffServlet extends HttpServlet {
             Users u = new Users(email, fullname, age, phone, authority, address, gender);
             UserRepository ur = new UserRepository();
             ur.insertStaff(u);
-            request.getRequestDispatcher("list_staff_driver.jsp").forward(request, response);
+            request.getRequestDispatcher("listuser").forward(request, response);
 
         } catch (Exception e) {
             System.out.println(e);

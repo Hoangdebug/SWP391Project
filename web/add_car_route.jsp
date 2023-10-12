@@ -6,7 +6,8 @@
 <jsp:useBean class="model.repository.CarRepository" id="showcar"></jsp:useBean>
 <jsp:useBean class="model.repository.UserRepository" id="showuser"></jsp:useBean>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,6 +37,7 @@
                 justify-content: center;
                 align-items: center;
             }
+
             .title-page{
                 color: white;
                 margin-bottom: 20px;
@@ -117,7 +119,7 @@
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <form action="car-route" method="POST" class="form-box">
+            <form action="addcarroute" method="POST" class="form-box">
                 <div class="title-page">
                     Add New Car Route
                 </div>
@@ -133,8 +135,9 @@
                     <div class="form-items-select">
                         <label for="types">Tài xế:</label>
                         <select name="driver_id" id="driver_id">
-                            
-                            <option value="tai2">Tài xế 2</option>
+                            <c:forEach var="user" items="${showuser.getListDriver()}">
+                                <option value="${user.id}">${user.fullname}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>

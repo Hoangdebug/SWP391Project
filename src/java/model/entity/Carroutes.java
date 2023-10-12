@@ -38,6 +38,17 @@ public class Carroutes {
     public Carroutes() {
     }
 
+    public Carroutes(int car_id, String from, String to, float price, String start, String end, Date datestart, int user_id) {
+        this.car_id = car_id;
+        this.from = from;
+        this.to = to;
+        this.price = price;
+        this.start = start;
+        this.end = end;
+        this.datestart = datestart;
+        this.user_id = user_id;
+    }
+
     public Carroutes(int id, int car_id, String from, String to, float price, String start, String end, Date datestart, int user_id) {
         this.id = id;
         this.car_id = car_id;

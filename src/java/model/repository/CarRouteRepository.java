@@ -53,9 +53,31 @@ public class CarRouteRepository {
         return null;
     }
     
+    public Carroutes getCarroute(String id) {
+        Carroutes c = new Carroutes();
+        String sql = "SELECT * FROM carroutes WHERE id = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Carroutes(rs.getInt("car_id"),rs.getString("from"),rs.getString("to"),rs.getFloat("price"),rs.getString("start"),rs.getString("end"),rs.getDate("datestart"),rs.getInt("user_id"));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return c;
+    }
+    
     public static void main(String[] args) {
         CarRouteRepository crr = new CarRouteRepository();
-        System.out.println(crr.getListCarroutes());
-        
+//        System.out.println(crr.getListCarroutes());
+        System.out.println(crr.getCarroute("1"));
     }
 }

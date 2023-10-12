@@ -4,7 +4,8 @@
     Author     : tuna
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -126,7 +127,7 @@
         %>
 
         <div class="body">
-            <form action="list_caroute.jsp" method="POST" class="form-box">
+            <form action="list_car_route.jsp" method="POST" class="form-box">
                 <div class="title-page">
                     Edit your profile
                 </div>
@@ -136,14 +137,6 @@
                 </div>
 
                 <div class="double-form-items">
-                    <div class="form-items-select">
-                        <label for="authority">Authority : </label>
-                        <select name="authority" id="authority">
-                            <option value="ROLE_STAFF">STAFF</option>
-                            <option value="ROLE_ADMIN">ADMIN</option> 
-                            <option value="ROLE_DRIVER">DRIVER</option>
-                        </select>
-                    </div>
                     <div class="form-items-select">
                         <label for="gender">Gender:</label>
                         <select name="gender" id="gender">

@@ -151,8 +151,6 @@
                 <div class="col-md-2 text-left" >
                    <span style="color: black; font-weight: bold; font-size: 23px;">VH</span><span style="color: var(--teal);font-weight: bold;font-size: 23px;F">Express</span>
                 </div>
-
-                
                 <div class="col-md-10 text-right" >
                     <a href="${pageContext.request.contextPath}/login" class="btn btn-success"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
                     <a href="${pageContext.request.contextPath}/register" class="btn btn-primary text-white"><i class="fa-solid fa-user-plus"></i> Đăng ký</a>
@@ -323,12 +321,8 @@
                 </div>
             </div>
         </footer>
-
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
 </html>

@@ -86,9 +86,12 @@
             <div
                 class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 color-teal">
                 <!-- Copyright -->
-                <div class="text-white mb-3 mb-md-0 footer-title">
-                    Viet Hoang Express
-                </div>
+                <a src="index.html">
+                    <div class="text-white mb-3 mb-md-0 footer-title">
+                        Viet Hoang Express
+                    </div>
+                </a>
+
                 <!-- Copyright -->
 
                 <!-- Right -->
@@ -110,11 +113,11 @@
             </div>
         </section>
         <!-- loader -->
-<!--        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                    stroke="#F96D00" />
-            </svg></div>-->
+        <!--        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+                    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+                    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                            stroke="#F96D00" />
+                    </svg></div>-->
 
 
     </body>     

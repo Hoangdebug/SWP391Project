@@ -1,6 +1,7 @@
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,9 @@
     <body>
         <header>
             <div class="header__cont">
-                <div class="header__cont-logo title">VH Express</div>
+                <div class="col-md-2 text-left" >
+                   <span style="color: black; font-weight: bold; font-size: 23px;">VH</span><span style="color: var(--teal);font-weight: bold;font-size: 23px;F">Express</span>
+                </div>
                 <!--<nav class="header__cont-nav">
                     <a href="home.jsp" class="nav-item">Home</a>
                     <a href="search.jsp" class="nav-item">Search</a>

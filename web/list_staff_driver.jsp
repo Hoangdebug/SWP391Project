@@ -5,9 +5,9 @@
 --%>
 
 <%@page import="org.apache.catalina.User"%>
-<%--<jsp:useBean class="model.repository.UserRepository" id="show"></jsp:useBean>--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,12 +71,20 @@
                                 <td>${user.gender}</td>
                                 <td >${user.address}</td>
                                 <td><a href="#">Edit</a></td>
-                                <td><a href="deleteuser? sid=${user.id}">Delete</a></td>
+                                <td><a href="#" onclick="messconfirm(${user.id})">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
+        <script>
+            function messconfirm(id) {
+                var option = confirm('Are you sure to delete');
+                if (option === true) {
+                    window.location.href = 'deleteuser?sid=' + id;
+                }
+            }
+        </script>
     </body>
 </html>

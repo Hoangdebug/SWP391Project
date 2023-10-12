@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.Cars;
 import model.repository.CarRepository;
+import model.repository.SeatRepository;
 
 /**
  *
@@ -56,6 +57,11 @@ public class AddCarServlet extends HttpServlet {
         String result = cr.InserCar(cars);
         
         if(result.equalsIgnoreCase("SUCCESS")){
+            Cars c = cr.getCarbyLicenseplate(licenseplate);
+            for(int i = 1; i<= countseat; i++){
+                SeatRepository sr = new SeatRepository();
+                sr.insertSeats(i,c.getId());
+            }
             response.sendRedirect("list_car.jsp");
         } else{
             response.sendRedirect("addcar");

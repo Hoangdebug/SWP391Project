@@ -50,7 +50,6 @@ public class CarRepository {
     }
 
     public String InserCar(Cars c) {
-
         String sql = "INSERT INTO cars (name, type, countseat, isactive, licenseplate)\n"
                 + "VALUES\n"
                 + "    (?, ?, ?, 1, ?)";
@@ -67,17 +66,63 @@ public class CarRepository {
             ps.setString(2, type);
             ps.setInt(3, countseat);
             ps.setString(4, licenseplate);
-
+            
             int i = ps.executeUpdate();
             if(i!=0){
                 return "SUCCESS";
             }
+            
             ps.close();
 
         } catch (Exception e) {
             System.err.println("RegisterRepository File:: " + e);
         }
-        return "error";
+        return "ERROR";
+    }
+    
+    
+    public Cars getCar(int id) {
+        Cars c = new Cars();
+        String sql = "SELECT * FROM cars WHERE id = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Cars(rs.getInt("id"),rs.getString("name"),rs.getString("type"),rs.getInt("countseat"),rs.getInt("isactive"),rs.getString("licenseplate"));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return c;
+    }
+    
+    public Cars getCarbyLicenseplate(String licenseplate) {
+        Cars c = new Cars();
+        String sql = "SELECT * FROM cars WHERE licenseplate = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, licenseplate);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Cars(rs.getInt("id"),rs.getString("name"),rs.getString("type"),rs.getInt("countseat"),rs.getInt("isactive"),rs.getString("licenseplate"));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc licenseplate");
+        }
+        return c;
     }
     
     public static void main(String[] args) {
@@ -87,11 +132,13 @@ public class CarRepository {
         String name = new String("Hoa Hieu");
         String type = new String("VIP");
         int countseat = 40;
-        String licenseplate = new String("73A199XX");
-        
+        String licenseplate = new String("73A16699");
+        String id  = new String("1");
         Cars car = new Cars(name, type, countseat, licenseplate);
-        cr.InserCar(car);
+//        cr.InserCar(car);
+//        Cars c = cr.getCar(id);
+//        System.out.println(c);
+//        System.out.println(cr.insertSeats(1, 1));
+        System.out.println(cr.getCarbyLicenseplate(licenseplate));
     }
-    
-    
 }

@@ -35,8 +35,9 @@ public class Cars {
     }
 
     public Cars() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
     public Cars(int id, String name, String type) {
         this.id = id;
