@@ -40,11 +40,11 @@ public class ListSeatServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String carouteid = request.getParameter("crid");
-        System.out.println(carouteid);
+//        System.out.println(carouteid);
         CarRouteRepository crr = new CarRouteRepository();
         Carroutes carroute = crr.getCarroute(carouteid);
         
-        System.out.println(carroute);
+//        System.out.println(carroute);
         CarRepository cr = new CarRepository();
         Cars car = cr.getCar(carroute.getCar_id());
         SeatRepository sr = new SeatRepository();

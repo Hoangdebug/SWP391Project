@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
 
             UserRepository ur = new UserRepository();
             String getdb = ur.login(ld);
-            Users u = ur.getUser(email);
+            Users u = ur.getUserByEmail(email);
 
 //            String userAuthority = ur.getUserAuthority(email); // Lấy thông tin quyền của người dùng từ cơ sở dữ liệu
 //            String cur_name = ur.getUserName(email);
@@ -98,6 +98,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("cur_phone", phone);
                 session.setAttribute("cur_age", age);
                 session.setAttribute("cur_address", address);
+                session.setAttribute("cur_user",u);
                 
                 
                 // Kiểm tra quyền của người dùng và chuyển hướng tương ứng

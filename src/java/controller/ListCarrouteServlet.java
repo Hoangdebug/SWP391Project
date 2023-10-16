@@ -66,9 +66,9 @@ public class ListCarrouteServlet extends HttpServlet {
         ArrayList<Carroutes> crList = crr.getListCarroutes();
         HttpSession session = request.getSession(true);
         request.setAttribute("crlistS", crList);
-        System.out.println(crList);
+//        System.out.println(crList);
         String authority = (String) session.getAttribute("authority");
-        System.out.println(authority);
+//        System.out.println(authority);
         if (authority.equalsIgnoreCase("ROLE_MEMBER")) {
             request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
         } else {

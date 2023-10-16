@@ -68,6 +68,11 @@ public class Seats {
         this.id_car = id_car;
     }
 
+    @Override
+    public String toString() {
+        return "Seats{" + "id=" + id + ", is_booked=" + is_booked + ", seat_number=" + seat_number + ", id_car=" + id_car + '}';
+    }
+
     
     
 }

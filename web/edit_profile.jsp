@@ -117,15 +117,6 @@
     <body>
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
-        <%
-            String cur_name = (String) session.getAttribute("cur_name");
-            String cur_authority = (String) session.getAttribute("cur_authority");
-            String cur_gender = (String) session.getAttribute("cur_gender");
-            String cur_phone = (String) session.getAttribute("cur_phone");
-            String cur_age = (String) session.getAttribute("cur_age");
-            String cur_address = (String) session.getAttribute("cur_address");
-        %>
-
         <div class="body">
             <form action="list_car_route.jsp" method="POST" class="form-box">
                 <div class="title-page">
@@ -133,7 +124,7 @@
                 </div>
                 <div class="form-items">
                     <label for="fullname">Name: </label>
-                    <input type="text" id="fullname" name="fullname" required value="${cur_name}">
+                    <input value="${uinfo.fullname}" type="text" name="fullname" required >
                 </div>
 
                 <div class="double-form-items">
@@ -149,17 +140,17 @@
 
                 <div class="double-form-items">
                     <div class="form-items">
-                        <label for="phone">Phone : </label>
-                        <input type="text" id="phone" name="phone" required value="${cur_phone}">
+                        <label for="phone">Phone: </label>
+                        <input value="${uinfo.phone}" type="text" id="phone" name="phone" required>
                     </div>
                     <div class="form-items">
                         <label for="age">Age : </label>
-                        <input type="text" id="age" name="age" required value="${cur_age}">
+                        <input value="${uinfo.age}" type="number" id="age" name="age" required>
                     </div>
                 </div>
                 <div class="form-items">
                     <label for="address">Address : </label>
-                    <input type="text" id="address" name="address" required value="${cur_address}">
+                    <input value="${uinfo.address}" type="text" id="address" name="address" required>
                 </div>
                 <input class="button-form" type="submit" value="Update">
             </form>

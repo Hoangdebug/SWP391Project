@@ -156,7 +156,7 @@ public class UserRepository {
         return null;
     }
 
-    public Users getUser(String email) {
+    public Users getUserByEmail(String email) {
         Users u = new Users();
         String sql = "SELECT * FROM users WHERE email = ?";
 
@@ -168,6 +168,29 @@ public class UserRepository {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Users(rs.getInt(1), email, rs.getString(2), rs.getString("age"), rs.getString("phone"), rs.getString("authority"), rs.getString("address"), rs.getString("gender"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+    
+    public Users getUserById(String id) {
+        Users u = new Users();
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1), rs.getString("email"), rs.getString(2), rs.getString("age"), rs.getString("phone"), rs.getString("authority"), rs.getString("address"), rs.getString("gender"));
             }
 
             rs.close();
@@ -327,8 +350,8 @@ public class UserRepository {
 //        ld.setNewPass(newPass);
 //        System.out.println(newPass);
 //        System.out.println(ur.login(ld));
-        RegisterDao rd = new RegisterDao(fullname, email1, pass, authority);
-        System.out.println(ur.Register(rd));
+//        RegisterDao rd = new RegisterDao(fullname, email1, pass, authority);
+//        System.out.println(ur.Register(rd));
 //        System.out.println("123" + ur.Register(rd));
 //        System.out.println(ur.getUserName(email));
 //        System.out.println(ur.getListUser());
@@ -338,6 +361,7 @@ public class UserRepository {
 //        int id = 12;
 //        System.out.println(ur.deleteUser(id));
 //        System.out.println(ur.getUser(email));
+        System.out.println(ur.getUserById("2"));
     }
 
 }

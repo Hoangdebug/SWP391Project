@@ -71,8 +71,35 @@ public class SeatRepository {
         return null;
     }
     
+    public Seats getSeat(int seat_number, int car_id) {
+        Seats s = new Seats();
+        String sql = "SELECT * FROM seats WHERE seat_number = ? and car_id = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, seat_number);
+            ps.setInt(2, car_id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Seats(rs.getInt(1),
+                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getInt(2));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return s;
+    }
+    
     public static void main(String[] args) {
         SeatRepository sr = new SeatRepository();
-        System.out.println(sr.getListSeats(2));
+//        System.out.println(sr.getListSeats(2));
+//        System.out.println(sr.getSeat(12,2).toString());
     }
 }

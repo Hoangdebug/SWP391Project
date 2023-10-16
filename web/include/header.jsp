@@ -34,23 +34,10 @@
 
                 <div class="header__cont-user">
                     <i class="fa-solid fa-bars"></i>
-<!--                a    <c:if test="${authority=='ROLE_MEMBER'}">
-                        <div class="role-name">MEMBER</div>
-                    </c:if>
-                    <c:if test="${authority=='ROLE_ADMIN'}">
-                        <div class="role-name">ADMIN</div>
-                    </c:if>
-                    <c:if test="${authority=='ROLE_STAFF'}">
-                        <div class="role-name">STAFF</div>
-                    </c:if>
-                    <c:if test="${authority=='ROLE_DRIVER'}">
-                        <div class="role-name">DRIVER</div>
-                    </c:if>
-                        a-->
                     <div class="role-name">${cur_name}</div>
                     <div class="user-info">
                         <c:if test="${authority=='ROLE_MEMBER'}">
-                            <a href="edit_profile.jsp" class="user-info-item">Edit profile</a>
+                            <a href="editprofile?userid=${cur_user.id}" class="user-info-item">Edit profile</a>            
                         </c:if>
                         <a href="login" class="user-info-item">Log out</a>
                     </div>

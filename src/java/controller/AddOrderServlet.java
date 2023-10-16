@@ -11,15 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.entity.Users;
-import model.repository.UserRepository;
 
 /**
  *
  * @author tuna
  */
-@WebServlet(name = "EditProfileServlet", urlPatterns = {"/editprofile"})
-public class EditProfileServlet extends HttpServlet {
+@WebServlet(name = "AddOrderServlet", urlPatterns = {"/addorder"})
+public class AddOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +36,10 @@ public class EditProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileServlet</title>");            
+            out.println("<title>Servlet AddOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfileServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,14 +57,7 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String uid = request.getParameter("userid");
-        System.out.println(uid);
-        UserRepository ur = new UserRepository();
-        Users user = ur.getUserById(uid);
-        request.setAttribute("uinfo", user);
-        request.getRequestDispatcher("edit_profile.jsp").forward(request, response);
-//        processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

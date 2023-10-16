@@ -80,13 +80,18 @@
                 justify-content: center;
                 align-items: center;
             }
-            
+
             .right{
                 width: 50%;
             }
         </style>
     </head>
     <body>
+        <%
+            String seat[];
+            seat = request.getParameterValues("tickets");
+        %>    
+
         <%@ include file="/include/header.jsp" %>
         <div class="body">
             <div class="content">
@@ -98,19 +103,18 @@
                         <div class="all-seats">
                             <c:forEach var="seat" items="${sList}">
                                 <c:if test="${seat.is_booked == 0}">
-                                    <input type="checkbox" name="tickets" id="s+${seat.id}" />
-                                    <label for="s+${seat.id}" class="seat ">${seat.seat_number}</label>
+                                    <input type="checkbox" name="ticket" id="${seat.seat_number}"  onClick="handleClick(this,${curCarroute.price})"/>
+                                    <label for="${seat.seat_number}" class="seat ">${seat.seat_number}</label>
                                 </c:if>
                                 <c:if test="${seat.is_booked == 1}">
-                                    <input type="checkbox" name="tickets" id="s+${seat.id}" />
-                                    <label for="s+${seat.id}" class="seat booked">${seat.seat_number}</label>
+                                    <input type="checkbox" name="ticket" id="${seat.seat_number}" />
+                                    <label for="${seat.seat_number}" class="seat booked">${seat.seat_number}</label>
                                 </c:if>
                             </c:forEach>
-
                         </div>
                     </form>
                 </div>
-                
+
                 <div class="right">
                     <div class="carroute information">
                         <div class="name-car">
@@ -131,16 +135,43 @@
                         <div class="end">
                             End: ${curCarroute.end}
                         </div>
-                        <div class="list-seat">
-                            Seat: [12,14]
+                        <div class="list-seat" >
+                            Seat: <span id="seat-list">${seat}</span>
                         </div>
                         <div class="total">
-                            Total: 0 VND
+                            Total:
+                            <span id="total">0</span>VND
                         </div>
                     </div>
-                        <button>Tiếp tục</button>
+                    <button href="" onclick="createTicket()" >Tiếp tục</button>
+
                 </div>
             </div>
         </div>
+        <script>
+            const seatList = document.getElementById("seat-list");
+            const total = document.getElementById("total");
+
+            let arr = [];
+            let count = 0;
+            const handleClick = (e, b) => {
+                if (arr.includes(e.id)) {
+                    arr = arr.filter((item) => item !== e.id);
+                    count -= b;
+                    total.innerHTML = count.toFixed(3);
+                    seatList.innerHTML = arr;
+                } else {
+                    count += b;
+                    arr = [...arr, e.id];
+                    total.innerHTML = count.toFixed(3);
+                    seatList.innerHTML = arr;
+                }
+            }
+            
+            const createTicket = () => {
+                window.location.href = 'createticket?lseat=' + arr;
+            }
+        </script>
     </body>
+
 </html>
