@@ -37,7 +37,8 @@
                     <div class="role-name">${cur_name}</div>
                     <div class="user-info">
                         <c:if test="${authority=='ROLE_MEMBER'}">
-                            <a href="editprofile?userid=${cur_user.id}" class="user-info-item">Edit profile</a>            
+                            <a href="editprofile?userid=${cur_user.id}" class="user-info-item">Edit profile</a>
+                            <a href="" class="user-info-item">List History</a>
                         </c:if>
                         <a href="login" class="user-info-item">Log out</a>
                     </div>

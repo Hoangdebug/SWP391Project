@@ -11,24 +11,11 @@ import java.sql.Date;
  * @author tuna
  */
 public class Carroutes {
-//    CREATE TABLE carroutes (
-//    id INT AUTO_INCREMENT PRIMARY KEY,
-//    car_id INT,
-//    from VARCHAR(255),
-//    to VARCHAR(255),
-//    price DECIMAL(13, 3),
-//    start TIME,
-//    end TIME,
-//    datestart DATE,
-//    user_id INT,
-//    FOREIGN KEY (car_id) REFERENCES cars(id),
-//    FOREIGN KEY (user_id) REFERENCES users(id)
-//);
 
     private int id;
     private int car_id;
-    private String from;
-    private String to;
+    private int from;
+    private int to;
     private float price;
     private String start;
     private String end;
@@ -38,7 +25,8 @@ public class Carroutes {
     public Carroutes() {
     }
 
-    public Carroutes(int car_id, String from, String to, float price, String start, String end, Date datestart, int user_id) {
+    public Carroutes(int id, int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
+        this.id = id;
         this.car_id = car_id;
         this.from = from;
         this.to = to;
@@ -49,8 +37,7 @@ public class Carroutes {
         this.user_id = user_id;
     }
 
-    public Carroutes(int id, int car_id, String from, String to, float price, String start, String end, Date datestart, int user_id) {
-        this.id = id;
+    public Carroutes(int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
         this.car_id = car_id;
         this.from = from;
         this.to = to;
@@ -77,19 +64,19 @@ public class Carroutes {
         this.car_id = car_id;
     }
 
-    public String getFrom() {
+    public int getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(int from) {
         this.from = from;
     }
 
-    public String getTo() {
+    public int getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(int to) {
         this.to = to;
     }
 
@@ -132,8 +119,6 @@ public class Carroutes {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
-    
-    
 
     
     

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : payment
-    Created on : Oct 17, 2023, 2:14:04 AM
+    Document   : payment.jsp
+    Created on : Oct 24, 2023, 10:04:10 AM
     Author     : tuna
 --%>
 
@@ -14,19 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div>
-            <div>Order Number: ${cur_order.id} </div>
-            <div> Car Route Number: ${curCarroute.id} </div>
-            <c:forEach var="ticket" items="${lticketS}">
-                <div class="passenger-info">
-                    <div> Seat Number: ${ticket.seat_id}</div>
-
-                    <div>Name passenger: ${ticket.passenger_name}</div>
-                    <div>Phone passenger: ${ticket.passenger_phone}</div>
-                </div>
-            </c:forEach>
-            <div>Total: ${cur_order.total_price}</div>
-            <a href="">Payment</a>
-        </div>
+        <h1>Đặt vé thành công!</h1>
+        <a href="listcarroute">Quay về list car route</a>
     </body>
 </html>

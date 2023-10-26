@@ -3,7 +3,8 @@
     Created on : Oct 5, 2023, 10:23:43 PM
     Author     : tuna
 --%>
-
+<jsp:useBean class="model.repository.CarRepository" id="show"></jsp:useBean>
+<jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -38,47 +39,46 @@
                 </table>
             </form>
 
-            <div class="title-page">
-                List Car Route
-            </div>
+            <div class="box-list">
+                <div class="title-page">
+                    List Car Route
+                </div>
 
-            <div class="table">
-                <table border="2">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Car Id</th>
-                            <th>User Id</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Price</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Date Start</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                            <th>Booking</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="carroute" items="${crlistS}">
-                            <tr id="row${carroute.id}">
-                                <td>${carroute.id}</td>
-                                <td>${carroute.car_id}</td>
-                                <td>${carroute.user_id}</td>
-                                <td>${carroute.from}</td>
-                                <td>${carroute.to}</td>
-                                <td>${carroute.price}</td>
-                                <td>${carroute.start}</td>
-                                <td>${carroute.end}</td>
-                                <td>${carroute.datestart}</td>
-                                <td><a href="#">Edit</a></td>
-                                <td><a href="#">Delete</a></td>
-                                <td><a href="#">Booking</a></td>
+                <div class="table">
+                    <table border="2">
+                        <thead>
+                            <tr>
+                                <th>Name car</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Price</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Date Start</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Booking</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="carroute" items="${crlistS}">
+                                <tr id="row${carroute.id}">
+                                    <td>${show.getCar(carroute.car_id).name}</td>
+                                    <td>${show1.getlocation(carroute.from).province}</td>
+                                    <td>${show1.getlocation(carroute.to).province}</td>
+                                    <td>${carroute.price}</td>
+                                    <td>${carroute.start}</td>
+                                    <td>${carroute.end}</td>
+                                    <td>${carroute.datestart}</td>
+                                    <td><a href="#">Edit</a></td>
+                                    <td><a href="#">Delete</a></td>
+                                    <td><a href="listseat?crid=${carroute.id}">Booking</a></td>
+                                    <!--<td><a href="ticket_member.jsp">Booking1</a></td>-->
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>

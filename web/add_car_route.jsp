@@ -5,13 +5,15 @@
 --%>
 <jsp:useBean class="model.repository.CarRepository" id="showcar"></jsp:useBean>
 <jsp:useBean class="model.repository.UserRepository" id="showuser"></jsp:useBean>
+<jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8" http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="css/add_staff.css"/>
 
@@ -146,15 +148,17 @@
                     <div class="form-items-select">
                         <label for="from">Điểm đi:</label>
                         <select name="from" id="from">
-                            <option value="from1">Đà Nẵng</option>
-                            <option value="from2">Kon Tum</option>
+                            <c:forEach var="location" items="${show1.listLocations}">
+                                <option value="${location.id}">${location.province}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-items-select">
                         <label for="to">Điểm đến:</label>
                         <select name="to" id="to">
-                            <option value="to1">Quãng Bình</option>
-                            <option value="to2">Quãng Nam</option>
+                            <c:forEach var="location" items="${show1.listLocations}">
+                                <option value="${location.id}">${location.province}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -166,7 +170,7 @@
                     </div>
                     <div class="form-items-select">
                         <label for="datestart">Ngày Khởi Hành:</label>
-                        <input type="date"  name="datestart" required>
+                        <input name="datestart" class="form-control col-sm-12" type="date" required min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
                     </div>
                 </div>
 
@@ -174,15 +178,25 @@
                     <div class="form-items-select">
                         <label for="start">Giờ Khởi Hành:</label>
                         <select name="start" id="start">
-                            <option value="start1">10:00 AM</option>
-                            <option value="start2">10:30 AM</option>
+                            <% for (int hour = 0; hour < 24; hour++) { %>
+                            <% for (int minute = 0; minute < 60; minute += 60) {%>
+                            <option value="<%= String.format("%02d:%02d", hour, minute)%>">
+                                <%= String.format("%02d:%02d %s", hour % 12 == 0 ? 12 : hour % 12, minute, hour < 12 ? "AM" : "PM")%>
+                            </option>
+                            <% } %>
+                            <% }%>
                         </select>
                     </div>
                     <div class="form-items-select">
                         <label for="end">Giờ Đến:</label>
                         <select name="end" id="end">
-                            <option value="end1">5:30 PM</option>
-                            <option value="end2">6:00 PM</option>
+                            <% for (int hour = 0; hour < 24; hour++) { %>
+                            <% for (int minute = 0; minute < 60; minute += 60) {%>
+                            <option value="<%= String.format("%02d:%02d", hour, minute)%>">
+                                <%= String.format("%02d:%02d %s", hour % 12 == 0 ? 12 : hour % 12, minute, hour < 12 ? "AM" : "PM")%>
+                            </option>
+                            <% } %>
+                            <% }%>
                         </select>
                     </div>
                 </div>

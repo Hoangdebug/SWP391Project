@@ -6,125 +6,126 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Document</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    </head>
-    <style>
+        </head>
+        <style>
 
-        .carousel-item img {
-            max-height: 500px; /* Điều chỉnh chiều cao tối đa */
-            object-fit: cover; /* Hiển thị hình ảnh đầy đủ trong khung hiển thị */
-            width: 100%;
-        }
-        .step-item{
-            width: auto;
-            height: 250px;
-            border: dashed 3px var(--teal);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-        }
+            .carousel-item img {
+                max-height: 500px; /* Điều chỉnh chiều cao tối đa */
+                object-fit: cover; /* Hiển thị hình ảnh đầy đủ trong khung hiển thị */
+                width: 100%;
+            }
+            .step-item{
+                width: auto;
+                height: 250px;
+                border: dashed 3px var(--teal);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 40px;
+            }
 
-        .step-name{
-            font-weight: 600;
-            font-size: 28px;
-            color: black;
-        }
+            .step-name{
+                font-weight: 600;
+                font-size: 28px;
+                color: black;
+            }
 
-        .step-content{
-            text-align: left;
-            margin-bottom: 10px;
-        }
+            .step-content{
+                text-align: left;
+                margin-bottom: 10px;
+            }
 
-        .step-content p{
-            margin: 0;
-        }
+            .step-content p{
+                margin: 0;
+            }
 
-        .highlight{
-            color: var(--dark);
-            font-weight: 600;
-        }
+            .highlight{
+                color: var(--dark);
+                font-weight: 600;
+            }
 
-        .step-item a{
-            height: auto;
-            background-color: var(--teal);
-            margin: 0 auto;
-            padding: 10px 40px;
-            color: white;
-            font-weight: 600;
-            border-radius: 2px;
-        }
-        .box-search {
-            background-color: #fff;
-            padding: 10px;
-            margin-top: -300px; /* Điều chỉnh khoảng cách giữa carousel và giao diện tìm kiếm */
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            position: relative; /* Để điều chỉnh vị trí tương đối cho box-search */
-            z-index: 1; /* Để đảm bảo rằng box-search nằm trên carousel */
-        }
-        /* Đảm bảo rằng các phần tử trong carousel không bị che phủ bởi box-search */
-        .carousel-item {
-            z-index: 0;
-        }
-        .ftco-section {
-            margin-top: 250px; /* Điều chỉnh khoảng cách theo ý muốn */
-        }
-        /* CSS cho nút "Tìm vé" */
-        .btn-find-ticket {
-            background-color: #007bff; /* Màu nền */
-            color: #fff; /* Màu chữ */
-            border: none; /* Loại bỏ viền */
-            border-radius: 5px; /* Bo tròn góc */
-            width: 100px;
-            /* Kích thước nút */
-            margin-left: 30px;
-            font-size: 16px; /* Cỡ chữ */
-            cursor: pointer; /* Đổi con trỏ chuột thành con trỏ tay khi di chuột qua nút */
-            transition: background-color 0.3s ease; /* Hiệu ứng màu nền thay đổi mượt mà */
-        }
+            .step-item a{
+                height: auto;
+                background-color: var(--teal);
+                margin: 0 auto;
+                padding: 10px 40px;
+                color: white;
+                font-weight: 600;
+                border-radius: 2px;
+            }
+            .box-search {
+                background-color: #fff;
+                padding: 10px;
+                margin-top: -300px; /* Điều chỉnh khoảng cách giữa carousel và giao diện tìm kiếm */
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+                position: relative; /* Để điều chỉnh vị trí tương đối cho box-search */
+                z-index: 1; /* Để đảm bảo rằng box-search nằm trên carousel */
+            }
+            /* Đảm bảo rằng các phần tử trong carousel không bị che phủ bởi box-search */
+            .carousel-item {
+                z-index: 0;
+            }
+            .ftco-section {
+                margin-top: 250px; /* Điều chỉnh khoảng cách theo ý muốn */
+            }
+            /* CSS cho nút "Tìm vé" */
+            .btn-find-ticket {
+                background-color: #007bff; /* Màu nền */
+                color: #fff; /* Màu chữ */
+                border: none; /* Loại bỏ viền */
+                border-radius: 5px; /* Bo tròn góc */
+                width: 100px;
+                /* Kích thước nút */
+                margin-left: 30px;
+                font-size: 16px; /* Cỡ chữ */
+                cursor: pointer; /* Đổi con trỏ chuột thành con trỏ tay khi di chuột qua nút */
+                transition: background-color 0.3s ease; /* Hiệu ứng màu nền thay đổi mượt mà */
+            }
 
-        /* CSS cho hover nút "Tìm vé" (thay đổi màu nền khi di chuột qua) */
-        .btn-find-ticket:hover {
-            background-color: #0056b3; /* Màu nền thay đổi khi hover */
-        }
+            /* CSS cho hover nút "Tìm vé" (thay đổi màu nền khi di chuột qua) */
+            .btn-find-ticket:hover {
+                background-color: #0056b3; /* Màu nền thay đổi khi hover */
+            }
 
-        footer {
-            margin-top: 30px;
-            background-color: var(--teal);
-            color: #fff;
-            padding: 20px 0;
-            /*text-align: center;*/
-        }
+            footer {
+                margin-top: 30px;
+                background-color: var(--teal);
+                color: #fff;
+                padding: 20px 0;
+                /*text-align: center;*/
+            }
 
-        /* Định dạng cho liên kết trong footer */
-        footer a {
-            color: #fff;
-            text-decoration: none;
-        }
+            /* Định dạng cho liên kết trong footer */
+            footer a {
+                color: #fff;
+                text-decoration: none;
+            }
 
-        /* Định dạng cho liên kết hover */
-        footer a:hover {
-            text-decoration: underline;
-        }
-        
-        td{
-            padding: 0px 10px;
-        }
+            /* Định dạng cho liên kết hover */
+            footer a:hover {
+                text-decoration: underline;
+            }
+
+            td{
+                padding: 0px 10px;
+            }
 
 
-    </style>
+        </style>
 
-    <body>
+        <body>
         <%@ include file="/include/header.jsp" %>
         <!--CAROUSEL-->
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -172,21 +173,30 @@
         <!-- CAROUSEL-->
         <div class="container">
             <div class="box-search">
-                <form action="listcarroute" >
+                <form action="listcarroute">
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đi" selected>Điểm đi</option>
-                                        <option>Sài gòn</option>
-                                    </select></td>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đến" selected>Điểm đến</option>
-                                        <option>Cà Mau</option>
-                                    </select></td>
-                                <td class="date"><input class="form-control col-sm-12"
-                                                        type="date"></td>
-                                <td><input type="submit" class="btn-find-ticket" value="Tìm vé"></td>
+                                <td>                                   
+                                    <select name="from" id="from" class="form-control col-sm-12">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control col-sm-12" name="to">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td class="date">
+                                    <input class="form-control col-sm-12" type="date" name="datestart">
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn-find-ticket" value="Tìm vé">
+                                </td>
                             </tr>
                         </tbody>
                     </table>

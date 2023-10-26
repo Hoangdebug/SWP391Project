@@ -4,6 +4,7 @@
     Author     : tuna
 --%>
 <jsp:useBean class="model.repository.CarRepository" id="show"></jsp:useBean>
+<jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -132,7 +133,7 @@
                 align-items: center;
                 width: 100%;
             }
-            
+
         </style>
 
     </head>
@@ -189,17 +190,26 @@
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đi" selected>Điểm đi</option>
-                                        <option>Sài gòn</option>
-                                    </select></td>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đến" selected>Điểm đến</option>
-                                        <option>Cà Mau</option>
-                                    </select></td>
-                                <td class="date"><input class="form-control col-sm-12"
-                                                        type="date"></td>
-                                <td><input type="submit" class="btn-find-ticket" value="Tìm vé"></td>
+                                <td>                                   
+                                    <select name="from" id="from" class="form-control col-sm-12">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control col-sm-12" name="to">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td class="date">
+                                    <input class="form-control col-sm-12" type="date" name="datestart">
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn-find-ticket" value="Tìm vé">
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -223,8 +233,10 @@
                             <th>Start</th>
                             <th>End</th>
                             <th>Date Start</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                                <c:if test="${authority!='ROLE_MEMBER'}">
+                                <td>Edit</td>
+                                <td>Delete</td>
+                            </c:if>
                             <th>Booking</th>
                         </tr>
                     </thead>
@@ -232,14 +244,17 @@
                         <c:forEach var="carroute" items="${crlistS}">
                             <tr id="row${carroute.id}">
                                 <td>${show.getCar(carroute.car_id).name}</td>
-                                <td>${carroute.from}</td>
-                                <td>${carroute.to}</td>
+                                <td>${show1.getlocation(carroute.from).province}</td>
+                                <td>${show1.getlocation(carroute.to).province}</td>
                                 <td>${carroute.price}</td>
                                 <td>${carroute.start}</td>
                                 <td>${carroute.end}</td>
                                 <td>${carroute.datestart}</td>
-                                <td><a href="#">Edit</a></td>
-                                <td><a href="#">Delete</a></td>
+                                <c:if test="${authority!='ROLE_MEMBER'}">
+                                    <td><a href="#">Edit</a></td>
+                                    <td><a href="#">Delete</a></td>
+                                </c:if>
+
                                 <td><a href="listseat?crid=${carroute.id}">Booking</a></td>
                                 <!--<td><a href="ticket_member.jsp">Booking1</a></td>-->
                             </tr>
@@ -248,7 +263,7 @@
                 </table>
             </div>
         </div>
-        
+
         <footer>
             <div class="container">
                 <div class="row">

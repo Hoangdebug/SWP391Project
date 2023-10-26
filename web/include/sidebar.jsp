@@ -26,10 +26,10 @@
                     <a href="add_staff.jsp" class="">Create Staff/Driver</a>
                 </c:if>
                 <c:if test="${authority=='ROLE_STAFF'}">
-                    <a href="add_car_route.jsp" class="">Create Car Route</a>
-                    <a href="add_car.jsp" class="">Add New Car</a>
-                    <a href="list_carroute.jsp" class=""> Car Route List</a>
-                    <a href="list_car.jsp" class="">List car</a>
+                    <a href="addcarroute" class="">Create Car Route</a>
+                    <a href="addcar" class="">Add New Car</a>
+                    <a href="listcarroute" class=""> Car Route List</a>
+                    <a href="listcar" class="">List car</a>
 
                 </c:if>
                 <c:if test="${authority=='ROLE_MEMBER'}">

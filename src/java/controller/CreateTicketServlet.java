@@ -122,6 +122,7 @@ public class CreateTicketServlet extends HttpServlet {
         System.out.println(carr.getCar_id());
         
         TicketRepository tr = new TicketRepository();
+        SeatRepository sr = new SeatRepository();
         ArrayList<Tickets> ltickets = new ArrayList<>();
         ArrayList<Seats> lseats = (ArrayList<Seats>) session.getAttribute("lseatS");
         for (Seats s : lseats) {
@@ -129,11 +130,11 @@ public class CreateTicketServlet extends HttpServlet {
             String passPhone = request.getParameter("passen_phone"+s.getSeat_number());
             Tickets t = new Tickets(carr.getId(),s.getSeat_number(),o_new.getId(), passName, passPhone);
             tr.InserTicket(t);
+            sr.setIsBooked(carr.getCar_id(), s.getSeat_number());
             ltickets.add(t);
         }
-        
         session.setAttribute("lticketS", ltickets);
-        request.getRequestDispatcher("payment.jsp").forward(request, response);
+        request.getRequestDispatcher("confirm.jsp").forward(request, response);
     }
 
     /**

@@ -15,22 +15,23 @@ import model.entity.Orders;
  * @author tuna
  */
 public class OrderRepository {
+
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
+
     public String InserOrder(Orders o) {
         String sql = "INSERT INTO orders (user_id, status, total_price) VALUES (?, 0, ?);";
 
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-  
+
             ps.setInt(1, o.getUser_id());
             ps.setFloat(2, o.getTotal_price());
-            
+
             int i = ps.executeUpdate();
-            if(i!=0){
+            if (i != 0) {
                 return "SUCCESS";
             }
             ps.close();
@@ -40,13 +41,14 @@ public class OrderRepository {
         }
         return "ERROR";
     }
-    public Orders getNearOrder(){
+
+    public Orders getNearOrder() {
         Orders o = new Orders();
         String sql = "SELECT TOP 1 * FROM orders ORDER BY id DESC";
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            
+
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Orders(rs.getInt(1),
@@ -62,16 +64,31 @@ public class OrderRepository {
         }
         return o;
     }
-    
-    
-    
+
+    public void updateStatusOrder(int id) {
+        String sql = "UPDATE [orders]\n"
+                + "SET [status] = 1\n"
+                + "WHERE id = ?;";
+        try{
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setInt(1,id);
+            
+            int i = ps.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
     public static void main(String[] args) {
         OrderRepository or = new OrderRepository();
         int userId = 1;
         float totalPrice = (float) 1200.009;
-        Orders o = new Orders(userId,1, totalPrice);
-        
+        Orders o = new Orders(userId, 1, totalPrice);
+        int id = 2001;
 //        System.out.println(or.InserOrder(o));
-        System.out.println(or.getNearOrder());
+//        System.out.println(or.getNearOrder());
+        or.updateStatusOrder(id);
     }
 }

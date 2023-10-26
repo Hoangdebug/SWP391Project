@@ -206,17 +206,17 @@
         <!-- CAROUSEL-->
         <div class="container">
             <div class="box-search">
-                <form>
+                <form action="listcarroute">
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
                                 <td><select class="form-control col-sm-12">
                                         <option value="Điểm đi" selected>Điểm đi</option>
-                                        <option>Sài gòn</option>
+                                        <option>Kon Tum</option>
                                     </select></td>
                                 <td><select class="form-control col-sm-12">
                                         <option value="Điểm đến" selected>Điểm đến</option>
-                                        <option>Cà Mau</option>
+                                        <option>Quảng Bình</option>
                                     </select></td>
                                 <td class="date"><input class="form-control col-sm-12"
                                                         type="date"></td>
