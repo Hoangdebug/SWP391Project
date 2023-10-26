@@ -4,7 +4,6 @@
     Author     : ADMIN
 --%>
 
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -60,14 +59,14 @@
                                         Remember me
                                     </label>
                                 </div>
-                                <a href="fogot_pass.jsp" class="text-body">Forgot password?</a>
+                                <a href="#!" class="text-body">Forgot password?</a>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
                                 <button type="submit" class="btn color-teal btn-lg"
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                                 <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
-                                    <a href="register" class="link-danger registed-teal">Register</a>
+                                    <a href="register.jsp" class="link-danger registed-teal">Register</a>
                                 </p>
                             </div>
 
@@ -76,9 +75,10 @@
                             </div>
                             <button type="button" class="gg-button"> 
                                 <i class="fab fa-google"></i>
-                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/vh_express/login/LoginGoogleServlet&response_type=code
-                                   &client_id=638984395947-ot7n2roet029u797d2fnri9ifun9okot.apps.googleusercontent.com">Login With Google</a>  
+                                <p>Login with Google</p>
                             </button>
+
+
                         </form>
                     </div>
                 </div>
@@ -86,9 +86,12 @@
             <div
                 class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 color-teal">
                 <!-- Copyright -->
-                <div class="text-white mb-3 mb-md-0 footer-title">
-                    Viet Hoang Express
-                </div>
+                <a src="index.html">
+                    <div class="text-white mb-3 mb-md-0 footer-title">
+                        Viet Hoang Express
+                    </div>
+                </a>
+
                 <!-- Copyright -->
 
                 <!-- Right -->

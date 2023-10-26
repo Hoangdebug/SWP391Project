@@ -4,6 +4,8 @@
     Author     : ADMIN
 --%>
 
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -75,7 +77,7 @@
             </div>
         </div>
     </body>
-    <script src="jQuery-Seat-Charts/jquery-1.11.0.min.js"></script>
+            <script src="jQuery-Seat-Charts/jquery-1.11.0.min.js"></script>
         <script src="jQuery-Seat-Charts/jquery.seat-charts.js"></script>
 
         <script>
@@ -104,7 +106,7 @@
                             category: 'Number'
                         },
                         e: {
-                            price: ${bus.getPrice()},
+                            price: 200,
                             classes: 'economy-class', //your custom CSS class
                             category: 'Number'
                         }
@@ -183,7 +185,7 @@
 
                 //let's pretend some seats have already been booked
                 var booked = new Array();
-            <c:forEach items="${ListSeat}" var="a" >
+            <c:forEach items="${ListTicket}" var="a" >
                 booked.push("${a.getSeat_number()}");//// data get id seat
             </c:forEach>
                 sc.get(booked).status('unavailable');

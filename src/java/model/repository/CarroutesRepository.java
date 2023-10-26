@@ -111,5 +111,38 @@ public class CarroutesRepository {
         }
         return list;
     }
+    
+    public static Carroutes getCarroute(int id){
+        
+        Carroutes carroute = new Carroutes();
+        
+        String query = "SELECT * FROM carroutes WHERE id = ?";
+        
+        try(Connection conn = DBConnect.getConnection()) {
+            
+            PreparedStatement ps = conn.prepareStatement(query);
+            
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                return new Carroutes(rs.getInt("id"),rs.getInt("car_id"),rs.getString("from"),
+                        rs.getString("to"),rs.getFloat("price"),rs.getString("start"),
+                        rs.getString("end"),rs.getDate("datestart"),rs.getInt("user_id"));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        
+        return carroute;
+    }
 
+   
 }

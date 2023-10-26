@@ -1,48 +1,95 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import model.config.DBConnect;
-import model.entity.Tickets;
+import model.config.DBContext;
+import model.entity.Orders;
 
 /**
  *
- * @author ADMIN
+ * @author tuna
  */
 public class OrderRepository {
-    
-    public static boolean booking(String passenger_name, String passenger_phone, int seatid){
-        
-        String query = "Insert into tickets(passenger_name, passenger_phone) values (? ,?)";
-        
-        try(Connection conn = DBConnect.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, passenger_name);
-            ps.setString(2, passenger_phone);
-            ps.executeUpdate();
-            
-            
-            String query1 = "UPDATE seats SET is_booked = 1 WHERE id = ?";
-            
-            PreparedStatement ps1 = conn.prepareStatement(query1);
-            
-            ps1.setInt(1, seatid);
-            ps1.executeUpdate();
-            
+
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    public String InserOrder(Orders o) {
+        String sql = "INSERT INTO orders (user_id, status, total_price) VALUES (?, 0, ?);";
+
+        try {
+           con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, o.getUser_id());
+            ps.setFloat(2, o.getTotal_price());
+
+            int i = ps.executeUpdate();
+            if (i != 0) {
+                return "SUCCESS";
+            }
             ps.close();
-            ps1.close();
-            conn.close();
-            
+
         } catch (Exception e) {
-            System.out.println(e);
-            System.err.println("Lỗi booking");
+            System.err.println("RegisterRepository File:: " + e);
         }
-        return false;
+        return "ERROR";
     }
-    
+
+    public Orders getNearOrder() {
+        Orders o = new Orders();
+        String sql = "SELECT TOP 1 * FROM orders ORDER BY id DESC";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Orders(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getFloat(4));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return o;
+    }
+
+    public void updateStatusOrder(int id) {
+        String sql = "UPDATE orders\n"
+                + "SET status = 1\n"
+                + "WHERE id = ?;";
+        try{
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setInt(1,id);
+            
+            int i = ps.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        OrderRepository or = new OrderRepository();
+        int userId = 1;
+        float totalPrice = (float) 1200.009;
+        Orders o = new Orders(userId, 1, totalPrice);
+        int id = 2001;
+//        System.out.println(or.InserOrder(o));
+//        System.out.println(or.getNearOrder());
+        or.updateStatusOrder(id);
+    }
 }

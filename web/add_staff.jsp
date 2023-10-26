@@ -1,4 +1,11 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- 
+    Document   : add_staff
+    Created on : Oct 4, 2023, 5:15:04 AM
+    Author     : tuna
+--%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>

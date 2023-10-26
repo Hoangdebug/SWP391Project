@@ -4,7 +4,8 @@
     Author     : tuna
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -16,24 +17,24 @@
     <body>
         <div class="sidebar">
             <div class="items">
-                <c:if test="${role=='ROLE_MEMBER'}">
-                    <a href="welcome_member.jsp" class=""> Car Route List</a>         
+                <c:if test="${authority=='ROLE_MEMBER'}">
+                    <a href="list_carroute.jsp" class=""> Car Route List</a>         
                     <a href="ticket_member.jsp" class=""> Ticket</a>
+                </c:if>
+                <c:if test="${authority=='ROLE_ADMIN'}">
+                    <a href="listuser" class="">List Staff/Driver</a>
+                    <a href="addStaff" class="">Create Staff/Driver</a>
+                </c:if>
+                <c:if test="${authority=='ROLE_STAFF'}">
+                    <a href="addcarroute" class="">Create Car Route</a>
+                    <a href="addcar" class="">Add New Car</a>
+                    <a href="listcarroute" class=""> Car Route List</a>
+                    <a href="listcar" class="">List car</a>
 
                 </c:if>
-                <c:if test="${role=='ROLE_ADMIN'}">
-                    <a href="add_car.jsp" class="">Create Car</a>
-                    <a href="list_staff_driver.jsp" class="">List Staff/Driver</a>
-                    <a href="add_staff.jsp" class="">Create Staff/Driver</a>
-                    <a href="create_route.jsp" class="">Create Car Route</a>
+                <c:if test="${authority=='ROLE_MEMBER'}">
 
                 </c:if>
-                <c:if test="${role=='ROLE_STAFF'}">
-                    <a href="add_car.jsp" class="">Create Staff/Driver</a>
-
-                    <a href="add_car_route.jsp" class="">Create Car Route</a>
-                </c:if>
-
             </div>
         </div>
     </body>

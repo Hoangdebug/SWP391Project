@@ -5,6 +5,8 @@
  */
 package dao;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  *
  * @author ADMIN
@@ -16,6 +18,16 @@ public class LoginDao {
     private String newPass;
     private String authority;
 //    private String authority;
+
+    public LoginDao(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.newPass = DigestUtils.md5Hex(this.password);
+    }
+
+    public LoginDao() {
+    }
+    
 
     public String getEmail() {
         return email;
