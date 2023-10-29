@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Pay;
+package model.config;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -26,8 +26,8 @@ public class Config {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:8080/vh_express/paysuccess";
-    public static String vnp_TmnCode = "WMILKU0Z";
-    public static String secretKey = "DMVWAKNNEZHOFNFGECRZHNREVPJOLOGJ";
+    public static String vnp_TmnCode = "O6WIMIS9";
+    public static String secretKey = "MLZCLSMCCWNESGJFBJWQEAKGQIHCMRBI";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     public static String md5(String message) {

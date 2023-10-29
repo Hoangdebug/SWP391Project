@@ -7,6 +7,7 @@ package model.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import model.config.DBContext;
 import model.entity.Orders;
 
@@ -80,6 +81,29 @@ public class OrderRepository {
             System.out.println(e);
         }
     }
+    
+    public ArrayList<Orders> getListOrdersbyUser(int id) {
+        ArrayList<Orders> list = new ArrayList<>();
+        String sql = "SELECT * FROM orders where user_id = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, id);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Orders o = new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getFloat(4));
+                list.add(o);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         OrderRepository or = new OrderRepository();
@@ -89,6 +113,7 @@ public class OrderRepository {
         int id = 2001;
 //        System.out.println(or.InserOrder(o));
 //        System.out.println(or.getNearOrder());
-        or.updateStatusOrder(id);
+//        or.updateStatusOrder(id);
+        System.out.println(or.getListOrdersbyUser(5));
     }
 }

@@ -7,13 +7,11 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.entity.Carroutes;
 import model.repository.CarRouteRepository;
 
@@ -21,8 +19,8 @@ import model.repository.CarRouteRepository;
  *
  * @author tuna
  */
-@WebServlet(name = "ListCarrouteServlet", urlPatterns = {"/listcarroute"})
-public class ListCarrouteServlet extends HttpServlet {
+@WebServlet(name = "UpdateCarrouteServlet", urlPatterns = {"/updatecarroute"})
+public class UpdateCarrouteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,36 +34,17 @@ public class ListCarrouteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println(request.getParameter("from"));
-        int from = Integer.parseInt(request.getParameter("from"));
-        int to = Integer.parseInt(request.getParameter("to"));
-        String dateStr = request.getParameter("datestart");
-        Date date = null;
-        if (dateStr != null && !dateStr.isEmpty()) {
-            try {
-                date = Date.valueOf(dateStr);
-            } catch (IllegalArgumentException e) {
-                // Handle the date format error here (e.g., log an error or show a user-friendly message)
-            }
-        }
-
-        CarRouteRepository crr = new CarRouteRepository();
-        ArrayList<Carroutes> list = new ArrayList<>();
-
-        if (from != 0 && to != 0 && date != null) {
-            list = crr.searchCarroutes(from, to, date);
-        } else {
-            list = crr.getListCarroutes();
-        }
-
-        HttpSession session = request.getSession(true);
-        request.setAttribute("crlistS", list);
-        String authority = (String) session.getAttribute("authority");
-
-        if (authority != null && authority.equalsIgnoreCase("ROLE_MEMBER")) {
-            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateCarrouteServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateCarrouteServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -81,17 +60,20 @@ public class ListCarrouteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int car_name = Integer.parseInt(request.getParameter("name"));
+        int from = Integer.parseInt(request.getParameter("from"));
+        int to = Integer.parseInt(request.getParameter("to"));
+        float price = Float.parseFloat(request.getParameter("price"));
+        String start = request.getParameter("start");
+        String end = request.getParameter("end");
+        Date datestart = Date.valueOf(request.getParameter("datestart"));
+        int driver = Integer.parseInt(request.getParameter("user_id"));
+        
+        Carroutes car = new Carroutes(id, car_name, from, to, price, start, end, datestart, driver);
         CarRouteRepository crr = new CarRouteRepository();
-        ArrayList<Carroutes> crList = crr.getListCarroutes();
-        HttpSession session = request.getSession(true);
-        request.setAttribute("crlistS", crList);
-        String authority = (String) session.getAttribute("authority");
-        if (authority.equalsIgnoreCase("ROLE_MEMBER")) {
-            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
-        }
-//        processRequest(request, response);
+        crr.updateCarRoute(car);
+        response.sendRedirect("listcarroute");
     }
 
     /**

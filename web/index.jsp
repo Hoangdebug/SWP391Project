@@ -8,7 +8,6 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     </head>
     <style>
         
@@ -114,46 +113,14 @@
     </style>
 
     <body>
-        <!--NAVBAR-->
-        <!--    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a href="#" class="navbar-brand">VH<b>EXPRESS</b></a> 
-                 Collection of nav links, forms, and other content for toggling 
-                <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Ngôn ngữ
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Tiếng Anh</a>
-                            <a class="dropdown-item" href="#">Tiếng việt</a>
-                            <a class="dropdown-item" href="#">Tiếng Nhật</a>
-                        </div>
-                    </div>
-                    <div class="navbar-nav">
-                        <a href="#" class="nav-item nav-link">Trang chủ</a>
-                        <a href="#" class="nav-item nav-link">Thông tin</a>			
-                    </div>
-                    <a href="#" class="nav-item nav-link">Liên hệ</a>
-                    <div class="navbar-nav ml-auto action-buttons">
-                        <div class="nav-item">
-                            <a href="${pageContext.request.contextPath}/AccountServlet" class="nav-link dropdown-toggle mr-4">Đăng nhập</a>
-        
-                        </div>
-                        <div class="nav-item ">
-                            <a href="${pageContext.request.contextPath}/RegisterServlet"  class="btn btn-primary dropdown-toggle sign-up-btn">Đăng ký</a>
-                        </div>
-                    </div>
-        
-            </nav>-->
-
         <div class="container-fluid p-3">
             <div class="row">
                 <div class="col-md-2 text-left" >
                    <span style="color: black; font-weight: bold; font-size: 23px;">VH</span><span style="color: var(--teal);font-weight: bold;font-size: 23px;F">Express</span>
                 </div>
                 <div class="col-md-10 text-right" >
-                    <a href="${pageContext.request.contextPath}/login" class="btn btn-success"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
-                    <a href="${pageContext.request.contextPath}/register" class="btn btn-primary text-white"><i class="fa-solid fa-user-plus"></i> Đăng ký</a>
+                    <a href="register" class="btn btn-primary text-white"> Đăng ký</a>
+                    <a href="login" class="btn btn-success">Đăng nhập</a>
                 </div>
             </div>
         </div>

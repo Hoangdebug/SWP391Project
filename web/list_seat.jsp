@@ -190,7 +190,7 @@
                                     <label for="${seat.seat_number}" class="seat ">${seat.seat_number}</label>
                                 </c:if>
                                 <c:if test="${seat.is_booked == 1}">
-                                    <input type="checkbox" name="ticket" id="${seat.seat_number}" />
+                                    <input type="checkbox" name="ticket" id="${seat.seat_number}" disable="disable"/>
                                     <label for="${seat.seat_number}" class="seat booked">${seat.seat_number}</label>
                                 </c:if>
                             </c:forEach>

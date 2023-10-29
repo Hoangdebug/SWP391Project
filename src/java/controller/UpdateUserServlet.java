@@ -6,23 +6,20 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.entity.Carroutes;
-import model.repository.CarRouteRepository;
+import model.entity.Users;
+import model.repository.UserRepository;
 
 /**
  *
  * @author tuna
  */
-@WebServlet(name = "ListCarrouteServlet", urlPatterns = {"/listcarroute"})
-public class ListCarrouteServlet extends HttpServlet {
+@WebServlet(name = "UpdateUserServlet", urlPatterns = {"/updateuser"})
+public class UpdateUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,36 +33,17 @@ public class ListCarrouteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println(request.getParameter("from"));
-        int from = Integer.parseInt(request.getParameter("from"));
-        int to = Integer.parseInt(request.getParameter("to"));
-        String dateStr = request.getParameter("datestart");
-        Date date = null;
-        if (dateStr != null && !dateStr.isEmpty()) {
-            try {
-                date = Date.valueOf(dateStr);
-            } catch (IllegalArgumentException e) {
-                // Handle the date format error here (e.g., log an error or show a user-friendly message)
-            }
-        }
-
-        CarRouteRepository crr = new CarRouteRepository();
-        ArrayList<Carroutes> list = new ArrayList<>();
-
-        if (from != 0 && to != 0 && date != null) {
-            list = crr.searchCarroutes(from, to, date);
-        } else {
-            list = crr.getListCarroutes();
-        }
-
-        HttpSession session = request.getSession(true);
-        request.setAttribute("crlistS", list);
-        String authority = (String) session.getAttribute("authority");
-
-        if (authority != null && authority.equalsIgnoreCase("ROLE_MEMBER")) {
-            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateUserServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -81,17 +59,18 @@ public class ListCarrouteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CarRouteRepository crr = new CarRouteRepository();
-        ArrayList<Carroutes> crList = crr.getListCarroutes();
-        HttpSession session = request.getSession(true);
-        request.setAttribute("crlistS", crList);
-        String authority = (String) session.getAttribute("authority");
-        if (authority.equalsIgnoreCase("ROLE_MEMBER")) {
-            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
-        }
-//        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String authority = request.getParameter("authority");
+        String age = request.getParameter("age");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+        String address = request.getParameter("address");
+        
+        Users users = new Users(id, name, age, phone, authority, address, gender);
+        UserRepository ur = new UserRepository();
+        ur.updateUser(users);
+        response.sendRedirect("listuser");
     }
 
     /**

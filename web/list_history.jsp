@@ -1,10 +1,12 @@
 <%-- 
-    Document   : list_carrouter_member
-    Created on : Oct 9, 2023, 10:44:29 AM
+    Document   : list_history
+    Created on : Oct 27, 2023, 11:56:01 AM
     Author     : tuna
 --%>
-<jsp:useBean class="model.repository.CarRepository" id="show"></jsp:useBean>
-<jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
+
+<jsp:useBean class="model.repository.CarRouteRepository" id="show"></jsp:useBean>
+<jsp:useBean class="model.repository.CarRepository" id="show1"></jsp:useBean>
+<jsp:useBean class="model.repository.LocationRepository" id="show2"></jsp:useBean>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -132,6 +134,10 @@
                 align-items: center;
                 width: 100%;
             }
+            
+            .container{
+                margin-top: 100px;
+            }
 
         </style>
 
@@ -139,49 +145,7 @@
 
     <body>
         <%@ include file="/include/header.jsp" %>
-        <!--CAROUSEL-->
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ul>
-
-            <!-- Slides -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/img1.webp" alt="Image 1" class="img-fluid">
-                    <div class="carousel-caption">
-                        <h3>Slide 1</h3>
-                        <p>Some text for slide 1.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="images/img2.jpeg" alt="Image 2" class="img-fluid">
-                    <div class="carousel-caption">
-                        <h3>Slide 2</h3>
-                        <p>Some text for slide 2.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="images/img3.jpeg" alt="Image 3" class="img-fluid">
-                    <div class="carousel-caption">
-                        <h3>Slide 3</h3>
-                        <p>Some text for slide 3.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-
+        
         <!-- CAROUSEL-->
         <div class="container">
             <div class="box-search">
@@ -218,7 +182,7 @@
 
         <div class="box-list">
             <div class="title-page">
-                List Car Route
+                List History
             </div>
 
             <div class="table">
@@ -228,7 +192,7 @@
                             <th>Name car</th>
                             <th>From</th>
                             <th>To</th>
-                            <th>Price</th>
+                            <th>Total Price</th>
                             <th>Start</th>
                             <th>End</th>
                             <th>Date Start</th>
@@ -236,13 +200,13 @@
                                 <td>Edit</td>
                                 <td>Delete</td>
                             </c:if>
-                            <th>Booking</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <c:forEach var="carroute" items="${crlistS}">
-                            <tr id="row${carroute.id}">
-                                <td>${show.getCar(carroute.car_id).name}</td>
+<!--                    <tbody>
+                        <c:forEach var="order" items="${olistS}">
+                            <tr id="row${order.id}">
+                                <td>${show.getCarroute(show.getbyOrder(order.id))}</td>
                                 <td>${show1.getlocation(carroute.from).province}</td>
                                 <td>${show1.getlocation(carroute.to).province}</td>
                                 <td>${carroute.price}</td>
@@ -255,15 +219,15 @@
                                 </c:if>
 
                                 <td><a href="listseat?crid=${carroute.id}">Booking</a></td>
-                                <!--<td><a href="ticket_member.jsp">Booking1</a></td>-->
+                                <td><a href="ticket_member.jsp">Booking1</a></td>
                             </tr>
                         </c:forEach>
-                    </tbody>
+                    </tbody>-->
                 </table>
             </div>
         </div>
 
-        <footer>
+<!--        <footer>
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -282,10 +246,9 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>
-

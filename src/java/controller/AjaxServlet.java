@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Pay;
+package controller;
 
+import model.config.Config;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
