@@ -55,7 +55,8 @@ public class OrderRepository {
                 return new Orders(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getFloat(4));
+                        rs.getInt(4),
+                        rs.getDate(5));
             }
             rs.close();
             ps.close();
@@ -94,7 +95,7 @@ public class OrderRepository {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                Orders o = new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getFloat(4));
+                Orders o = new Orders(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getDate(5));
                 list.add(o);
             }
             return list;
@@ -109,7 +110,7 @@ public class OrderRepository {
         OrderRepository or = new OrderRepository();
         int userId = 1;
         float totalPrice = (float) 1200.009;
-        Orders o = new Orders(userId, 1, totalPrice);
+//        Orders o = new Orders(userId, 1, totalPrice);
         int id = 2001;
 //        System.out.println(or.InserOrder(o));
 //        System.out.println(or.getNearOrder());

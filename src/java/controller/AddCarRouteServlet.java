@@ -6,7 +6,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entity.Carroutes;
+import model.entity.Cars;
+import model.entity.Seats;
+import model.entity.Tickets;
 import model.repository.CarRepository;
 import model.repository.CarRouteRepository;
+import model.repository.SeatRepository;
+import model.repository.TicketRepository;
 
 /**
  *
@@ -82,18 +86,30 @@ public class AddCarRouteServlet extends HttpServlet {
         int car_id = Integer.parseInt(request.getParameter("car_id"));
         int from = Integer.parseInt(request.getParameter("from"));
         int to = Integer.parseInt(request.getParameter("to"));
-        float price = Float.parseFloat(request.getParameter("price"));
+//        float price = Float.parseFloat(request.getParameter("price"));
+        int price = Integer.parseInt(request.getParameter("price"));
         String start = request.getParameter("start");
         String end = request.getParameter("end");
         Date datestart = Date.valueOf(request.getParameter("datestart"));
         int user_id = Integer.parseInt(request.getParameter("driver_id"));
         
+        //add carroute
         Carroutes carroutes = new Carroutes(car_id, from, to, price, start, end, datestart, user_id);
         CarRouteRepository crr = new CarRouteRepository();
         crr.createCarroutes(carroutes);
         
+        
+        //add ticket
+        SeatRepository sr = new SeatRepository();
+        TicketRepository tr = new TicketRepository();
         CarRepository cr = new CarRepository();
-        cr.getCar(car_id);
+        Cars c = cr.getCar(car_id);
+        Carroutes carroute = crr.getByCarUser(car_id, user_id);
+        for(int i = 1; i<=c.getCountseat(); i++){
+            Seats s = sr.getSeat(i,c.getId());
+            Tickets t = new Tickets(carroute.getId(),s.getId(),0,0);
+            tr.InserTicket(t);
+        }
         response.sendRedirect("listcarroute");
     }
 

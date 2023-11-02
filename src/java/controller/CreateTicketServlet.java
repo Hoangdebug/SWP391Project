@@ -40,39 +40,54 @@ public class CreateTicketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String seats;
-        seats = request.getParameter("lseat");
+        String tickets;
+        tickets = request.getParameter("lticket");
 //        System.out.println(seats);
 
-        String[] listseat = seats.split(",");
-        int[] seatids = new int[listseat.length];
+        String[] listticket = tickets.split(",");
+        int[] ticketids = new int[listticket.length];
 
-        for (int i = 0; i < listseat.length; i++) {
-            seatids[i] = Integer.parseInt(listseat[i]);
+        for (int i = 0; i < listticket.length; i++) {
+            ticketids[i] = Integer.parseInt(listticket[i]);
         }
 
         HttpSession session = request.getSession();
 //        session.setAttribute("lseatS", seatids);
         Carroutes crs = (Carroutes) session.getAttribute("curCarroute");
         int idCar = crs.getCar_id();
-        float price = crs.getPrice();
-
-        float total = 0;
-
-        ArrayList<Seats> lSeats = new ArrayList<>();
+        int price = crs.getPrice();
+        int total = 0;
+        
+        TicketRepository tr = new TicketRepository();
+        ArrayList<Tickets> ltickets = new ArrayList<>();
         SeatRepository sr = new SeatRepository();
-        for (int seatid : seatids) {
-            total += price;
-            Seats s = sr.getSeat(seatid, idCar);
-//            System.out.println(s);
-            lSeats.add(s);
+        for(int ticketid : ticketids){
+            total +=price;
+            Seats s = sr.getSeat(ticketid, idCar);
+            Tickets t = tr.getTicketByRouteSeat(crs.getId(),s.getId());
+            ltickets.add(t);
         }
-        session.setAttribute("lseatS", lSeats);
-        session.setAttribute("totalPrice", total);
-
-//        for (int seatid : seatids) {
-//            System.out.println(seatid);
+        
+        //test
+//        for(Tickets t : ltickets){
+//            System.out.println(t);
 //        }
+        
+        session.setAttribute("lticketS", ltickets);
+        session.setAttribute("totalPrice", total);
+        
+        
+//        ArrayList<Seats> lSeats = new ArrayList<>();
+//        SeatRepository sr = new SeatRepository();
+//        for (int seatid : ticketids) {
+//            total += price;
+//            Seats s = sr.getSeat(seatid, idCar);
+////            System.out.println(s);
+//            lSeats.add(s);
+//        }
+//        
+
+//        
         request.getRequestDispatcher("create_ticket.jsp").forward(request, response);
     }
 
@@ -109,32 +124,59 @@ public class CreateTicketServlet extends HttpServlet {
 
         Users u = (Users) session.getAttribute("cur_user");
         int u_id = u.getId();
-//        System.out.println(u_id);
         
-        float total_price = (float) session.getAttribute("totalPrice");
-//        System.out.println(total_price);
+        int total_price = (int) session.getAttribute("totalPrice");
         Orders o = new Orders(u_id,0,total_price);
         or.InserOrder(o);
         Orders o_new = or.getNearOrder();
         session.setAttribute("cur_order", o_new);
         
         Carroutes carr = (Carroutes) session.getAttribute("curCarroute");
-        System.out.println(carr.getCar_id());
-        
+//        System.out.println(carr.getCar_id());
+
+        //add ticket to order and update passenger information to ticket
         TicketRepository tr = new TicketRepository();
         SeatRepository sr = new SeatRepository();
-        ArrayList<Tickets> ltickets = new ArrayList<>();
-        ArrayList<Seats> lseats = (ArrayList<Seats>) session.getAttribute("lseatS");
-        for (Seats s : lseats) {
-            String passName = request.getParameter("passen_name"+s.getSeat_number());
-            String passPhone = request.getParameter("passen_phone"+s.getSeat_number());
-            Tickets t = new Tickets(carr.getId(),s.getSeat_number(),o_new.getId(), passName, passPhone);
-            tr.InserTicket(t);
-            sr.setIsBooked(carr.getCar_id(), s.getSeat_number());
-            ltickets.add(t);
+        ArrayList<Tickets> ltickets = (ArrayList<Tickets>) session.getAttribute("lticketS");
+        ArrayList<Tickets> ltickets_new = new ArrayList<>();
+        for(Tickets t : ltickets){
+            String passName = request.getParameter("passen_name"+t.getId());
+            String passPhone = request.getParameter("passen_phone"+t.getId());
+            Tickets t_new = new Tickets(t.getId(),
+                    t.getRoute_id(),
+                    t.getSeat_id(),
+                    o_new.getId(),
+                    1,
+                    passName,
+                    passPhone
+            );
+//            System.out.println(t_new);
+            tr.updatePassenger(t_new);
+            ltickets_new.add(t_new);
         }
-        session.setAttribute("lticketS", ltickets);
-        request.getRequestDispatcher("confirm.jsp").forward(request, response);
+        session.setAttribute("litcket_newS", ltickets_new);
+        request.getRequestDispatcher("confirm_ticket.jsp").forward(request, response);
+        //test
+//        for(Tickets t : ltickets){
+//            System.out.println(t);
+//        }
+
+
+        
+//        TicketRepository tr = new TicketRepository();
+//        SeatRepository sr = new SeatRepository();
+//        ArrayList<Tickets> ltickets = new ArrayList<>();
+//        ArrayList<Seats> lseats = (ArrayList<Seats>) session.getAttribute("lseatS");
+//        for (Seats s : lseats) {
+//            String passName = request.getParameter("passen_name"+s.getSeat_number());
+//            String passPhone = request.getParameter("passen_phone"+s.getSeat_number());
+//            Tickets t = new Tickets(carr.getId(),s.getSeat_number(),o_new.getId(), passName, passPhone);
+//            tr.InserTicket(t);
+//            sr.setIsBooked(carr.getCar_id(), s.getSeat_number());
+//            ltickets.add(t);
+//        }
+//        session.setAttribute("lticketS", ltickets);
+        
     }
 
     /**

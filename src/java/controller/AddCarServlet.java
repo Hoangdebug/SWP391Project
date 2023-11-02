@@ -48,9 +48,25 @@ public class AddCarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        // Kiểm tra định dạng dữ liệu
+        String characterEncoding = request.getCharacterEncoding();
+        if (characterEncoding == null) {
+            characterEncoding = "UTF-8";
+        }
         String name = request.getParameter("name");
+        System.out.println(name);
         String type = request.getParameter("type");
-        int countseat = Integer.parseInt(request.getParameter("countseat"));
+        
+        int countseat = 0;
+        if(type.equalsIgnoreCase("VIP")){
+            countseat = 45;
+        }else if(type.equalsIgnoreCase("LUXURY")){
+            countseat = 24;
+        }else if(type.equalsIgnoreCase("STANDARD")){
+            countseat = 22;
+        }
+//        int countseat = Integer.parseInt(request.getParameter("countseat"));
         String licenseplate = request.getParameter("licenseplate");
         Cars cars = new Cars(name, type, countseat, licenseplate);
         CarRepository cr = new CarRepository();
@@ -62,7 +78,7 @@ public class AddCarServlet extends HttpServlet {
                 SeatRepository sr = new SeatRepository();
                 sr.insertSeats(i,c.getId());
             }
-            response.sendRedirect("list_car.jsp");
+            response.sendRedirect("listcar");
         } else{
             response.sendRedirect("addcar");
         }

@@ -36,7 +36,7 @@ public class CarRouteRepository {
                 int car_id = rs.getInt(2);
                 int from = rs.getInt(3);
                 int to = rs.getInt(4);
-                float price = rs.getFloat(5);
+                int price = rs.getInt(5);
                 String start = rs.getString(6);
                 String end = rs.getString(7);
                 Date datestart = rs.getDate(8);
@@ -64,7 +64,15 @@ public class CarRouteRepository {
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new Carroutes(rs.getInt("id"), rs.getInt("car_id"), rs.getInt("from"), rs.getInt("to"), rs.getFloat("price"), rs.getString("start"), rs.getString("end"), rs.getDate("datestart"), rs.getInt("user_id"));
+                return new Carroutes(rs.getInt("id"),
+                        rs.getInt("car_id"),
+                        rs.getInt("from"),
+                        rs.getInt("to"),
+                        rs.getInt(5),
+                        rs.getString("start"),
+                        rs.getString("end"),
+                        rs.getDate("datestart"),
+                        rs.getInt("user_id"));
             }
             rs.close();
             ps.close();
@@ -86,7 +94,7 @@ public class CarRouteRepository {
             ps.setInt(1, c.getCar_id());
             ps.setInt(2, c.getFrom());
             ps.setInt(3, c.getTo());
-            ps.setFloat(4, c.getPrice());
+            ps.setInt(4, c.getPrice());
             ps.setString(5, c.getStart());
             ps.setString(6, c.getEnd());
             ps.setDate(7, c.getDatestart());
@@ -116,14 +124,14 @@ public class CarRouteRepository {
             ps.setInt(1, from);
             ps.setInt(2, to);
             ps.setDate(3, datestart);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int car_id = rs.getInt(2);
                 from = rs.getInt(3);
                 to = rs.getInt(4);
-                float price = rs.getFloat(5);
+                int price = rs.getInt(5);
                 String start = rs.getString(6);
                 String end = rs.getString(7);
                 datestart = rs.getDate(8);
@@ -199,6 +207,36 @@ public class CarRouteRepository {
         }
         return 0;
     }
+    
+    public Carroutes getByCarUser(int car_id, int user_id){
+        String sql = "Select * from carroutes where [car_id] = ? and [user_id] = ? ";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, car_id);
+            ps.setInt(2, user_id);
+            
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new Carroutes(rs.getInt(1),
+                rs.getInt(2),
+                rs.getInt(3),
+                rs.getInt(4),
+                rs.getInt(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getDate(8),
+                rs.getInt(9));
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi getByCarUser ");
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         CarRouteRepository crr = new CarRouteRepository();
@@ -207,7 +245,7 @@ public class CarRouteRepository {
         int car_id = 2;
         int from = 3;
         int to = 4;
-        float price = (float) 500.000;
+        int price = 500000;
         String start = "09:00:00";
         String end = "15:00:00";
         Date datestart = Date.valueOf("2023-12-26");
@@ -215,7 +253,8 @@ public class CarRouteRepository {
         Carroutes cr = new Carroutes(car_id, from, to, price, start, end, datestart, user_id);
 //        crr.createCarroutes(cr);
         
-        System.out.println(crr.getbyOrder(1));
+//        System.out.println(crr.getbyOrder(1));
         
+        System.out.println(crr.getByCarUser(4,4));
     }
 }

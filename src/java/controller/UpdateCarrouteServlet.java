@@ -64,7 +64,8 @@ public class UpdateCarrouteServlet extends HttpServlet {
         int car_name = Integer.parseInt(request.getParameter("name"));
         int from = Integer.parseInt(request.getParameter("from"));
         int to = Integer.parseInt(request.getParameter("to"));
-        float price = Float.parseFloat(request.getParameter("price"));
+//        float price = Float.parseFloat(request.getParameter("price"));
+        int price = Integer.parseInt(request.getParameter("price"));
         String start = request.getParameter("start");
         String end = request.getParameter("end");
         Date datestart = Date.valueOf(request.getParameter("datestart"));

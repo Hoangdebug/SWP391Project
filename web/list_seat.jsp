@@ -8,6 +8,8 @@
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
+<jsp:useBean class="model.repository.SeatRepository" id="show2"></jsp:useBean>
+
 
 <!DOCTYPE html>
 <html>
@@ -136,10 +138,6 @@
         </style>
     </head>
     <body>
-        <%
-            String seat[];
-            seat = request.getParameterValues("tickets");
-        %>    
 
         <%@ include file="/include/header.jsp" %>
         <div class="body">
@@ -180,18 +178,18 @@
                 </div>
                 <div class="right">
                     <div class="title-page">
-                        List Seat
+                        List Ticket
                     </div>
                     <form>
                         <div class="all-seats">
-                            <c:forEach var="seat" items="${sList}">
-                                <c:if test="${seat.is_booked == 0}">
-                                    <input type="checkbox" name="ticket" id="${seat.seat_number}"  onClick="handleClick(this,${curCarroute.price})"/>
-                                    <label for="${seat.seat_number}" class="seat ">${seat.seat_number}</label>
+                            <c:forEach var="ticket" items="${tlistS}">
+                                <c:if test="${ticket.status == 0}">
+                                    <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  onClick="handleClick(this,${curCarroute.price})"/>
+                                    <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat ">${show2.getById(ticket.seat_id).seat_number}</label>
                                 </c:if>
-                                <c:if test="${seat.is_booked == 1}">
-                                    <input type="checkbox" name="ticket" id="${seat.seat_number}" disable="disable"/>
-                                    <label for="${seat.seat_number}" class="seat booked">${seat.seat_number}</label>
+                                <c:if test="${ticket.status == 1}">
+                                    <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  disable="disable"/>
+                                    <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat booked">${show2.getById(ticket.seat_id).seat_number}</label>
                                 </c:if>
                             </c:forEach>
                         </div>
@@ -206,23 +204,25 @@
             const total = document.getElementById("total");
 
             let arr = [];
+            let realList = [];
             let count = 0;
             const handleClick = (e, b) => {
                 if (arr.includes(e.id)) {
                     arr = arr.filter((item) => item !== e.id);
                     count -= b;
-                    total.innerHTML = count.toFixed(3);
+                    total.innerHTML = count;
                     seatList.innerHTML = arr;
                 } else {
+                    console.log(e);
                     count += b;
                     arr = [...arr, e.id];
-                    total.innerHTML = count.toFixed(3);
+                    total.innerHTML = count;
                     seatList.innerHTML = arr;
                 }
             }
 
             const createTicket = () => {
-                window.location.href = 'createticket?lseat=' + arr;
+                window.location.href = 'createticket?lticket=' + arr;
             }
         </script>
     </body>

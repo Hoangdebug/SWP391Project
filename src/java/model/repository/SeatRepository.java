@@ -23,7 +23,7 @@ public class SeatRepository {
     ResultSet rs = null;
 
     public int insertSeats(int id, int car_id) {
-        String sql = "INSERT INTO seats (car_id,seat_number, is_booked)\n"
+        String sql = "INSERT INTO seats (car_id,seat_number, status)\n"
                 + "VALUES\n"
                 + "    (?, ?, 0)";
         try {
@@ -56,11 +56,11 @@ public class SeatRepository {
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int is_booked = rs.getInt("is_booked");
+                int status = rs.getInt("status");
                 int idcar = rs.getInt("car_id");
                 int seat_number = rs.getInt("seat_number");
 
-                Seats s = new Seats(id, is_booked, seat_number, idcar);
+                Seats s = new Seats(id, status, seat_number, idcar);
                 list.add(s);
             }
             return list;
@@ -96,10 +96,35 @@ public class SeatRepository {
         }
         return s;
     }
+    
+    public Seats getById(int seat_id) {
+        Seats s = new Seats();
+        String sql = "SELECT * FROM seats WHERE id= ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, seat_id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Seats(rs.getInt(1),
+                        rs.getInt(4),
+                        rs.getInt(3),
+                        rs.getInt(2));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("loi getSeatbyId");
+        }
+        return s;
+    }
 
     public void setIsBooked(int car_id, int seat_number) {
         String sql = "UPDATE [seats]\n"
-                + "SET [is_booked] = 1\n"
+                + "SET [status] = 1\n"
                 + "WHERE [car_id] = ? AND [seat_number] = ?;";
         try{
             con = (Connection) new DBContext().getConnection();

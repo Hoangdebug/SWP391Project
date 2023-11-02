@@ -28,9 +28,9 @@
                 --dark: #419197;
                 --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
-            *{
+/*            *{
                 font-family: sans-serif;
-            }
+            }*/
 
             .body{
                 display: flex;
@@ -64,13 +64,13 @@
                 color: white;
                 gap: 10px;
             }
-            
+
             .double-form-items{
                 display: flex;
                 width: 70%;
                 justify-content: space-between;
                 gap: 20px;
-                
+
             }
 
             .form-items-select{
@@ -128,18 +128,20 @@
                         <label for="type">Loai xe:</label>
                         <select name="type" id="type">
                             <option value="VIP">VIP</option>
+                            <option value="LUXURY">LUXURY</option>
                             <option value="STANDARD">STANDARD</option>
                         </select>
                     </div>
-                    <div class="form-items-select">
+<!--                    <div class="form-items-select">
                         <label for="countseat">Số ghế:</label>
                         <select name="countseat" id="countseat">
                             <option value="45">45</option>
+                            <option value="24">24</option>
                             <option value="22">22</option>
                         </select>
-                    </div>
+                    </div>-->
                 </div>
-                
+
                 <div class="form-items">
                     <label for="licenseplate">Biển Số Xe:</label>
                     <input type="text" id="licenseplate" name="licenseplate" required>

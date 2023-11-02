@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean class="model.repository.LocationRepository" id="show1"></jsp:useBean>
 <jsp:useBean class="model.repository.CarRepository" id="showcar"></jsp:useBean>
+<jsp:useBean class="model.repository.SeatRepository" id="show2"></jsp:useBean>
     <!DOCTYPE html>
     <html>
         <head>
@@ -124,7 +125,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="ticket" items="${lticketS}">
+                        <c:forEach var="ticket" items="${lticket_newS}">
                             <tr>
                                 <td class="information-column">
                                     <div>Name passenger: ${ticket.passenger_name}</div>
@@ -137,6 +138,8 @@
                                         <p>Car Plate: ${showcar.getCar(curCarroute.car_id).licenseplate}</p>
                                         <p>From: ${show1.getlocation(curCarroute.from).province}</p>
                                         <p>To: ${show1.getlocation(curCarroute.to).province}</p>
+                                        <p>Start: ${curCarroute.start}</p>
+                                        <p>End: ${curCarroute.end}</p>
                                     </div>
                                 </td>
                                 <td class="price-column">

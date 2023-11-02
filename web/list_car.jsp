@@ -100,7 +100,6 @@
                                     <button type="button" class="btn-fix update-car" data-toggle="modal" data-target="#myModal" data-car-id="${car.id}">
                                         Update
                                     </button>
-
                                 </td>
                                 <td>
                                     <a href="deletecar?id=${car.id}">Delete</a>

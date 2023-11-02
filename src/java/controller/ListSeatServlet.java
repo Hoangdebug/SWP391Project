@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.entity.Carroutes;
 import model.entity.Cars;
-import model.entity.Seats;
+import model.entity.Tickets;
 import model.repository.CarRepository;
 import model.repository.CarRouteRepository;
-import model.repository.SeatRepository;
+import model.repository.TicketRepository;
 
 /**
  *
@@ -38,20 +38,23 @@ public class ListSeatServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String carouteid = request.getParameter("crid");
-//        System.out.println(carouteid);
+        String carouteid = request.getParameter("crid") ;
+        System.out.println(carouteid);
         CarRouteRepository crr = new CarRouteRepository();
         Carroutes carroute = crr.getCarroute(carouteid);
         
 //        System.out.println(carroute);
         CarRepository cr = new CarRepository();
         Cars car = cr.getCar(carroute.getCar_id());
-        SeatRepository sr = new SeatRepository();
-        ArrayList<Seats> sList = sr.getListSeats(carroute.getCar_id());
+        //lay list tickets
+        TicketRepository tr = new TicketRepository();
+        ArrayList<Tickets> tlist = tr.getListTickets(carroute.getId());
+//        SeatRepository sr = new SeatRepository();
+//        ArrayList<Seats> sList = sr.getListSeats(carroute.getCar_id());
+        
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("sList", sList);
+        session.setAttribute("tlistS", tlist);
         session.setAttribute("curCarroute",carroute);
         session.setAttribute("curCar", car);
 //        response.sendRedirect("listseat");

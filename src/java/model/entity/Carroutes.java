@@ -11,12 +11,27 @@ import java.sql.Date;
  * @author tuna
  */
 public class Carroutes {
+    
+//    CREATE TABLE [dbo].[carroutes] (
+//    [id]        INT             IDENTITY (1, 1) NOT NULL,
+//    [car_id]    INT             NULL,
+//    [from]      INT  NULL,
+//    [to]        INT  NULL,
+//    [price]     INT  NOT NULL,
+//    [start]     NVARCHAR(8)        NULL,
+//    [end]       NVARCHAR(8)      NULL,
+//    [datestart] DATE            NULL,
+//    [user_id]   INT             NULL,
+//    PRIMARY KEY CLUSTERED ([id] ASC),
+//    FOREIGN KEY ([car_id]) REFERENCES [dbo].[cars] ([id]),
+//    FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([id])
+//);
 
     private int id;
     private int car_id;
     private int from;
     private int to;
-    private float price;
+    private int price;
     private String start;
     private String end;
     private Date datestart;
@@ -25,7 +40,7 @@ public class Carroutes {
     public Carroutes() {
     }
 
-    public Carroutes(int id, int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
+    public Carroutes(int id, int car_id, int from, int to, int price, String start, String end, Date datestart, int user_id) {
         this.id = id;
         this.car_id = car_id;
         this.from = from;
@@ -37,7 +52,7 @@ public class Carroutes {
         this.user_id = user_id;
     }
 
-    public Carroutes(int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
+    public Carroutes(int car_id, int from, int to, int price, String start, String end, Date datestart, int user_id) {
         this.car_id = car_id;
         this.from = from;
         this.to = to;
@@ -80,11 +95,11 @@ public class Carroutes {
         this.to = to;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -118,6 +133,11 @@ public class Carroutes {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Carroutes{" + "id=" + id + ", car_id=" + car_id + ", from=" + from + ", to=" + to + ", price=" + price + ", start=" + start + ", end=" + end + ", datestart=" + datestart + ", user_id=" + user_id + '}';
     }
 
     

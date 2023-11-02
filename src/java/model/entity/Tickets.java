@@ -9,13 +9,14 @@ package model.entity;
  * @author tuna
  */
 public class Tickets {
-//    CREATE TABLE [dbo].[tickets] (
-//    [id]              INT             IDENTITY (1, 1) NOT NULL,
-//    [route_id]        INT             NULL,
-//    [seat_id]         INT             NULL,
-//    [order_id]        INT             NULL,
-//    [passenger_name]  NVARCHAR (255)  NOT NULL,
-//    [passenger_phone] NVARCHAR (255)  NOT NULL,
+//CREATE TABLE [dbo].[tickets] (
+//    [id]              INT            IDENTITY (1, 1) NOT NULL,
+//    [route_id]        INT            NULL,
+//    [seat_id]         INT            NULL,
+//    [order_id]        INT            NULL,
+//    [status]      INT             NOT NULL,
+//    [passenger_name]  NVARCHAR (255) NOT NULL,
+//    [passenger_phone] NVARCHAR (255) NOT NULL,
 //    PRIMARY KEY CLUSTERED ([id] ASC),
 //    FOREIGN KEY ([order_id]) REFERENCES [dbo].[orders] ([id]),
 //    FOREIGN KEY ([route_id]) REFERENCES [dbo].[carroutes] ([id]),
@@ -25,27 +26,37 @@ public class Tickets {
     private int route_id;
     private int seat_id;
     private int order_id;
+    private int status;
     private String passenger_name;
     private String passenger_phone;
 
     public Tickets() {
     }
 
-    public Tickets(int id, int route_id, int seat_id, int order_id, String passenger_name, String passenger_phone) {
+    public Tickets(int id, int route_id, int seat_id, int order_id, int status, String passenger_name, String passenger_phone) {
         this.id = id;
         this.route_id = route_id;
         this.seat_id = seat_id;
         this.order_id = order_id;
+        this.status = status;
         this.passenger_name = passenger_name;
         this.passenger_phone = passenger_phone;
     }
 
-    public Tickets(int route_id, int seat_id, int order_id, String passenger_name, String passenger_phone) {
+    public Tickets(int route_id, int seat_id, int order_id, int status, String passenger_name, String passenger_phone) {
         this.route_id = route_id;
         this.seat_id = seat_id;
         this.order_id = order_id;
+        this.status = status;
         this.passenger_name = passenger_name;
         this.passenger_phone = passenger_phone;
+    }
+
+    public Tickets(int route_id, int seat_id, int order_id, int status) {
+        this.route_id = route_id;
+        this.seat_id = seat_id;
+        this.order_id = order_id;
+        this.status = status;
     }
 
     public int getId() {
@@ -80,6 +91,14 @@ public class Tickets {
         this.order_id = order_id;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getPassenger_name() {
         return passenger_name;
     }
@@ -98,7 +117,8 @@ public class Tickets {
 
     @Override
     public String toString() {
-        return "Tickets{" + "id=" + id + ", route_id=" + route_id + ", seat_id=" + seat_id + ", order_id=" + order_id + ", passenger_name=" + passenger_name + ", passenger_phone=" + passenger_phone + '}';
+        return "Tickets{" + "id=" + id + ", route_id=" + route_id + ", seat_id=" + seat_id + ", order_id=" + order_id + ", status=" + status + ", passenger_name=" + passenger_name + ", passenger_phone=" + passenger_phone + '}';
     }
+
     
 }

@@ -39,7 +39,7 @@ public class ListCarServlet extends HttpServlet {
         ArrayList<Cars> clist = cr.getListCars();
         HttpSession session = request.getSession(true);
         request.setAttribute("clistS", clist);
-        System.out.println(clist);
+//        System.out.println(clist);
         request.getRequestDispatcher("list_car.jsp").forward(request, response);
     }
 

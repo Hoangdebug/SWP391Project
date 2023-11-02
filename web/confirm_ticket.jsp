@@ -1,6 +1,6 @@
 <%-- 
-    Document   : CreateTicket
-    Created on : Oct 16, 2023, 2:54:40 AM
+    Document   : confirm_ticket
+    Created on : Nov 2, 2023, 5:42:46 PM
     Author     : tuna
 --%>
 
@@ -117,22 +117,18 @@
                     background-color: var(--primary);
                     color: white;
                 }
-
-                .delete-column i{
-                    color: white;
-                    font-size: 24px;
+                .payment-column{
+                    text-align: center;
+                    color: red;
                 }
-
-                .delete-column i:hover{
-                    color: var(--primary);
-                }
+                
             </style>
         </head>
         <body>
         <%@ include file="/include/header.jsp" %>
         <div class="body">
             <form action="createticket" method="POST">
-                <div class="title"> Chuyến xe số ${curCarroute.id} </div>
+                <div class="title">Order Number: ${cur_order.id} </div>
                 <table width="100%" border="1">
                     <thead>
                         <tr class="head-row">
@@ -140,18 +136,15 @@
                             <th class="text-head car-infor-column">Car Infor</th>
                             <th class="text-head">Time Infor</th>
                             <th class="price-column text-head">Price</th>
-                            <th class="delete-column text-head">Delete</th>
+                            <th class="text-head">Payment</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="ticket" items="${lticketS}">
+                        <c:forEach var="ticket" items="${litcket_newS}">
                             <tr class="t-row">
                                 <td class="passen-column">
-                                    <label>Name Passenger:</label>
-                                    <input value="" name="passen_name${ticket.id}" type="text" required="">
-                                    <br>
-                                    <label>Phone Passenger:</label>
-                                    <input value="" name="passen_phone${ticket.id}" type="text" required="">
+                                    <div>Name passenger: ${ticket.passenger_name}</div>
+                                    <div>Phone passenger: ${ticket.passenger_phone}</div>
                                 </td>
                                 <td class="car-infor-column">
                                     <p>
@@ -170,8 +163,8 @@
                                 <td class="price-column">
                                     ${curCarroute.price}
                                 </td>
-                                <td class="delete-column">
-                                    <a href=""><i class="fa-solid fa-trash-can"></i></a>
+                                <td class="payment-column">
+                                    <p>Not pay</p>
                                 </td>
                             </tr>
                         </c:forEach>

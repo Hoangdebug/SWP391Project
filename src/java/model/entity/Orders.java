@@ -4,35 +4,58 @@
  */
 package model.entity;
 
+import java.sql.Date;
+
 /**
  *
  * @author tuna
  */
 public class Orders {
+    
 //    CREATE TABLE [dbo].[orders] (
-//    [id]      INT            IDENTITY (1, 1) NOT NULL,
-//    [user_id] INT            NULL,
-//    [status]  INT            NOT NULL,
-//    [price]   DECIMAL (10, 2) NOT NULL,
+//    [id]          INT             IDENTITY (0, 1) NOT NULL,
+//    [user_id]     INT             NULL,
+//    [status]      INT             NOT NULL,
+//    [total_price] INT               NOT NULL,
+//    [date_order] DATETIME DEFAULT GETDATE() NOT NULL,
 //    PRIMARY KEY CLUSTERED ([id] ASC),
 //    FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([id])
 //);
+
     private int id;
     private int user_id;
     private int status;
-    private float total_price;
+    private int total_price;
+    private Date date_order;
 
     public Orders() {
     }
 
-    public Orders(int id, int user_id, int status, float total_price) {
+    public Orders(int user_id, int status, int total_price, Date date_order) {
+        this.user_id = user_id;
+        this.status = status;
+        this.total_price = total_price;
+        this.date_order = date_order;
+    }
+
+    public Orders(int id, int user_id, int status, int total_price, Date date_order) {
+        this.id = id;
+        this.user_id = user_id;
+        this.status = status;
+        this.total_price = total_price;
+        this.date_order = date_order;
+    }
+
+    public Orders(int id, int user_id, int status, int total_price) {
         this.id = id;
         this.user_id = user_id;
         this.status = status;
         this.total_price = total_price;
     }
+    
+    
 
-    public Orders(int user_id, int status, float total_price) {
+    public Orders(int user_id, int status, int total_price) {
         this.user_id = user_id;
         this.status = status;
         this.total_price = total_price;
@@ -62,19 +85,20 @@ public class Orders {
         this.status = status;
     }
 
-    public float getTotal_price() {
+    public int getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(float total_price) {
+    public void setTotal_price(int total_price) {
         this.total_price = total_price;
     }
 
-    @Override
-    public String toString() {
-        return "Orders{" + "id=" + id + ", user_id=" + user_id + ", status=" + status + ", total_price=" + total_price + '}';
+    public Date getDate_order() {
+        return date_order;
     }
-    
-    
+
+    public void setDate_order(Date date_order) {
+        this.date_order = date_order;
+    }
     
 }

@@ -9,6 +9,17 @@ package model.entity;
  * @author tuna
  */
 public class Cars {
+    
+//    CREATE TABLE [dbo].[cars] (
+//    [id]           INT            IDENTITY (1, 1) NOT NULL,
+//    [name]         NVARCHAR (255) NULL,
+//    [type]         NVARCHAR (255) NULL,
+//    [countseat]    INT            NULL,
+//    [isactive]     INT            NULL,
+//    [licenseplate] NVARCHAR (50)  NULL,
+//    PRIMARY KEY CLUSTERED ([id] ASC),
+//    UNIQUE NONCLUSTERED ([licenseplate] ASC)
+//);
 
     private int id;
     private String name;
