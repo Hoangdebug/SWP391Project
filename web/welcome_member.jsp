@@ -140,24 +140,24 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="images/img1.webp" alt="Image 1" class="img-fluid">
-                    <div class="carousel-caption">
+<!--                    <div class="carousel-caption">
                         <h3>Slide 1</h3>
                         <p>Some text for slide 1.</p>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="carousel-item">
                     <img src="images/img2.jpeg" alt="Image 2" class="img-fluid">
-                    <div class="carousel-caption">
+<!--                    <div class="carousel-caption">
                         <h3>Slide 2</h3>
                         <p>Some text for slide 2.</p>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="carousel-item">
                     <img src="images/img3.jpeg" alt="Image 3" class="img-fluid">
-                    <div class="carousel-caption">
+<!--                    <div class="carousel-caption">
                         <h3>Slide 3</h3>
                         <p>Some text for slide 3.</p>
-                    </div>
+                    </div>-->
                 </div>
             </div>
 

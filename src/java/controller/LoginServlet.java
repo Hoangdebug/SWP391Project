@@ -107,7 +107,7 @@ public class LoginServlet extends HttpServlet {
                 } else if ("ROLE_ADMIN".equals(userAuthority)) {
                     response.sendRedirect("welcome_admin.jsp");
                 } else if ("ROLE_STAFF".equals(userAuthority)) {
-                    response.sendRedirect("add_car_route.jsp");
+                    response.sendRedirect("welcome_staff.jsp");
                 } else {
                     response.sendRedirect("welcome.jsp"); // Trường hợp mặc định
                 }

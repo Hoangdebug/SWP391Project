@@ -28,6 +28,14 @@ public class Users {
         this.gender = gender;
     }
 
+    public Users(int id, String fullname, String age, String phone, String address, String gender) {
+        this.id = id;
+        this.fullname = fullname;
+        this.age = age;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+    }
     
     
     public Users(int id, int active, String email, String password, String fullname, String age, String phone, String authority, String address, String gender) {

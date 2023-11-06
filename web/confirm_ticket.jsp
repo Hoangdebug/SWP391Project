@@ -88,7 +88,7 @@
                     width: 20%;
                     padding: 0px 20px;
                 }
-                
+
                 .time-infor-column{
                     width: 20%;
                     padding: 10px 20px 0px 20px;
@@ -101,7 +101,7 @@
                 .delete-column{
                     text-align: center;
                 }
-                
+
 
                 .button-form{
                     width: 30%;
@@ -121,7 +121,7 @@
                     text-align: center;
                     color: red;
                 }
-                
+
             </style>
         </head>
         <body>
@@ -171,8 +171,13 @@
                     </tbody>
                 </table>
                 <div>Total: ${totalPrice}</div>
-                <input class="button-form" type="submit" value="Continue">
+                <!--<input class="button-form" type="submit" value="Continue">-->
             </form>
+            <form action="ajax" method="post">
+                <input type="hidden" name="orderNumber" value="${cur_order.id}">
+                <input type="hidden" name="amount" value="${cur_order.total_price}">
+                <button class="button-form" type="submit">Payment</button>
+            </form>   
         </div>
         <script src="https://kit.fontawesome.com/4c84863d74.js" crossorigin="anonymous"></script>
     </body>

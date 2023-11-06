@@ -140,7 +140,8 @@ public class CreateTicketServlet extends HttpServlet {
         ArrayList<Tickets> ltickets = (ArrayList<Tickets>) session.getAttribute("lticketS");
         ArrayList<Tickets> ltickets_new = new ArrayList<>();
         for(Tickets t : ltickets){
-            String passName = request.getParameter("passen_name"+t.getId());
+            String passName = new String(request.getParameter("passen_name"+t.getId()).getBytes("iso-8859-1"), "utf-8");
+//            String passName = request.getParameter("passen_name"+t.getId());
             String passPhone = request.getParameter("passen_phone"+t.getId());
             Tickets t_new = new Tickets(t.getId(),
                     t.getRoute_id(),

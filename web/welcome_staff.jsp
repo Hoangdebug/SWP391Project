@@ -1,6 +1,6 @@
 <%-- 
-    Document   : welcome_admin
-    Created on : Oct 4, 2023, 3:45:35 AM
+    Document   : welcome_staff
+    Created on : Nov 3, 2023, 3:30:04 AM
     Author     : tuna
 --%>
 
@@ -36,7 +36,7 @@
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <h1>Welcome Admin</h1>
+            <h1>Welcome Staff</h1>
         </div>
     </body>
 </html>

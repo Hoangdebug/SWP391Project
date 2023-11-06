@@ -77,8 +77,6 @@
                                 <i class="fab fa-google"></i>
                                 <p>Login with Google</p>
                             </button>
-
-
                         </form>
                     </div>
                 </div>

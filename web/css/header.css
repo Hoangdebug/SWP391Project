@@ -49,9 +49,25 @@ header {
     font-weight: 900;
     color: #20c997;
     font-size: 30px;
-    font: bold;
+    font-weight: bold;
     text-transform: uppercase;
     font-family: sans-serif;
+}
+
+.title{
+    text-decoration: none;
+}
+
+.title-vh{
+    color: black;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.title-express{
+    color: var(--teal);
+    font-weight: bold;
+    font-size: 23px;
 }
 
 .header__cont-user {

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import model.entity.Orders;
 import model.repository.OrderRepository;
 import model.repository.SeatRepository;
+import model.repository.TicketRepository;
 
 /**
  *
@@ -40,6 +41,11 @@ public class PaySuccessServlet extends HttpServlet {
         Orders o = (Orders) session.getAttribute("cur_order");
         System.out.println(o.getId());
         or.updateStatusOrder(o.getId());
+        
+        //update status = 2 ticket in order
+        TicketRepository tr = new TicketRepository();
+        tr.updatePayment(o.getId());
+        
         request.getRequestDispatcher("payment.jsp").forward(request, response);
     }
 

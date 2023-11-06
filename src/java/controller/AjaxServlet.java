@@ -90,10 +90,12 @@ public class AjaxServlet extends HttpServlet {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-//        long amount = Integer.parseInt(req.getParameter("amount")) * 100;
-        double amountDouble = Double.parseDouble(request.getParameter("amount"));
-        long amount = (long) (amountDouble * 100000);
-
+        long amount = Integer.parseInt(request.getParameter("amount")) * 100;
+        System.out.println(amount);
+//        double amountDouble = Double.parseDouble(request.getParameter("amount"));
+//        long amount = (long) (amountDouble);
+        
+            
         String bankCode = request.getParameter("bankCode");
 
         String vnp_TxnRef = Config.getRandomNumber(8);

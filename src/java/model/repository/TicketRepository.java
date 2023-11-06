@@ -112,21 +112,37 @@ public class TicketRepository {
                 + "WHERE\n"
                 + "    route_id = ?\n"
                 + "    AND seat_id = ?;";
-        try{
+        try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
-            
+
             ps.setInt(1, t.getOrder_id());
             ps.setNString(2, t.getPassenger_name());
             ps.setNString(3, t.getPassenger_phone());
             ps.setInt(4, t.getRoute_id());
             ps.setInt(5, t.getSeat_id());
-            
+
             ps.executeUpdate();
             ps.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Loi updatePassenger");
+        }
+    }
+
+    public void updatePayment(int order_id) {
+        String sql = "UPDATE tickets \n"
+                + "SET status = 2\n"
+                + "WHERE order_id = ?;";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in update Ticket Payment");
         }
     }
 
@@ -140,13 +156,14 @@ public class TicketRepository {
 //        System.out.println(tr.getListTickets(7));
 //        System.out.println(tr.getTicketByRouteSeat(7, 70));
         Tickets t_new = new Tickets(162,
-                    7,
-                    73,
-                    3,
-                    1,
-                    "x",
-                    "y"
-            );
-        tr.updatePassenger(t_new);
+                7,
+                73,
+                3,
+                1,
+                "x",
+                "y"
+        );
+//        tr.updatePassenger(t_new);
+        tr.updatePayment(2);
     }
 }

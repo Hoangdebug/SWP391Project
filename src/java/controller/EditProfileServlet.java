@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionIdListener;
 import model.entity.Users;
 import model.repository.UserRepository;
 
@@ -38,7 +40,7 @@ public class EditProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileServlet</title>");            
+            out.println("<title>Servlet EditProfileServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditProfileServlet at " + request.getContextPath() + "</h1>");
@@ -59,12 +61,13 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String uid = request.getParameter("userid");
-        System.out.println(uid);
+        HttpSession session = request.getSession();
+
+        Users u = (Users) session.getAttribute("cur_user");
         UserRepository ur = new UserRepository();
-        Users user = ur.getUserById(uid);
-        request.setAttribute("uinfo", user);
+        Users u_new = (Users) ur.getUserById(u.getId());
+        System.out.println(u_new);
+        session.setAttribute("cur_user", u_new);
         request.getRequestDispatcher("edit_profile.jsp").forward(request, response);
 //        processRequest(request, response);
     }
@@ -80,7 +83,21 @@ public class EditProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String name = new String(request.getParameter("fullname").getBytes("iso-8859-1"), "utf-8");
+        String gender = request.getParameter("gender");
+        String phone = new String(request.getParameter("phone").getBytes("iso-8859-1"), "utf-8");
+        String age = new String(request.getParameter("age").getBytes("iso-8859-1"), "utf-8");
+        String address = new String(request.getParameter("address").getBytes("iso-8859-1"), "utf-8");
+
+        HttpSession session = request.getSession();
+        Users u = (Users) session.getAttribute("cur_user");
+        Users u_new = new Users(u.getId(), name, age, phone, address, gender);
+        UserRepository ur = new UserRepository();
+        ur.editProfile(u_new);
+        System.out.println("kkk");
+        session.setAttribute("msgEditProfile", "Edit successfull !!!");
+        response.sendRedirect("editprofile");
     }
 
     /**

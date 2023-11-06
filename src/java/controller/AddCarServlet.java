@@ -49,12 +49,9 @@ public class AddCarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Kiểm tra định dạng dữ liệu
-        String characterEncoding = request.getCharacterEncoding();
-        if (characterEncoding == null) {
-            characterEncoding = "UTF-8";
-        }
-        String name = request.getParameter("name");
+        
+        String name = new String(request.getParameter("name").getBytes("iso-8859-1"), "utf-8");
+//        String name = request.getParameter("name");
         System.out.println(name);
         String type = request.getParameter("type");
         

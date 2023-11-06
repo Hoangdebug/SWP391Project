@@ -6,12 +6,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="css/add_staff.css"/>
 
         <link
             rel="stylesheet"
@@ -20,139 +20,48 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <style>
-            :root {
-                --primary: #20c997;
-                --secondary: #E0E0E0;
-                --light: #befff7;
-                --dark: #419197;
-                --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            }
-            *{
-                font-family: sans-serif;
-            }
-
-            .body{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-            .title-page{
-                color: white;
-            }
-
-            .form-box{
-                margin-top: 100px;
-                width: 50%;
-                height: auto;
-                display: flex;
-                flex-direction: column;
-                background-color: #419197;
-                border-radius: 20px;
-                box-shadow: 10px 10px 50px grey;
-            }
-
-            .form-items{
-                margin-top: 10px;
-                width: 70%;
-                /*height:50px;*/
-                display: flex;
-                flex-direction: column;
-                /*background-color: #befff7;*/
-                font-size: 16px;
-                color: white;
-                gap: 10px;
-            }
-
-            .double-form-items{
-                display: flex;
-                width: 70%;
-                justify-content: space-between;
-                gap: 20px;
-
-            }
-
-            .double-form-items div{
-                width: 50%;
-            }
-
-            .form-items-select{
-                font-size: 16px;
-                color: white;
-                gap: 20px;
-            }
-
-
-            input{
-                padding: 5px 20px;
-                font-size: 16px;
-                border: none;
-                background-color: #419197;
-                border-bottom: solid 1px white;
-                color: white;
-            }
-
-            .button-form{
-                margin:20px 0px;
-                padding: 10px;
-                color: #419197;
-                background-color: white;
-                border-radius: 10px;
-                border: none;
-            }
-
-            .button-form:hover {
-                background-color: #20c997;
-                color: white;
-            }
-
-            .form-items-select select{
-                padding: 5px;
-                border-radius: 10px;
-            }
-
-        </style>
+        <link rel="stylesheet" href="css/edit_profile.css"/>
     </head>
     <body>
         <%@ include file="/include/header.jsp" %>
-        <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <form action="list_car_route.jsp" method="POST" class="form-box">
+            <form action="editprofile" method="POST" class="form-box">
                 <div class="title-page">
                     Edit your profile
                 </div>
-                <div class="form-items">
-                    <label for="fullname">Name: </label>
-                    <input value="${uinfo.fullname}" type="text" name="fullname" required >
-                </div>
+                <div class="form">
+                    <div class="double-form">
+                        <div class="single-form big-form">
+                            <label>Name: </label>
+                            <input type="text" name="fullname" value="${cur_user.fullname}"/>
+                        </div>
+                        <div class="single-form small-form">
+                            <label>Gender: </label>
+                            <select name="gender">
+                                <option value="MALE">MALE</option>
+                                <option value="FEMALE">FEMALE</option>
+                                <option value="OTHERS">OTHERS</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div class="double-form-items">
-                    <div class="form-items-select">
-                        <label for="gender">Gender:</label>
-                        <select name="gender" id="gender">
-                            <option value="female">Female</option>
-                            <option value="male">Male</option>
-                            <option value="others">Others</option>
-                        </select>
+                    <div class="double-form">
+                        <div class="single-form big-form">
+                            <label>Phone: </label>
+                            <input type="text" name="phone" value="${cur_user.phone}"/>
+                        </div>
+                        <div class="single-form small-form">
+                            <label>Age: </label>
+                            <input type="text" name="age" value="${cur_user.age}"/>
+                        </div>
                     </div>
-                </div>
-
-                <div class="double-form-items">
-                    <div class="form-items">
-                        <label for="phone">Phone: </label>
-                        <input value="${uinfo.phone}" type="text" id="phone" name="phone" required>
+                    <div class="single-form">
+                        <label>Address: </label>
+                        <input type="text" name="address" value="${cur_user.address}"/>
                     </div>
-                    <div class="form-items">
-                        <label for="age">Age : </label>
-                        <input value="${uinfo.age}" type="number" id="age" name="age" required>
-                    </div>
+                    <button class="form-button" type="submit"> Update profile</button> 
+                    <div class="message">${msgEditProfile}</div>
                 </div>
-                <div class="form-items">
-                    <label for="address">Address : </label>
-                    <input value="${uinfo.address}" type="text" id="address" name="address" required>
-                </div>
-                <input class="button-form" type="submit" value="Update">
             </form>
         </div>
     </body>

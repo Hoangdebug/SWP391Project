@@ -20,9 +20,10 @@
     <body>
         <header>
             <div class="header__cont">
-                <div class="col-md-2 text-left" >
-                   <span style="color: black; font-weight: bold; font-size: 23px;">VH</span><span style="color: var(--teal);font-weight: bold;font-size: 23px;F">Express</span>
-                </div>
+                <a class="col-md-2 text-left title" href="welcome_member.jsp">
+                    <span class="title-vh" >VH</span>
+                    <span class="title-express"> Express</span>
+                </a>
                 <!--<nav class="header__cont-nav">
                     <a href="home.jsp" class="nav-item">Home</a>
                     <a href="search.jsp" class="nav-item">Search</a>
@@ -31,13 +32,12 @@
                     <a href="add.jsp" class="nav-item">Add</a>
                 </c:if>
                 </nav>-->
-
                 <div class="header__cont-user">
                     <i class="fa-solid fa-bars"></i>
                     <div class="role-name">${cur_name}</div>
                     <div class="user-info">
                         <c:if test="${authority=='ROLE_MEMBER'}">
-                            <a href="editprofile?userid=${cur_user.id}" class="user-info-item">Edit profile</a>
+                            <a href="editprofile?msg=''" class="user-info-item">Edit profile</a>
                             <a href="listhistory" class="user-info-item">List History</a>
                         </c:if>
                         <a href="login" class="user-info-item">Log out</a>

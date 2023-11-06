@@ -23,6 +23,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author tuna
  */
 public class Config {
+    
+//Ngân hàng	NCB
+//Số thẻ	9704198526191432198
+//Tên chủ thẻ	NGUYEN VAN A
+//Ngày phát hành	07/15
+//Mật khẩu OTP	123456
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:8080/vh_express/paysuccess";
