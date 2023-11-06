@@ -34,13 +34,7 @@ public class ListCarServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        CarRepository cr = new CarRepository();
-        ArrayList<Cars> clist = cr.getListCars();
-        HttpSession session = request.getSession(true);
-        request.setAttribute("clistS", clist);
-//        System.out.println(clist);
-        request.getRequestDispatcher("list_car.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,13 +49,13 @@ public class ListCarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-//        CarRepository cr = new CarRepository();
-//        ArrayList<Cars> clist = cr.getListCars();
-//        HttpSession session = request.getSession(true);
-//        request.setAttribute("clistS", clist);
+        response.setContentType("text/html;charset=UTF-8");
+        CarRepository cr = new CarRepository();
+        ArrayList<Cars> clist = cr.getListCars();
+        HttpSession session = request.getSession(true);
+        session.setAttribute("clistS", clist);
 //        System.out.println(clist);
-//        request.getRequestDispatcher("list_car.jsp").forward(request, response);
+        request.getRequestDispatcher("list_car.jsp").forward(request, response);
     }
 
     /**
@@ -75,7 +69,15 @@ public class ListCarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);    
+        String carName = new String(request.getParameter("car_name").getBytes("iso-8859-1"), "utf-8");
+        System.out.println(carName);
+        
+        CarRepository cr = new CarRepository();
+        ArrayList<Cars> clist = cr.searchCarByName(carName);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("clistS", clist);
+        request.getRequestDispatcher("list_car.jsp").forward(request, response);
     }
 
     /**

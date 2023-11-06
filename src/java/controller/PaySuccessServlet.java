@@ -44,6 +44,7 @@ public class PaySuccessServlet extends HttpServlet {
         
         //update status = 2 ticket in order
         TicketRepository tr = new TicketRepository();
+        System.out.println(o.getId());
         tr.updatePayment(o.getId());
         
         request.getRequestDispatcher("payment.jsp").forward(request, response);

@@ -57,15 +57,14 @@
             <div class="container">
 
                 <div class="box-search">
-                    <form action="listcarroute">
-
+                    <form action="listcar" method="POST">
                         <table width="50%" cellspacing="0" class="table-search">
                             <tbody>
                             <td class="text">
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" name="car_name">
                             </td>
                             <td>
-                                <input type="submit" class="btn btn-primary" value="Search Car">
+                                <input type="submit" class="btn btn-primary" value="Search Car Name">
                             </td>
                             </tbody>
                         </table>

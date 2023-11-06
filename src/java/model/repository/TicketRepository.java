@@ -137,6 +137,8 @@ public class TicketRepository {
         try {
             con = (Connection) new DBContext().getConnection();
             ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, order_id);
 
             ps.executeUpdate();
             ps.close();

@@ -62,6 +62,7 @@ public class EditProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        session.setAttribute("msgEditProfile", "");
 
         Users u = (Users) session.getAttribute("cur_user");
         UserRepository ur = new UserRepository();
@@ -97,7 +98,7 @@ public class EditProfileServlet extends HttpServlet {
         ur.editProfile(u_new);
         System.out.println("kkk");
         session.setAttribute("msgEditProfile", "Edit successfull !!!");
-        response.sendRedirect("editprofile");
+        request.getRequestDispatcher("edit_profile.jsp").forward(request, response);
     }
 
     /**

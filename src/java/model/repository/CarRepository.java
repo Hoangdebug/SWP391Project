@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.config.DBContext;
 import model.entity.Cars;
-import model.entity.Users;
 
 /**
  *
@@ -170,6 +169,34 @@ public class CarRepository {
             System.out.println("----------LOI Delete Car trong CarRepository------------");
         }
 
+    }
+    public ArrayList<Cars> searchCarByName(String car_name) {
+        ArrayList<Cars> list = new ArrayList<>();
+        String sql = "SELECT * FROM cars where name=?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setNString(1, car_name);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idcar = rs.getInt(1);
+                String namecar = rs.getString(2);
+                String type = rs.getString(3);
+                int countseat = rs.getInt(4);
+                int isactive = rs.getInt(5);
+                String licenseplate = rs.getString(6);
+                Cars car = new Cars(idcar, namecar, type, countseat, isactive, licenseplate);
+                list.add(car);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong car repo");
+        }
+        return null;
     }
 
     public static void main(String[] args) {

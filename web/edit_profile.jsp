@@ -38,6 +38,7 @@
                         <div class="single-form small-form">
                             <label>Gender: </label>
                             <select name="gender">
+                                <option value='${cur_user.gender}'>${cur_user.gender}</option>
                                 <option value="MALE">MALE</option>
                                 <option value="FEMALE">FEMALE</option>
                                 <option value="OTHERS">OTHERS</option>
