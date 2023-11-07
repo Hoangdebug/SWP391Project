@@ -192,16 +192,18 @@
                             <tr>
                                 <td>                                   
                                     <select name="from" id="from" class="form-control col-sm-12">
+                                        <option value="0">--Option--</option>
                                         <c:forEach var="location" items="${show1.listLocations}">
-                                            <option value="0">--Option--</option>
+                                            
                                             <option value="${location.id}">${location.province}</option>
                                         </c:forEach>
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control col-sm-12" name="to">
+                                        <option value="0">--Option--</option>
                                         <c:forEach var="location" items="${show1.listLocations}">
-                                            <option value="0">--Option--</option>
+                                            
                                             <option value="${location.id}">${location.province}</option>
                                         </c:forEach>
                                     </select>

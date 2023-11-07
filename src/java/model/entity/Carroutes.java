@@ -16,7 +16,7 @@ public class Carroutes {
     private int car_id;
     private int from;
     private int to;
-    private float price;
+    private int price;
     private String start;
     private String end;
     private Date datestart;
@@ -25,7 +25,7 @@ public class Carroutes {
     public Carroutes() {
     }
 
-    public Carroutes(int id, int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
+    public Carroutes(int id, int car_id, int from, int to, int price, String start, String end, Date datestart, int user_id) {
         this.id = id;
         this.car_id = car_id;
         this.from = from;
@@ -37,7 +37,7 @@ public class Carroutes {
         this.user_id = user_id;
     }
 
-    public Carroutes(int car_id, int from, int to, float price, String start, String end, Date datestart, int user_id) {
+    public Carroutes(int car_id, int from, int to, int price, String start, String end, Date datestart, int user_id) {
         this.car_id = car_id;
         this.from = from;
         this.to = to;
@@ -84,7 +84,7 @@ public class Carroutes {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

@@ -49,7 +49,7 @@ public class SeatRepository {
         String sql = "SELECT * FROM seats where car_id = ?";
 
         try {
-           con = DBConnect.getConnection();
+            con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
 
             ps.setInt(1, id_car);
@@ -102,15 +102,34 @@ public class SeatRepository {
         String sql = "UPDATE seats\n"
                 + "SET is_booked = 1\n"
                 + "WHERE car_id = ? AND seat_number = ?;";
-        try{
+        try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, car_id);
             ps.setInt(2, seat_number);
             int i = ps.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public static int totalIncomeFromSoldTickets() {
+        int totalIncome = 0;
+        try (Connection conn = DBConnect.getConnection()) {
+            // Giả sử mỗi vé có một trường giá riêng
+            String query = "SELECT SUM(price) AS total_income FROM tickets WHERE status = 2";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalIncome = rs.getInt("total_income");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số tiền từ vé đã bán.");
+        }
+        return totalIncome;
     }
 
     public static void main(String[] args) {
@@ -118,8 +137,7 @@ public class SeatRepository {
         int car_id = 2;
         int seat_number = 15;
         sr.setIsBooked(car_id, seat_number);
-        
-        
+
 //        System.out.println(sr.getListSeats(2));
 //        System.out.println(sr.getSeat(12,2).toString());
     }

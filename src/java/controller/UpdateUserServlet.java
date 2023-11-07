@@ -39,7 +39,7 @@ public class UpdateUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateUserServlet</title>");            
+            out.println("<title>Servlet UpdateUserServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateUserServlet at " + request.getContextPath() + "</h1>");
@@ -61,13 +61,13 @@ public class UpdateUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
+        String name = new String(request.getParameter("fullname").getBytes("iso-8859-1"), "utf-8");
         String authority = request.getParameter("authority");
         String age = request.getParameter("age");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         String address = request.getParameter("address");
-        
+
         Users users = new Users(id, name, age, phone, authority, address, gender);
         UserRepository.updateUser(users);
         response.sendRedirect("listuser");

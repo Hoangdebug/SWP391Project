@@ -66,8 +66,10 @@ public class ListCarrouteServlet extends HttpServlet {
 
         if (authority != null && authority.equalsIgnoreCase("ROLE_MEMBER")) {
             request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
+        } else if(authority != null && authority.equalsIgnoreCase("ROLE_STAFF")) {
             request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
+        } else {
+              request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         
     }

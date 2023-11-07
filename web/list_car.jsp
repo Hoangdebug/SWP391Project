@@ -42,7 +42,7 @@
                 outline: none; 
                 border: none; 
             }
-            
+
         </style>
     </head>
     <body>
@@ -53,12 +53,11 @@
             <div class="title-page">
                 List Car
             </div>
-            <div class="container">
 
-                <div class="box-search">
+                <div class="box-search" style="margin-right: 10%">
                     <form action="listcarroute">
 
-                        <table width="50%" cellspacing="0" class="table-search">
+                        <table width="40%" cellspacing="0" class="table-search">
                             <tbody>
                             <td class="text">
                                 <input class="form-control" type="text">
@@ -70,7 +69,6 @@
                         </table>
                     </form>
                 </div>
-            </div>
 
             <div class="table">
                 <table border="2" class="table table-striped">
@@ -168,6 +166,28 @@
             </div>
         </form>
 
+        <!-- Delete Confirmation Modal -->
+        <div class="modal" id="deleteCarConfirmModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete car</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to delete this car?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteCar">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -179,6 +199,26 @@
                     const carId = button.getAttribute('data-car-id');
                     const idInput = document.getElementById('idInput');
                     idInput.value = carId;
+                });
+            });
+        </script>
+
+        <script>
+            // Thêm một event listener vào tất cả các nút "Delete"
+            const deleteLinks = document.querySelectorAll('a[href^="deletecar"]');
+            deleteLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn không cho liên kết thực hiện hành vi mặc định
+                    const carId = this.getAttribute('href').split('=')[1]; // Lấy ID từ href của liên kết
+
+                    // Cập nhật nút xác nhận trong modal với sự kiện click mới
+                    const confirmDeleteCarButton = document.getElementById('confirmDeleteCar');
+                    confirmDeleteCarButton.onclick = function () {
+                        window.location.href = 'deletecar?id=' + carId; // Redirect để xóa xe
+                    };
+
+                    // Hiển thị modal xác nhận xóa
+                    $('#deleteCarConfirmModal').modal('show');
                 });
             });
         </script>

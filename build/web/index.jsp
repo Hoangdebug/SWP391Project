@@ -203,30 +203,78 @@
             </a>
         </div>
 
-        <!-- CAROUSEL-->
+       <!-- CAROUSEL-->
         <div class="container">
             <div class="box-search">
                 <form action="listcarroute">
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đi" selected>Điểm đi</option>
-                                        <option>Kon Tum</option>
-                                    </select></td>
-                                <td><select class="form-control col-sm-12">
-                                        <option value="Điểm đến" selected>Điểm đến</option>
-                                        <option>Quảng Bình</option>
-                                    </select></td>
-                                <td class="date"><input class="form-control col-sm-12"
-                                                        type="date"></td>
-                                <td><input type="submit" class="btn-find-ticket" value="Tìm vé"></td>
+                                <td>                                   
+                                    <select name="from" id="from" class="form-control col-sm-12">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="0">--Option--</option>
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control col-sm-12" name="to">
+                                        <c:forEach var="location" items="${show1.listLocations}">
+                                            <option value="0">--Option--</option>
+                                            <option value="${location.id}">${location.province}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                                <td class="date">
+                                    <input class="form-control col-sm-12" type="date" name="datestart">
+                                </td>
+                                <td>
+                                    <input type="submit" class="btn-find-ticket" value="Tìm vé">
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
             </div>
         </div>
+
+        <div class="box-list">
+            <div class="title-page">
+                List Car Route
+            </div>
+
+            <div class="table">
+                <table border="2">
+                    <thead>
+                        <tr>
+                            <th>Name car</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Price</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Date Start</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="carroute" items="${crlistS}">
+                            <tr id="row${carroute.id}">
+                                <td>${show.getCar(carroute.car_id).name}</td>
+                                <td>${show1.getlocation(carroute.from).province}</td>
+                                <td>${show1.getlocation(carroute.to).province}</td>
+                                <td>${carroute.price}</td>
+                                <td>${carroute.start}</td>
+                                <td>${carroute.end}</td>
+                                <td>${carroute.datestart}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+                                
         <div class="container">
             <section class="ftco-section">
                 <div class="container">

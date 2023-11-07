@@ -22,13 +22,14 @@
                     <a href="ticket_member.jsp" class=""> Ticket</a>
                 </c:if>
                 <c:if test="${authority=='ROLE_ADMIN'}">
+                    <a href="Statics.jsp" class="">Statics</a>
                     <a href="listuser" class="">List Staff/Driver</a>
-                    <a href="addStaff" class="">Create Staff/Driver</a>
+                    <a href="addStaff" class="">Add New Staff/Driver</a>
                 </c:if>
                 <c:if test="${authority=='ROLE_STAFF'}">
-                    <a href="addcarroute" class="">Create Car Route</a>
+                    <a href="addcarroute" class="">Add New Car Route</a>
                     <a href="addcar" class="">Add New Car</a>
-                    <a href="listcarroute" class=""> Car Route List</a>
+                    <a href="listcarroute" class="">List Car Route</a>
                     <a href="listcar" class="">List car</a>
 
                 </c:if>

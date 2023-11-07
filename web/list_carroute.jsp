@@ -24,7 +24,7 @@
             referrerpolicy="no-referrer"
             />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
+
         <style>
             .modal {
                 top: 10%;
@@ -46,7 +46,7 @@
                 outline: none; 
                 border: none; 
             }
-            
+
         </style>
     </head>
     <body>
@@ -57,7 +57,7 @@
                 <div class="title-page">
                     List Car Route
                 </div>
-                <form action="listcarroute" method="post">
+                <form action="listcarroute">
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
@@ -213,7 +213,7 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                    
+
                             </div>
                         </div>
                         <!-- Modal footer -->
@@ -224,6 +224,29 @@
                 </div>
             </div>
         </form>
+
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal" id="deleteConfirmModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm delete carroute</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to delete this carroute?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -239,5 +262,25 @@
                 });
             });
         </script>
+
+        <script>
+            // Thêm một event listener vào tất cả các nút "Delete"
+            document.querySelectorAll('a[href^="deletecarroute"]').forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn không cho liên kết thực hiện hành vi mặc định
+                    const carrouteId = this.href.split('=')[1]; // Lấy ID từ href của nút
+
+                    // Cập nhật nút xác nhận trong modal với sự kiện click mới
+                    const confirmDeleteButton = document.getElementById('confirmDelete');
+                    confirmDeleteButton.onclick = function () {
+                        window.location.href = 'deletecarroute?id=' + carrouteId; // Redirect để xóa tuyến xe
+                    };
+
+                    // Hiển thị modal xác nhận xóa
+                    $('#deleteConfirmModal').modal('show');
+                });
+            });
+        </script>
+
     </body>
 </html>

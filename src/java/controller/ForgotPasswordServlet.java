@@ -60,7 +60,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         try {
             url = "fogot_pass.jsp";
             String email = request.getParameter("email");
-            int result = user_repository.checkValidEmail(email);
+            int result = UserRepository.checkValidEmail(email);
             if (password.equals(passwordConfirm)) {
                 if (result > 0) {
                     response.sendRedirect("otpConfirm.jsp");

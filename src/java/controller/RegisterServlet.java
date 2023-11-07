@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -23,6 +23,8 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author ADMIN
  */
+
+
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
 
@@ -86,7 +88,7 @@ public class RegisterServlet extends HttpServlet {
             String password = request.getParameter("password");
 //            System.out.println(password);
             String newPass = DigestUtils.md5Hex(password);
-            
+
             String authStr = Authority.ROLE_MEMBER.toString();
 
             if (isEmailExists(email)) {
@@ -115,7 +117,9 @@ public class RegisterServlet extends HttpServlet {
                 String str = ur.Register(rd);
                 System.out.println(str);
                 if (str.equals("SUCCESS")) {
-                    response.sendRedirect("verifired.jsp");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("verified", "Làm ơn hãy kiểm tra email của bạn");
+                    response.sendRedirect("login");
                 } else {
                     response.sendRedirect("register");
                 }
