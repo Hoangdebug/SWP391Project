@@ -48,6 +48,7 @@
                             <p class="text-center font-weight-bold mb-2 me-3 ">Log in</p>
                             <p class="mes-login">${mesLogin}</p>
                             <p class="mes-register">${mesRegister}</p>
+                            <p class="mes-register">${status}</p>
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="email" id="form3Example3" name="email" class="form-control form-control-lg"
@@ -70,7 +71,7 @@
                                         Remember me
                                     </label>
                                 </div>
-                                <a href="#!" class="text-body">Forgot password?</a>
+                                <a href="forgotPass.jsp" class="text-body">Forgot password?</a>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">

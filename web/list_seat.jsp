@@ -140,39 +140,48 @@
                 .left .title-page{
                     margin-bottom: 20px;
                 }
-                
+
                 .example-color{
                     width: 100%;
                     padding: 10px 20px;
                     display: flex;
                     justify-content: space-around;
                 }
-                
+
                 .check-box{
                     display: flex;
                     gap: 10px;
                     align-items: center;
                 }
-                
+
                 .check-color{
                     width: 30px ;
                     height: 30px;
                     background-color: var(--primary);
                     border: 1px black solid;
-                    border-radius: 5px; 
+                    border-radius: 5px;
                 }
-                
+
                 .uncheck-color{
                     background-color: white
                 }
-                
+
                 .booked-color{
                     background-color: rgb(180, 180, 180)
                 }
-                
+
                 .payed{
                     background-color: red;
                 }
+                
+/*                .all-seats{
+                    margin-right: 20px;
+                    padding: 20px;
+                    background-color: #ed969e;
+                    display: flex;
+                    justify-content: space-around;
+                    flex-wrap: wrap;
+                }*/
             </style>
         </head>
         <body>
@@ -223,17 +232,17 @@
                             <div class="check-color"></div>
                             <p>Checked</p>
                         </div>
-                        
+
                         <div class="check-box">
                             <div class="check-color uncheck-color"></div>
                             <p>Unchecked</p>
                         </div>
-                        
+
                         <div class="check-box">
                             <div class="check-color booked-color"></div>
                             <p>Booked</p>
                         </div>
-                        
+
                         <div class="check-box">
                             <div class="check-color payed"></div>
                             <p>Payed</p>
@@ -243,22 +252,28 @@
                         <div class="all-seats">
                             <c:forEach var="ticket" items="${tlistS}">
                                 <c:if test="${ticket.status == 0}">
-                                    <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  onClick="handleClick(this,${curCarroute.price})"/>
-                                    <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat ">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    <div>
+                                        <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  onClick="handleClick(this,${curCarroute.price})"/>
+                                        <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat ">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    </div>
                                 </c:if>
                                 <c:if test="${ticket.status == 1}">
-                                    <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  disabled/>
-                                    <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat booked">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    <div>
+                                        <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  disabled/>
+                                        <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat booked">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    </div>
+
                                 </c:if>
                                 <c:if test="${ticket.status == 2}">
-                                    <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  disabled/>
-                                    <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat payed">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    <div>
+                                        <input type="checkbox" name="ticket" id="${show2.getById(ticket.seat_id).seat_number}"  disabled/>
+                                        <label for="${show2.getById(ticket.seat_id).seat_number}" class="seat payed">${show2.getById(ticket.seat_id).seat_number}</label>
+                                    </div>
                                 </c:if>
                             </c:forEach>
                         </div>
                     </form>
                 </div>
-
 
             </div>
         </div>
