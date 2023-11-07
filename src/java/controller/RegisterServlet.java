@@ -79,7 +79,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String name = request.getParameter("fullname");
+            String name = new String(request.getParameter("fullname").getBytes("iso-8859-1"), "utf-8");
 //            System.out.println(name);
             String email = request.getParameter("email");
 //            System.out.println(email);
@@ -92,7 +92,7 @@ public class RegisterServlet extends HttpServlet {
             if (isEmailExists(email)) {
                 System.out.println("kkk");
                 HttpSession session = request.getSession();
-                session.setAttribute("emailExistsMessage", "Email đã tồn tại, vui lòng chọn email khác.");
+                session.setAttribute("mesRegister1", "Email is available. Please enter the other email !!");
                 response.sendRedirect("register"); // Chuyển hướng về trang đăng ký
             } else {
                 System.out.println("kkk1");
@@ -115,7 +115,9 @@ public class RegisterServlet extends HttpServlet {
                 String str = ur.Register(rd);
                 System.out.println(str);
                 if (str.equals("SUCCESS")) {
-                    response.sendRedirect("verifired.jsp");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("mesRegister", "Register successfull! Please check email to active account !!");
+                    response.sendRedirect("login");
                 } else {
                     response.sendRedirect("register");
                 }

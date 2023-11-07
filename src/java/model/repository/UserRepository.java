@@ -435,6 +435,62 @@ public class UserRepository {
         }
     }
     
+    public int totalStaff() {
+        int totalStaff = 0;
+        String sql = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_STAFF'";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);    
+            
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalStaff = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số nhân viên.");
+        }
+        return totalStaff;
+    }
+
+    public int totalDrivers() {
+        int totalDrivers = 0;
+        String sql = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_DRIVER'";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);    
+            
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalDrivers = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số tài xế.");
+        }
+        return totalDrivers;
+    }
+
+    public int totalMembers() {
+        int totalMembers = 0;
+        String sql = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_MEMBER'";
+        try {
+            
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);    
+            
+            rs = ps.executeQuery();
+              
+            if (rs.next()) {
+                totalMembers = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số thành viên.");
+        }
+        return totalMembers;
+    }
+    
 
     public static void main(String[] args) {
         UserRepository ur = new UserRepository();

@@ -5,7 +5,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -35,38 +34,7 @@ public class ListCarrouteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        System.out.println(request.getParameter("from"));
-        int from = Integer.parseInt(request.getParameter("from"));
-        int to = Integer.parseInt(request.getParameter("to"));
-        String dateStr = request.getParameter("datestart");
-        Date date = null;
-        if (dateStr != null && !dateStr.isEmpty()) {
-            try {
-                date = Date.valueOf(dateStr);
-            } catch (IllegalArgumentException e) {
-                // Handle the date format error here (e.g., log an error or show a user-friendly message)
-            }
-        }
 
-        CarRouteRepository crr = new CarRouteRepository();
-        ArrayList<Carroutes> list = new ArrayList<>();
-
-        if (from != 0 && to != 0 && date != null) {
-            list = crr.searchCarroutes(from, to, date);
-        } else {
-            list = crr.getListCarroutes();
-        }
-
-        HttpSession session = request.getSession(true);
-        request.setAttribute("crlistS", list);
-        String authority = (String) session.getAttribute("authority");
-
-        if (authority != null && authority.equalsIgnoreCase("ROLE_MEMBER")) {
-            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -105,7 +73,64 @@ public class ListCarrouteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+//        System.out.println(request.getParameter("from"));
+        int from = Integer.parseInt(request.getParameter("from"));
+        int to = Integer.parseInt(request.getParameter("to"));
+        String dateStr = request.getParameter("datestart");
+        Date date = null;
+
+        if (dateStr != null && !dateStr.isEmpty()) {
+            try {
+                date = Date.valueOf(dateStr);
+            } catch (IllegalArgumentException e) {
+                // Handle the date format error here (e.g., log an error or show a user-friendly message)
+            }
+        }
+
+        CarRouteRepository crr = new CarRouteRepository();
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        if (from == 0) {
+            if (to == 0) {
+                if (date == null) {
+                    list = crr.getListCarroutes();
+                } else {
+                    list = crr.searchCarroutesByDate(date);
+                }
+            } else if (date == null) {
+                list = crr.searchCarroutesByTo(to);
+            } else {
+                list = crr.searchCarroutesByToDate(to, date);
+            }
+        } else if (to == 0) {
+                    if (date == null) {
+                        list = crr.searchCarroutesByFrom(from);
+                    } else {
+                        list = crr.searchCarroutesByFromDate(from, date);
+                    }
+                } else if (date == null) {
+                    list = crr.searchCarroutesByFromTo(from, to);
+                } else {
+                    list = crr.searchCarroutes(from, to, date);
+        }
+
+//        if (from != 0 && to != 0 && date != null) {
+//            list = crr.searchCarroutes(from, to, date);
+//        } else {
+//            list = crr.getListCarroutes();
+//        }
+
+        HttpSession session = request.getSession(true);
+        request.setAttribute("crlistS", list);
+        String authority = (String) session.getAttribute("authority");
+
+        if (authority != null && authority.equalsIgnoreCase("ROLE_MEMBER")) {
+            request.getRequestDispatcher("list_carroute_member.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("list_carroute.jsp").forward(request, response);
+        }
     }
 
     /**

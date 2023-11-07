@@ -1,28 +1,24 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<%-- Kiểm tra xem có thông báo lỗi trong session không --%>
-<%
-    String emailExistsMessage = (String) session.getAttribute("emailExistsMessage");
-    if (emailExistsMessage != null) {
-        // Xóa thông báo lỗi khỏi session để tránh hiển thị nhiều lần
-        session.removeAttribute("emailExistsMessage");
-    }
-%>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <style>
+            .mes-register1{
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <!--        <form action="register" method="POST">
                     <div class="container">
         <%-- Hiển thị thông báo lỗi nếu có --%>
         <div class="error-message">
-        <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
+        
     </div>
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
@@ -59,7 +55,7 @@
                         <form action="register" method="POST">
 
                             <p class="text-center font-weight-bold mb-0 me-3 ">Sign up</p>
-
+                            <p class="mes-register1">${mesRegister1}</p>
                             <!-- Full name input -->
                             <div class="form-outline mb-4  ">
                                 <input type="text" id="form3Example3" name="fullname" class="form-control form-control-lg"

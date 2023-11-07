@@ -105,6 +105,24 @@ public class OrderRepository {
         }
         return null;
     }
+    
+    public int calculateTotalRevenueFromOrderc() {
+        int totalRevenue = 0;
+        String sql = "SELECT SUM(total_price) AS total_revenue FROM orders";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalRevenue = rs.getInt("total_revenue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error calculating the total revenue from orders.");
+        }
+        return totalRevenue;
+    }
 
     public static void main(String[] args) {
         OrderRepository or = new OrderRepository();

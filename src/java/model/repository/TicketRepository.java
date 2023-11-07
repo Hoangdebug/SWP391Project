@@ -147,6 +147,32 @@ public class TicketRepository {
             System.out.println("Error in update Ticket Payment");
         }
     }
+    
+    public Tickets getTicketByOrder(int order_id){
+        String sql = "SELECT TOP 1 * FROM tickets where order_id = ?";
+        try{
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, order_id);
+            
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Tickets(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getNString(6),
+                        rs.getNString(7));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+            System.out.println("Error get Ticket By order");
+        }
+        
+        return null;
+    }
 
     public static void main(String[] args) {
         TicketRepository tr = new TicketRepository();
@@ -166,6 +192,6 @@ public class TicketRepository {
                 "y"
         );
 //        tr.updatePassenger(t_new);
-        tr.updatePayment(2);
+//        tr.updatePayment(2);
     }
 }

@@ -68,9 +68,7 @@ public class ListHistoryServlet extends HttpServlet {
         Users u = (Users) session.getAttribute("cur_user");
 //        System.out.println(u.getId());
         ArrayList<Orders> olist = or.getListOrdersbyUser(u.getId());
-        session.setAttribute("olistS", olist);
-        
-        
+        session.setAttribute("oulistS", olist);
         request.getRequestDispatcher("list_history.jsp").forward(request, response);
 //        processRequest(request, response);
     }

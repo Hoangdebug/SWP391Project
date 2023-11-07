@@ -198,6 +198,26 @@ public class CarRepository {
         }
         return null;
     }
+    
+    public int totalCar() {
+        int totalCars = 0;
+        String sql = "SELECT COUNT(*) AS total_cars FROM cars";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCars = rs.getInt("total_cars");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi lấy tổng số xe.");
+        }
+        return totalCars;
+    }
 
     public static void main(String[] args) {
         CarRepository cr = new CarRepository();

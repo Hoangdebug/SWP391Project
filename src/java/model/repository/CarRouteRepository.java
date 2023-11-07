@@ -148,6 +148,207 @@ public class CarRouteRepository {
         return null;
     }
 
+    public ArrayList<Carroutes> searchCarroutesByFrom(int from) {
+
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        String sql = "Select * from carroutes where [from] = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, from);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Carroutes> searchCarroutesByTo(int to) {
+        ArrayList<Carroutes> list = new ArrayList<>();
+        String sql = "Select * from carroutes where [to] = ?";
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, to);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Carroutes> searchCarroutesByDate(Date datestart) {
+
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        String sql = "Select * from carroutes where datestart = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setDate(1, datestart);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Carroutes> searchCarroutesByFromDate(int from, Date datestart) {
+
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        String sql = "Select * from carroutes where [from] = ? and datestart = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, from);
+            ps.setDate(2, datestart);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Carroutes> searchCarroutesByFromTo(int from, int to) {
+
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        String sql = "Select * from carroutes where [from] = ? and [to] = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, from);
+            ps.setInt(2, to);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Carroutes> searchCarroutesByToDate(int to, Date datestart) {
+
+        ArrayList<Carroutes> list = new ArrayList<>();
+
+        String sql = "Select * from carroutes where [to] = ? and datestart = ?";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, to);
+            ps.setDate(2, datestart);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Carroutes c = new Carroutes(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9)
+                );
+                list.add(c);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi get list trong car repo");
+        }
+        return null;
+    }
+
     public void updateCarRoute(Carroutes carroute) {
         String sql = "UPDATE carroutes SET car_id = ?, [from] = ?, [to] = ?, price = ?, [start] = ?, [end] = ?, datestart = ?, user_id = ? WHERE id = ?";
 
@@ -198,8 +399,8 @@ public class CarRouteRepository {
             ps = con.prepareStatement(sql);
 
             ps.setInt(1, id);
-            rs=ps.executeQuery();
-            while(rs.next()){
+            rs = ps.executeQuery();
+            while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (Exception e) {
@@ -207,8 +408,8 @@ public class CarRouteRepository {
         }
         return 0;
     }
-    
-    public Carroutes getByCarUser(int car_id, int user_id){
+
+    public Carroutes getByCarUser(int car_id, int user_id) {
         String sql = "Select * from carroutes where [car_id] = ? and [user_id] = ? ";
 
         try {
@@ -217,25 +418,46 @@ public class CarRouteRepository {
 
             ps.setInt(1, car_id);
             ps.setInt(2, user_id);
-            
+
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 return new Carroutes(rs.getInt(1),
-                rs.getInt(2),
-                rs.getInt(3),
-                rs.getInt(4),
-                rs.getInt(5),
-                rs.getString(6),
-                rs.getString(7),
-                rs.getDate(8),
-                rs.getInt(9));
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDate(8),
+                        rs.getInt(9));
             }
         } catch (Exception e) {
             System.err.println(e);
             System.out.println("Lỗi getByCarUser ");
         }
         return null;
+    }
+
+    public int totalCarroute() {
+        int totalCarroute = 0;
+        String sql = "SELECT COUNT(*) AS total_carroutes FROM carroutes";
+
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCarroute = rs.getInt("total_carroutes");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi lấy tổng số chuyến xe.");
+        }
+        return totalCarroute;
     }
 
     public static void main(String[] args) {
@@ -252,9 +474,8 @@ public class CarRouteRepository {
         int user_id = 4;
         Carroutes cr = new Carroutes(car_id, from, to, price, start, end, datestart, user_id);
 //        crr.createCarroutes(cr);
-        
+
 //        System.out.println(crr.getbyOrder(1));
-        
-        System.out.println(crr.getByCarUser(4,4));
+        System.out.println(crr.getByCarUser(4, 4));
     }
 }

@@ -3,10 +3,10 @@
     Created on : Oct 27, 2023, 11:56:01 AM
     Author     : tuna
 --%>
-
-<jsp:useBean class="model.repository.CarRouteRepository" id="show"></jsp:useBean>
-<jsp:useBean class="model.repository.CarRepository" id="show1"></jsp:useBean>
-<jsp:useBean class="model.repository.LocationRepository" id="show2"></jsp:useBean>
+<jsp:useBean class="model.repository.TicketRepository" id="showTicket"></jsp:useBean>
+<jsp:useBean class="model.repository.CarRouteRepository" id="showCarroute"></jsp:useBean>
+<jsp:useBean class="model.repository.CarRepository" id="showCar"></jsp:useBean>
+<jsp:useBean class="model.repository.LocationRepository" id="showLocation"></jsp:useBean>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -134,9 +134,22 @@
                 align-items: center;
                 width: 100%;
             }
-            
+
             .container{
                 margin-top: 100px;
+            }
+            .box-list{
+                margin-top: 100px;
+            }
+            
+            form{
+                margin: 0px;
+            }
+            
+            .button-form{
+                border: none;
+                background-color: white;
+                color: red;
             }
 
         </style>
@@ -145,40 +158,40 @@
 
     <body>
         <%@ include file="/include/header.jsp" %>
-        
+
         <!-- CAROUSEL-->
-        <div class="container">
-            <div class="box-search">
-                <form action="listcarroute" method="POST">
-                    <table width="100%" cellspacing="0" class="table-search">
-                        <tbody>
-                            <tr>
-                                <td>                                   
-                                    <select name="from" id="from" class="form-control col-sm-12">
-                                        <c:forEach var="location" items="${show1.listLocations}">
-                                            <option value="${location.id}">${location.province}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control col-sm-12" name="to">
-                                        <c:forEach var="location" items="${show1.listLocations}">
-                                            <option value="${location.id}">${location.province}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                                <td class="date">
-                                    <input class="form-control col-sm-12" type="date" name="datestart">
-                                </td>
-                                <td>
-                                    <input type="submit" class="btn-find-ticket" value="Tìm vé">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-        </div>
+        <!--        <div class="container">
+                    <div class="box-search">
+                        <form action="listcarroute" method="POST">
+                            <table width="100%" cellspacing="0" class="table-search">
+                                <tbody>
+                                    <tr>
+                                        <td>                                   
+                                            <select name="from" id="from" class="form-control col-sm-12">
+        <c:forEach var="location" items="${show1.listLocations}">
+            <option value="${location.id}">${location.province}</option>
+        </c:forEach>
+    </select>
+</td>
+<td>
+    <select class="form-control col-sm-12" name="to">
+        <c:forEach var="location" items="${show1.listLocations}">
+            <option value="${location.id}">${location.province}</option>
+        </c:forEach>
+    </select>
+</td>
+<td class="date">
+    <input class="form-control col-sm-12" type="date" name="datestart">
+</td>
+<td>
+    <input type="submit" class="btn-find-ticket" value="Tìm vé">
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>-->
 
         <div class="box-list">
             <div class="title-page">
@@ -189,66 +202,90 @@
                 <table border="2">
                     <thead>
                         <tr>
-                            <th>Name car</th>
+                            <th>Id</th>
+                            <th>Car Name</th>
+                            <th>License Plate</th>
                             <th>From</th>
                             <th>To</th>
-                            <th>Total Price</th>
                             <th>Start</th>
                             <th>End</th>
                             <th>Date Start</th>
-                                <c:if test="${authority!='ROLE_MEMBER'}">
-                                <td>Edit</td>
-                                <td>Delete</td>
-                            </c:if>
+                            <th>Total</th>
+                            <th>Date book</th>
                             <th>Payment</th>
                         </tr>
                     </thead>
-<!--                    <tbody>
-                        <c:forEach var="order" items="${olistS}">
-                            <tr id="row${order.id}">
-                                <td>${show.getCarroute(show.getbyOrder(order.id))}</td>
-                                <td>${show1.getlocation(carroute.from).province}</td>
-                                <td>${show1.getlocation(carroute.to).province}</td>
-                                <td>${carroute.price}</td>
-                                <td>${carroute.start}</td>
-                                <td>${carroute.end}</td>
-                                <td>${carroute.datestart}</td>
-                                <c:if test="${authority!='ROLE_MEMBER'}">
-                                    <td><a href="#">Edit</a></td>
-                                    <td><a href="#">Delete</a></td>
+                    <tbody>
+                        <c:forEach var="order" items="${oulistS}">
+                            <tr id = "row${order.id}">
+                                <td>${order.id}</td>
+                                <td>${showCar.getCar(showCarroute.getCarroute(
+                                      showTicket.getTicketByOrder(order.id).route_id
+                                      ).car_id).name
+                                    }
+                                </td>
+                                <td>${showCar.getCar(showCarroute.getCarroute(
+                                      showTicket.getTicketByOrder(order.id).route_id
+                                      ).car_id).licenseplate
+                                    }
+                                </td>
+                                <td>${
+                                    showLocation.getlocation(showCarroute.getCarroute(
+                                        showTicket.getTicketByOrder(order.id).route_id
+                                        ).from
+                                        ).province
+                                    }
+                                </td>
+                                <td>${
+                                    showLocation.getlocation(showCarroute.getCarroute(
+                                        showTicket.getTicketByOrder(order.id).route_id
+                                        ).to
+                                        ).province
+                                    }
+                                </td>
+                                <td>${
+                                    showCarroute.getCarroute(
+                                        showTicket.getTicketByOrder(order.id).route_id
+                                        ).start
+                                    }
+                                </td>
+                                <td>${
+                                    showCarroute.getCarroute(
+                                        showTicket.getTicketByOrder(order.id).route_id
+                                        ).end
+                                    }
+                                </td>
+                                <td>${
+                                    showCarroute.getCarroute(
+                                        showTicket.getTicketByOrder(order.id).route_id
+                                        ).datestart
+                                    }
+                                </td>
+                                <td>${order.total_price}</td>
+                                <td>${order.date_order}</td>
+                                <c:if test="${order.status == 0}">
+                                    <td>
+                                        <form action="ajax" method="post">
+                                            <input type="hidden" name="orderNumber" value="${order.id}">
+                                            <input type="hidden" name="amount" value="${order.total_price}">
+                                            <button class="button-form" type="submit">Not Pay</button>
+                                        </form>   
+                                    </td>
                                 </c:if>
-
-                                <td><a href="listseat?crid=${carroute.id}">Booking</a></td>
-                                <td><a href="ticket_member.jsp">Booking1</a></td>
+                                <c:if test="${order.status == 1}">
+                                    <td style="color: green">Payed</td>
+                                </c:if>
                             </tr>
                         </c:forEach>
-                    </tbody>-->
+
+                    </tbody>
                 </table>
             </div>
         </div>
 
-<!--        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>Thông tin liên hệ</h5>
-                        <p>123 Đường ABC, Thành phố XYZ</p>
-                        <p>Email: example@example.com</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Liên kết hữu ích</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Trang chủ</a></li>
-                            <li><a href="#">Về chúng tôi</a></li>
-                            <li><a href="#">Sản phẩm</a></li>
-                            <li><a href="#">Liên hệ</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>-->
-    </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</html>
+        <!--       
+            </body>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </html>

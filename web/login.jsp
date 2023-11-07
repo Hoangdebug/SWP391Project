@@ -12,6 +12,15 @@
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
+        <style>
+            .mes-login{
+                color: red;
+            }
+            
+            .mes-register{
+                color: green;
+            }
+        </style>
     </head>   
     <body>    
         <!--        <form action="login" method="post">  
@@ -37,6 +46,8 @@
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form action="login" method="post">
                             <p class="text-center font-weight-bold mb-2 me-3 ">Log in</p>
+                            <p class="mes-login">${mesLogin}</p>
+                            <p class="mes-register">${mesRegister}</p>
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="email" id="form3Example3" name="email" class="form-control form-control-lg"
@@ -89,35 +100,8 @@
                         Viet Hoang Express
                     </div>
                 </a>
-
-                <!-- Copyright -->
-
-                <!-- Right -->
-                <!-- <div>
-                    <a href="#!" class="text-white me-4 mx-3">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#!" class="text-white me-4 mx-3">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#!" class="text-white me-4 mx-3">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#!" class="text-white me-4 mx-3">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div> -->
-                <!-- Right -->
             </div>
         </section>
-        <!-- loader -->
-        <!--        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-                    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-                    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                            stroke="#F96D00" />
-                    </svg></div>-->
-
-
     </body>     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

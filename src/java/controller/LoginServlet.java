@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         try {
             String email = request.getParameter("email");
             String pass = request.getParameter("password");
@@ -90,7 +91,7 @@ public class LoginServlet extends HttpServlet {
                 String address = u.getAddress();
                 String age = u.getAge();
 
-                HttpSession session = request.getSession(true);
+                
                 session.setAttribute("session_user", email);
                 session.setAttribute("authority", userAuthority);
                 session.setAttribute("cur_name", cur_fullname);
@@ -112,6 +113,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("welcome.jsp"); // Trường hợp mặc định
                 }
             } else {
+                session.setAttribute("mesLogin","Error, invalid Email or password, please enter again !!");
                 response.sendRedirect("login");
             }
         } catch (Exception e) {
