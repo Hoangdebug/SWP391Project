@@ -5,18 +5,34 @@
  */
 package dao;
 
+import java.util.Random;
 import model.entity.Authority;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
  * @author ADMIN
  */
 public class RegisterDao {
+
     private String fullname;
     private String email;
     private String password;
     private String hash;
     private String authority;
+
+    public RegisterDao(String fullname, String email, String password, String authority) {
+        this.fullname = fullname;
+        this.email = email;
+        this.password = DigestUtils.md5Hex(password);
+        Random rand = new Random();
+        rand.nextInt(999999);
+        this.hash = DigestUtils.md5Hex("" + rand);
+        this.authority = authority;
+    }
+
+    public RegisterDao() {
+    }
 
     public String getFullname() {
         return fullname;
@@ -56,6 +72,6 @@ public class RegisterDao {
 
     public void setAuthority(String authority) {
         this.authority = authority;
-    }    
-    
+    }
+
 }

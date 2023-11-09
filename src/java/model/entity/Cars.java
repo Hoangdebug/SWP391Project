@@ -1,13 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.entity;
 
 /**
  *
- * @author ACER
+ * @author tuna
  */
 public class Cars {
 
@@ -16,28 +15,29 @@ public class Cars {
     private String type;
     private int countseat;
     private int isactive;
-    private String liscenseplate;
+    private String licenseplate;
 
-    public Cars(int id, String name, String type, int countseat, int isactive, String liscenseplate) {
+    public Cars(int id, String name, String type, int countseat, int isactive, String licenseplate) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.countseat = countseat;
         this.isactive = isactive;
-        this.liscenseplate = liscenseplate;
+        this.licenseplate = licenseplate;
     }
 
-    public Cars(String name, String type, int countseat, String liscenseplate) {
+    public Cars(String name, String type, int countseat, String Licenseplate) {
 
         this.name = name;
         this.type = type;
         this.countseat = countseat;
-        this.liscenseplate = liscenseplate;
+        this.licenseplate = Licenseplate;
     }
 
     public Cars() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
     public Cars(int id, String name, String type) {
         this.id = id;
@@ -85,12 +85,18 @@ public class Cars {
         this.isactive = isactive;
     }
 
-    public String getLiscenseplate() {
-        return liscenseplate;
+    public String getLicenseplate() {
+        return licenseplate;
     }
 
-    public void setLiscenseplate(String liscenseplate) {
-        this.liscenseplate = liscenseplate;
+    public void setLicenseplate(String Licenseplate) {
+        this.licenseplate = Licenseplate;
     }
 
+    @Override
+    public String toString() {
+        return "Cars{" + "id=" + id + ", name=" + name + ", type=" + type + ", countseat=" + countseat + ", isactive=" + isactive + ", licenseplate=" + licenseplate + '}';
+    }
+    
+    
 }

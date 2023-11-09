@@ -1,10 +1,8 @@
-<jsp:useBean class="model.repository.CarroutesRepository" id="show"></jsp:useBean>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<% String carId = (String) session.getAttribute("car_id"); %>
-<% String userId = (String) session.getAttribute("user_id"); %>
-<% String dateStart = (String) session.getAttribute("datestart"); %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,22 +56,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="carroute" items="${show.getListCarroutes()}">
-                        <tr id="row${carroute.id}">
-                            <td>${carroute.id}</td>
-                            <td>${carroute.carname}</td>
-                            <td>${carroute.driver}</td>
-                            <td>${carroute.from}</td>
-                            <td>${carroute.to}</td>
-                            <td>${carroute.price}</td>
-                            <td>${carroute.start}</td>
-                            <td>${carroute.end}</td>
-                            <td>${carroute.datastart}</td>
-                            <td><a href="#">Edit</a></td>
-                            <td><a href="#">Delete</a></td>
-                            <td><a href="${pageContext.request.contextPath}/booking?idCar=${carId}&idUser=${userId}&datestart=${dateStart}"">Booking</a></td>
-                        </tr>
-                    </c:forEach>
+                        <c:forEach var="carroute" items="${crlistS}">
+                            <tr id="row${carroute.id}">
+                                <td>${carroute.id}</td>
+                                <td>${carroute.car_id}</td>
+                                <td>${carroute.user_id}</td>
+                                <td>${carroute.from}</td>
+                                <td>${carroute.to}</td>
+                                <td>${carroute.price}</td>
+                                <td>${carroute.start}</td>
+                                <td>${carroute.end}</td>
+                                <td>${carroute.datestart}</td>
+                                <td><a href="#">Edit</a></td>
+                                <td><a href="#">Delete</a></td>
+                                <td><a href="#">Booking</a></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

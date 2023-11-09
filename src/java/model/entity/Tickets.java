@@ -1,43 +1,52 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.entity;
 
 /**
  *
- * @author ACER
+ * @author tuna
  */
 public class Tickets {
+//    CREATE TABLE [dbo].[tickets] (
+//    [id]              INT             IDENTITY (1, 1) NOT NULL,
+//    [route_id]        INT             NULL,
+//    [seat_id]         INT             NULL,
+//    [order_id]        INT             NULL,
+//    [passenger_name]  NVARCHAR (255)  NOT NULL,
+//    [passenger_phone] NVARCHAR (255)  NOT NULL,
+//    PRIMARY KEY CLUSTERED ([id] ASC),
+//    FOREIGN KEY ([order_id]) REFERENCES [dbo].[orders] ([id]),
+//    FOREIGN KEY ([route_id]) REFERENCES [dbo].[carroutes] ([id]),
+//    FOREIGN KEY ([seat_id]) REFERENCES [dbo].[seats] ([id])
+//);
     private int id;
     private int route_id;
     private int seat_id;
     private int order_id;
     private String passenger_name;
-    private String phone;
-    private double price;
+    private String passenger_phone;
 
-    public Tickets(int id, int route_id, int seat_id, int order_id, String passenger_name, String phone, double price) {
+    public Tickets() {
+    }
+
+    public Tickets(int id, int route_id, int seat_id, int order_id, String passenger_name, String passenger_phone) {
         this.id = id;
         this.route_id = route_id;
         this.seat_id = seat_id;
         this.order_id = order_id;
         this.passenger_name = passenger_name;
-        this.phone = phone;
-        this.price = price;
+        this.passenger_phone = passenger_phone;
     }
 
-    public Tickets(int route_id, int seat_id, int order_id, String passenger_name, String phone, double price) {
+    public Tickets(int route_id, int seat_id, int order_id, String passenger_name, String passenger_phone) {
         this.route_id = route_id;
         this.seat_id = seat_id;
         this.order_id = order_id;
         this.passenger_name = passenger_name;
-        this.phone = phone;
-        this.price = price;
+        this.passenger_phone = passenger_phone;
     }
-    
-    
 
     public int getId() {
         return id;
@@ -79,22 +88,17 @@ public class Tickets {
         this.passenger_name = passenger_name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPassenger_phone() {
+        return passenger_phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassenger_phone(String passenger_phone) {
+        this.passenger_phone = passenger_phone;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    @Override
+    public String toString() {
+        return "Tickets{" + "id=" + id + ", route_id=" + route_id + ", seat_id=" + seat_id + ", order_id=" + order_id + ", passenger_name=" + passenger_name + ", passenger_phone=" + passenger_phone + '}';
     }
     
-    
-
 }

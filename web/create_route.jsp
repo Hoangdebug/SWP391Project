@@ -42,7 +42,7 @@
             <label for="datestart">Ngày Khởi Hành:</label>
             <input type="date"  name="datestart" required><br><br>
 
-            <input type="submit" value="Thêm Tuyến Đường">
+            <input type="submit" value="Add Car Route">
         </form>
 
     </body>

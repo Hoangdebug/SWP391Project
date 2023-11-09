@@ -1,27 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.entity.Carroutes;
-import model.repository.StaffRepository;
+import javax.servlet.http.HttpSession;
+import model.entity.Orders;
+import model.repository.OrderRepository;
+import model.repository.SeatRepository;
 
 /**
  *
- * @author ACER
+ * @author tuna
  */
-@WebServlet(name = "CarRouteServlet", urlPatterns = {"/car-route"})
-public class CarRouteServlet extends HttpServlet {
+@WebServlet(name = "PaySuccessServlet", urlPatterns = {"/paysuccess"})
+public class PaySuccessServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +35,12 @@ public class CarRouteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CarRouteServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CarRouteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        OrderRepository or = new OrderRepository();
+        HttpSession session = request.getSession();
+        Orders o = (Orders) session.getAttribute("cur_order");
+        System.out.println(o.getId());
+        or.updateStatusOrder(o.getId());
+        request.getRequestDispatcher("payment.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +55,7 @@ public class CarRouteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("create_route.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -75,19 +69,7 @@ public class CarRouteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int car_id = Integer.parseInt(request.getParameter("car_id"));
-        String from = request.getParameter("from");
-        String to = request.getParameter("to");
-        float price = Float.parseFloat(request.getParameter("price"));
-        String start = request.getParameter("start");
-        String end = request.getParameter("end");
-        Date datestart = Date.valueOf(request.getParameter("datestart")) ;
-
-        Carroutes carroutes = new Carroutes(car_id, from, to, price, start, end, datestart);
-
-        StaffRepository.createRoute(carroutes);
-
-        response.sendRedirect("listroute.jsp");
+        processRequest(request, response);
     }
 
     /**

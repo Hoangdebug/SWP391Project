@@ -1,4 +1,4 @@
-M<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <%-- Kiểm tra xem có thông báo lỗi trong session không --%>
@@ -21,7 +21,9 @@ M<%@page contentType="text/html" pageEncoding="UTF-8"%>
         <!--        <form action="register" method="POST">
                     <div class="container">
         <%-- Hiển thị thông báo lỗi nếu có --%>
-        
+        <div class="error-message">
+        <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
+    </div>
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
@@ -53,9 +55,6 @@ M<%@page contentType="text/html" pageEncoding="UTF-8"%>
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                              class="img-fluid" alt="Sample image">
                     </div>
-                    <div class="error-message">
-                        <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
-                    </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form action="register" method="POST">
 
@@ -68,7 +67,7 @@ M<%@page contentType="text/html" pageEncoding="UTF-8"%>
                                 <!-- <label class="form-label" for="form3Example3"></label> -->
                             </div>
 
-
+                          
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="email" id="form3Example3" name="email"class="form-control form-control-lg "
@@ -155,7 +154,7 @@ M<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 
-
+    
 
     </body>
 

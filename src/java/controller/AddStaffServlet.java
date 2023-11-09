@@ -33,7 +33,7 @@ public class AddStaffServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -87,13 +87,13 @@ public class AddStaffServlet extends HttpServlet {
             Users u = new Users(email, fullname, age, phone, authority, address, gender);
             UserRepository ur = new UserRepository();
             ur.insertStaff(u);
-            request.getRequestDispatcher("list_staff_driver.jsp").forward(request, response);
+            request.getRequestDispatcher("listuser").forward(request, response);
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
+    
     /**
      * Returns a short description of the servlet.
      *

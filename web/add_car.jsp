@@ -4,7 +4,8 @@
     Author     : tuna
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,6 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
             />
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <style>
             :root {
                 --primary: #20c997;
@@ -114,39 +114,7 @@
         <%@ include file="/include/header.jsp" %>
         <%@ include file="/include/sidebar.jsp" %>
         <div class="body">
-            <!--            <form action="addcar" method="POST" class="form-box">
-                            <div class="title-page">
-                                Add New Car
-                            </div>
-                            <div class="form-items">
-                                <label for="name">Tên Xe:</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-            
-                            <div class="double-form-items">
-                                <div class="form-items-select">
-                                    <label for="types">Loai xe:</label>
-                                    <select name="type" id="types">
-                                        <option value="VIP">VIP</option>
-                                        <option value="STANDARD">STANDARD</option>
-                                    </select>
-                                </div>
-                                <div class="form-items-select">
-                                    <label for="countseat">Số ghế:</label>
-                                    <select name="countseat" id="countseat">
-                                        <option value="45">45</option>
-                                        <option value="22">22</option>
-                                    </select>
-                                </div>
-                            </div>
-            
-                            <div class="form-items">
-                                <label for="licenseplate">Biển Số Xe:</label>
-                                <input type="text" id="licenseplate" name="licenseplate" required>
-                            </div>
-                            <input class="button-form" type="submit" value="Thêm Xe">
-                        </form>-->
-            <form id="myForm" method="POST" class="form-box">
+            <form action="addcar" method="POST" class="form-box">
                 <div class="title-page">
                     Add New Car
                 </div>
@@ -157,17 +125,19 @@
 
                 <div class="double-form-items">
                     <div class="form-items-select">
-                        <label for="types">Loai xe:</label>
+                        <label for="type">Loai xe:</label>
                         <select name="type" id="type">
                             <option value="VIP">VIP</option>
+                            <option value="ECONOMY">ECONOMY</option>
                             <option value="STANDARD">STANDARD</option>
                         </select>
                     </div>
                     <div class="form-items-select">
                         <label for="countseat">Số ghế:</label>
                         <select name="countseat" id="countseat">
-                            <option value="45">45</option>
                             <option value="22">22</option>
+                            <option value="35">35</option>
+                            <option value="45">45</option>
                         </select>
                     </div>
                 </div>
@@ -178,45 +148,6 @@
                 </div>
                 <input class="button-form" type="submit" value="Thêm Xe">
             </form>
-
         </div>
-        <script>
-            $(document).ready(function () {
-                $("myForm").submit(function (event) {
-                    event.preventDefault(); // Ngăn chặn chuyển trang mặc định
-
-                    // Lấy giá trị từ các trường nhập liệu
-                    var ten = $("#name").val();
-                    var loai = $("#type").val();
-                    var soghe = $("#countseat").val();
-                    var bienso = $("#licenseplate").val();
-
-
-                    // Tạo đối tượng dữ liệu để gửi lên server
-                    var data = {
-                        ten: ten,
-                        loai: loai,
-                        soghe: soghe,
-                        bienso: bienso
-                    };
-
-                    // Sử dụng Ajax để gửi dữ liệu lên server (thay đổi URL và phương thức tùy theo yêu cầu của bạn)
-                    $.ajax({
-                        url: "add_car.jsp", // Thay đổi thành URL của bạn
-                        method: "POST", // Thay đổi thành phương thức của bạn (POST hoặc GET)
-                        data: data,
-                        success: function (response) {
-                            // Xử lý kết quả từ server (nếu cần)
-                            alert("Thêm dữ liệu thành công!");
-                        },
-                        error: function (error) {
-                            // Xử lý lỗi (nếu có)
-                            alert("Có lỗi xảy ra: " + error);
-                        }
-                    });
-                });
-            });
-        </script>
-
     </body>
 </html>

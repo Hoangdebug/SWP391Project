@@ -7,14 +7,13 @@ package controller;
 
 import dao.LoginDao;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.entity.Users;
 import model.repository.UserRepository;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -76,27 +75,39 @@ public class LoginServlet extends HttpServlet {
             ld.setNewPass(newPass);
 
             UserRepository ur = new UserRepository();
-            String userAuthority = ur.getUserAuthority(email); // Lấy thông tin quyền của người dùng từ cơ sở dữ liệu
-            int id = ur.getIdByEmail(email);
-            String cur_name = ur.getUserName(email);
-            System.out.println(userAuthority);
             String getdb = ur.login(ld);
+            Users u = ur.getUserByEmail(email);
+
+//            String userAuthority = ur.getUserAuthority(email); // Lấy thông tin quyền của người dùng từ cơ sở dữ liệu
+//            String cur_name = ur.getUserName(email);
+//            String getdb = ur.login(ld);
+            System.out.println(getdb);
             if (getdb.contains("success")) {
+                String cur_fullname = u.getFullname();
+                String userAuthority = u.getAuthority();
+                String gender = u.getGender();
+                String phone = u.getPhone();
+                String address = u.getAddress();
+                String age = u.getAge();
+
                 HttpSession session = request.getSession(true);
                 session.setAttribute("session_user", email);
-                session.setAttribute("role", userAuthority);
-                session.setAttribute("cur_name", cur_name);
-                session.setAttribute("iduser", id);
-
+                session.setAttribute("authority", userAuthority);
+                session.setAttribute("cur_name", cur_fullname);
+                session.setAttribute("cur_gender", gender);
+                session.setAttribute("cur_phone", phone);
+                session.setAttribute("cur_age", age);
+                session.setAttribute("cur_address", address);
+                session.setAttribute("cur_user",u);
+                
+                
                 // Kiểm tra quyền của người dùng và chuyển hướng tương ứng
                 if ("ROLE_MEMBER".equals(userAuthority)) {
                     response.sendRedirect("welcome_member.jsp");
-                } else if ("ROLE_STAFF".equals(userAuthority)) {
-                    response.sendRedirect("welcome_staff.jsp");
-                } else if ("ROLE_DRIVER".equals(userAuthority)) {
-                    response.sendRedirect("welcome_driver.jsp");
                 } else if ("ROLE_ADMIN".equals(userAuthority)) {
                     response.sendRedirect("welcome_admin.jsp");
+                } else if ("ROLE_STAFF".equals(userAuthority)) {
+                    response.sendRedirect("add_car_route.jsp");
                 } else {
                     response.sendRedirect("welcome.jsp"); // Trường hợp mặc định
                 }

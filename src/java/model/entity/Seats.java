@@ -1,13 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.entity;
 
 /**
  *
- * @author ACER
+ * @author tuna
  */
 public class Seats {
 //      id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,20 +16,24 @@ public class Seats {
 //    FOREIGN KEY (car_id) REFERENCES cars(id)\
 
     private int id;
-    private int isbooked;
+    private int is_booked;
     private int seat_number;
-    private int idcar;
+    private int id_car;
 
     public Seats() {
     }
-    
-    
 
-    public Seats(int id, int isbooked, int seat_number, int idcar) {
+    public Seats(int id, int is_booked, int seat_number, int id_car) {
         this.id = id;
-        this.isbooked = isbooked;
+        this.is_booked = is_booked;
         this.seat_number = seat_number;
-        this.idcar = idcar;
+        this.id_car = id_car;
+    }
+
+    public Seats(int is_booked, int seat_number, int id_car) {
+        this.is_booked = is_booked;
+        this.seat_number = seat_number;
+        this.id_car = id_car;
     }
 
     public int getId() {
@@ -41,12 +44,12 @@ public class Seats {
         this.id = id;
     }
 
-    public int getIsbooked() {
-        return isbooked;
+    public int getIs_booked() {
+        return is_booked;
     }
 
-    public void setIsbooked(int isbooked) {
-        this.isbooked = isbooked;
+    public void setIs_booked(int is_booked) {
+        this.is_booked = is_booked;
     }
 
     public int getSeat_number() {
@@ -57,19 +60,19 @@ public class Seats {
         this.seat_number = seat_number;
     }
 
-    public int getIdcar() {
-        return idcar;
+    public int getId_car() {
+        return id_car;
     }
 
-    public void setIdcar(int idcar) {
-        this.idcar = idcar;
+    public void setId_car(int id_car) {
+        this.id_car = id_car;
     }
 
     @Override
     public String toString() {
-        return "Seats{seat_number=" + seat_number+'}';
+        return "Seats{" + "id=" + id + ", is_booked=" + is_booked + ", seat_number=" + seat_number + ", id_car=" + id_car + '}';
     }
-    
-    
 
+    
+    
 }

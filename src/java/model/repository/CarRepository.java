@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.repository;
 
@@ -9,67 +8,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 import model.config.DBConnect;
 import model.entity.Cars;
 
 /**
  *
- * @author ACER
+ * @author tuna
  */
 public class CarRepository {
 
-    public static List<Cars> getAllCar() {
-        List<Cars> list = new ArrayList<>();
-        try (Connection conn = DBConnect.getConnection()) {
-
-            String query = "SELECT * FROM cars";
-
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String type = rs.getString("type");
-                int countseat = rs.getInt("countseat");
-                int isactive = rs.getInt("isactive");
-                String licenseplate = rs.getString("licenseplate");
-
-                Cars cars = new Cars(id, name, type, countseat, isactive, licenseplate);
-                list.add(cars);
-            }
-            rs.close();
-            ps.close();
-            conn.close();
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("----------LOI GET ID Car trong CarsRepository------------");
-        }
-        return list;
-    }
-
-    public static void deleteCar(int id) {
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "Delete from cars WHERE id = ?\n";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
-            conn.close();
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("----------LOI Delete Car trong CarsRepository------------");
-        }
-    }
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
     public ArrayList<Cars> getListCars() {
         ArrayList<Cars> list = new ArrayList<>();
+        String sql = "SELECT * FROM cars";
 
-        try (Connection conn = DBConnect.getConnection()) {
-            String sql = "SELECT * FROM cars";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
 
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 int idcar = rs.getInt(1);
                 String namecar = rs.getString(2);
@@ -87,32 +47,140 @@ public class CarRepository {
         }
         return null;
     }
-    
-    public static Cars getIdCar(int id){
-        Cars car = null;
-        try(Connection conn = DBConnect.getConnection()) {
-            
-            String query = "Select * from cars where id = ?";
-            
-            PreparedStatement ps = conn.prepareStatement(query);
-            
-            ps.setInt(1, id);
-            
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                int idcar = rs.getInt(1);
-                String namecar = rs.getString(2);
-                String type = rs.getString(3);
-                int countseat = rs.getInt(4);
-                int isactive = rs.getInt(5);
-                String licenseplate = rs.getString(6);
-                car = new Cars(id, namecar, type, countseat, isactive, licenseplate);
+
+    public String InserCar(Cars c) {
+        String sql = "INSERT INTO cars (name, type, countseat, isactive, licenseplate)\n"
+                + "VALUES\n"
+                + "    (?, ?, ?, 1, ?)";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            String name = c.getName();
+            String type = c.getType();
+            int countseat = c.getCountseat();
+            String licenseplate = c.getLicenseplate();
+
+            ps.setString(1, name);
+            ps.setString(2, type);
+            ps.setInt(3, countseat);
+            ps.setString(4, licenseplate);
+
+            int i = ps.executeUpdate();
+            if (i != 0) {
+                return "SUCCESS";
             }
+
+            ps.close();
+
+        } catch (Exception e) {
+            System.err.println("RegisterRepository File:: " + e);
+        }
+        return "ERROR";
+    }
+
+    public Cars getCar(int id) {
+        Cars c = new Cars();
+        String sql = "SELECT * FROM cars WHERE id = ?";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Cars(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("countseat"), rs.getInt("isactive"), rs.getString("licenseplate"));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc id");
+        }
+        return c;
+    }
+
+    public Cars getCarbyLicenseplate(String licenseplate) {
+        Cars c = new Cars();
+        String sql = "SELECT * FROM cars WHERE licenseplate = ?";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, licenseplate);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Cars(rs.getInt("id"), rs.getString("name"), rs.getString("type"), rs.getInt("countseat"), rs.getInt("isactive"), rs.getString("licenseplate"));
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc licenseplate");
+        }
+        return c;
+    }
+
+    public static void updateCar(Cars car) {
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "UPDATE cars SET name = ?, type = ?, countseat = ?, isactive = ?, licenseplate = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setString(1, car.getName());
+            ps.setString(2, car.getType());
+            ps.setInt(3, car.getCountseat());
+            ps.setInt(4, car.getIsactive());
+            ps.setString(5, car.getLicenseplate());
+            ps.setInt(6, car.getId());
+
+            ps.executeUpdate();
+            ps.close();
         } catch (Exception e) {
             System.out.println(e);
-            System.err.println("Loi getId theo CarRepository");
+            System.out.println("Error in updating car information");
         }
-        return car;
-    }     
+    }
+
+    public static void deleteCar(int id) {
+        try (Connection conn = DBConnect.getConnection()) {
+            // First, delete related records in the Seats table
+            String deleteSeatsQuery = "DELETE FROM seats WHERE car_id = ?";
+            PreparedStatement deleteSeatsStatement = conn.prepareStatement(deleteSeatsQuery);
+            deleteSeatsStatement.setInt(1, id);
+            deleteSeatsStatement.executeUpdate();
+            deleteSeatsStatement.close();
+
+            // Then, delete the car from the Cars table
+            String deleteCarQuery = "DELETE FROM cars WHERE id = ?";
+            PreparedStatement deleteCarStatement = conn.prepareStatement(deleteCarQuery);
+            deleteCarStatement.setInt(1, id);
+            deleteCarStatement.executeUpdate();
+            deleteCarStatement.close();
+
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI Delete Car trong CarRepository------------");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        CarRepository cr = new CarRepository();
+//        System.out.println(cr.getListCars());
+
+        String name = new String("Hoa Hieu");
+        String type = new String("VIP");
+        int countseat = 40;
+        String licenseplate = new String("73A16699");
+        String id = new String("1");
+        Cars car = new Cars(name, type, countseat, licenseplate);
+//        cr.InserCar(car);
+//        Cars c = cr.getCar(id);
+//        System.out.println(c);
+//        System.out.println(cr.insertSeats(1, 1));
+        System.out.println(cr.getCarbyLicenseplate(licenseplate));
+    }
 }

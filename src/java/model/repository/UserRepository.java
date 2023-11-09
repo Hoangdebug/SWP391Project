@@ -10,14 +10,11 @@ import dao.RegisterDao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import model.config.DBConnect;
+import model.config.DBContext;
 import model.entity.SendingEmail;
 import model.entity.Users;
-import org.apache.catalina.User;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -26,22 +23,21 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class UserRepository {
 
-    Connection conn = null;
-    PreparedStatement pst = null;
+    Connection con = null;
+    PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public static String Register(RegisterDao rd) {
-        try (Connection conn = DBConnect.getConnection()) {
+    public String Register(RegisterDao rd) {
+        String sql = "Insert into users(fullname, email, password, hashkey, authority) values (?, ?, ?, ?, ?)";
 
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
             String name = rd.getFullname();
             String email = rd.getEmail();
             String pass = rd.getPassword();
             String hash = rd.getHash();
             String authority = rd.getAuthority();
-
-            String query = "Insert into users(fullname, email, password, hashkey, authority) values (?, ?, ?, ?, ?)";
-
-            PreparedStatement ps = conn.prepareStatement(query);
 
             ps.setString(1, name);
             ps.setString(2, email);
@@ -50,7 +46,6 @@ public class UserRepository {
             ps.setString(5, authority);
 
             int i = ps.executeUpdate();
-
             if (i != 0) {
                 SendingEmail se = new SendingEmail(email, hash);
                 se.sendMail();
@@ -64,59 +59,12 @@ public class UserRepository {
         return "error";
     }
 
-    public String getUserName(String email) {
-        String fullname = null;
-        String sql = "SELECT fullname FROM users WHERE email = ?";
+    public boolean isEmailExists(String email) {
+        String sql = "SELECT email FROM users WHERE email = ?";
 
-        try (Connection conn = DBConnect.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return fullname = rs.getString("fullname");
-            }
-            rs.close();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("khong lay dc email");
-        }
-        return null;
-    }
-
-    public int checkValidEmail(String email) throws SQLException {
         try {
-            Connection conn = DBConnect.getConnection();
-            if (conn != null) {
-                String sql = "select id from users where email = ?";
-
-                pst = conn.prepareStatement(sql);
-                pst.setString(1, email);
-
-                rs = pst.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt("id");
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pst != null) {
-                pst.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-
-        return -1;
-    }
-
-    public static boolean isEmailExists(String email) {
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT email FROM users WHERE email = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
@@ -133,34 +81,26 @@ public class UserRepository {
         String pass = ld.getPassword();
         String newPass = ld.getNewPass();
 
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "Select * from users where email = ? and\n"
-                    + " password = ? and active = '1'";
-            PreparedStatement ps = conn.prepareStatement(query);
+        String sql = "Select * from users where email = ? and password = ? and active = '1'";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, newPass);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
-//                ps.setString(1, rs.getString("email"));
-//                ps.setString(2, rs.getString("password"));
-//                String emaildb = rs.getString("email");
-////                String emaildb = rs.getString(3);
-//                String passdb = rs.getString("password");
+                System.out.println("vao roi do");
                 String auth = rs.getString("authority");
-//                if (emaildb.equalsIgnoreCase(email)) {
-//                if (emaildb.equalsIgnoreCase(email) && passdb.equalsIgnoreCase(newPass)) {
                 if ("ROLE_MEMBER".equals(auth)) {
                     return "success_member";
                 } else if ("ROLE_ADMIN".equals(auth)) {
                     return "success_admin";
+                } else if ("ROLE_STAFF".equals(auth)) {
+                    return "success_staff";
                 }
-//                } 
             }
             rs.close();
             ps.close();
-            conn.close();
 
         } catch (Exception e) {
             System.out.println("khong nhan database");
@@ -172,16 +112,18 @@ public class UserRepository {
     // Phương thức để lấy thông tin quyền của người dùng từ cơ sở dữ liệu
     public String getUserAuthority(String email) {
         String authority = null;
+        String sql = "SELECT authority FROM users WHERE email = ?";
 
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT authority FROM users WHERE email = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 authority = rs.getString("authority");
             }
+
             rs.close();
             ps.close();
         } catch (Exception e) {
@@ -192,36 +134,118 @@ public class UserRepository {
         return authority;
     }
 
-    public int getIdByEmail(String email) {
-        
-        int id = 0;
-        
-        try (Connection conn = DBConnect.getConnection()) {
+    public String getUserName(String email) {
+        String fullname = null;
+        String sql = "SELECT fullname FROM users WHERE email = ?";
 
-            String query = "Select id from users where email = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                id = rs.getInt("id");
-
+                return fullname = rs.getString("fullname");
             }
+
             rs.close();
             ps.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("khong lay dc id");
+            System.out.println("khong lay dc email");
         }
-        return id;
+        return null;
     }
 
-    public static List<Users> getListUser() {
-        List<Users> list = new ArrayList<>();
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "SELECT * FROM users";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+    public Users getUserByEmail(String email) {
+        Users u = new Users();
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1), email, rs.getString(2), rs.getString("age"), rs.getString("phone"), rs.getString("authority"), rs.getString("address"), rs.getString("gender"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+
+    public Users getUserById(String id) {
+        Users u = new Users();
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1), rs.getString("email"), rs.getString(2), rs.getString("age"), rs.getString("phone"), rs.getString("authority"), rs.getString("address"), rs.getString("gender"));
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("khong lay dc email");
+        }
+        return null;
+    }
+
+    public ArrayList<Users> getUserByName(String name) {
+    ArrayList<Users> userList = new ArrayList<>();
+    String sql = "SELECT * FROM users WHERE fullname = ?";
+
+    try {
+        con = DBConnect.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Users user = new Users(
+                rs.getInt("id"),
+                rs.getString("fullname"),
+                rs.getString("email"),
+                rs.getString("age"),
+                rs.getString("phone"),
+                rs.getString("authority"),
+                rs.getString("address"),
+                rs.getString("gender")
+            );
+            userList.add(user);
+        }
+
+        rs.close();
+        ps.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Error while retrieving user by name");
+    }
+    return userList;
+}
+
+
+    public ArrayList<Users> getListUser() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
             while (rs.next()) {
                 int idUser = rs.getInt("id");
                 String fullname = rs.getString("fullname");
@@ -234,58 +258,113 @@ public class UserRepository {
                 Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
                 list.add(users);
             }
+            return list;
         } catch (Exception e) {
             System.err.println(e);
-            System.out.println("Lỗi list trong User repo");
+            System.out.println("Lỗi list trong User repo");
         }
-
-        return list;
-
+        return null;
     }
 
-    public static void deleteUser(int id) {
-        try (Connection conn = DBConnect.getConnection()) {
-            String query = "Delete from users WHERE id = ?\n";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
-            conn.close();
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("----------LOI Delete User trong UserRepository------------");
-        }
-    }
+    public ArrayList<Users> getListStaff() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users";
 
-    public static List<Users> getDriverById() {
-        List<Users> list = new ArrayList<>();
-        try (Connection conn = DBConnect.getConnection()) {
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
 
-            String query = "SELECT * FROM users where authority = 'ROLE_DRIVER'";
-
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("fullname");
-                String author = rs.getString("authority");
-                Users user = new Users(id, name, author);
-                list.add(user);
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                list.add(users);
             }
-            rs.close();
-            ps.close();
-            conn.close();
+            return list;
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("----------LOI GET ID Driver trong UsersRepository------------");
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
         }
-        return list;
+        return null;
+    }
+
+    public Users getDriver(int id) {
+        String sql = "SELECT * FROM users WHERE id = ? AND authority = 'ROLE_DRIVER'";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);  // Set the ID parameter
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users user = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                return user;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Error in User repo");
+        } finally {
+            // Close database resources (con, ps, rs) in a 'finally' block
+            // to ensure they are closed even in case of an exception.
+            // Handle this properly in your code.
+        }
+        return null;
+    }
+
+    public ArrayList<Users> getAllDrivers() {
+
+        ArrayList<Users> drivers = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE authority = 'ROLE_DRIVER'";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users user = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                drivers.add(user);
+            }
+            return drivers;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Error in User repo");
+        } finally {
+            // Close database resources (con, ps, rs) in a 'finally' block
+            // to ensure they are closed even in case of an exception.
+            // Handle this properly in your code.
+        }
+        return null;
     }
 
     public void insertStaff(Users u) {
-        try (Connection conn = DBConnect.getConnection()) {
-            String sql = "INSERT INTO users (fullname, email, password, hashkey, active, age, phone, authority, address, gender) VALUES (?,?,'202cb962ac59075b964b07152d234b70','hashkey1',1,?,?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
+        String sql = "INSERT INTO users (fullname, email, password, hashkey, active, age, phone, authority, address, gender) VALUES (?,?,'202cb962ac59075b964b07152d234b70','2b5d701cb0fee995eed93d7e1a851fe3',1,?,?,?,?,?)";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
 
             ps.setString(1, u.getFullname());
             ps.setString(2, u.getEmail());
@@ -305,10 +384,47 @@ public class UserRepository {
         }
     }
 
+    public static void updateUser(Users user) {
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "UPDATE users SET fullname = ?, email = ?, age = ?, phone = ?, authority = ?, address = ?, gender = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setString(1, user.getFullname());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getAge());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getAuthority());
+            ps.setString(6, user.getAddress());
+            ps.setString(7, user.getGender());
+            ps.setInt(8, user.getId());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error in updating user information");
+        }
+    }
+
+    public void deleteUser(String id) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("----------LOI Delete User trong UserRepository------------");
+        }
+    }
+
     public static void main(String[] args) {
         UserRepository ur = new UserRepository();
         String fullname = new String("Nguyen Anh Tu");
-        String email = new String("anhnnde170283@fpt.edu.vn");
+        String email = new String("tranthib@example.com");
+        String email1 = new String("nnguyenttu2@gmail.com");
         String age = new String("20");
         String phone = new String("0915215288");
         String authority = new String("ROLE_ADMIN");
@@ -324,11 +440,18 @@ public class UserRepository {
 //        ld.setNewPass(newPass);
 //        System.out.println(newPass);
 //        System.out.println(ur.login(ld));
-//        RegisterDao rd = new RegisterDao(fullName, email, pass, authority);
+//        RegisterDao rd = new RegisterDao(fullname, email1, pass, authority);
+//        System.out.println(ur.Register(rd));
 //        System.out.println("123" + ur.Register(rd));
-        System.out.println(ur.getUserName(email));
+//        System.out.println(ur.getUserName(email));
 //        System.out.println(ur.getListUser());
 //        Users u = new Users(fullname, email, age, phone, authority, address, gender);
 //        ur.insertStaff(u);
+//        System.out.println(ur.getListDriver());
+//        int id = 12;
+//        System.out.println(ur.deleteUser(id));
+//        System.out.println(ur.getUser(email));
+        System.out.println(ur.getUserById("2"));
     }
+
 }

@@ -5,7 +5,7 @@
  */
 package controller;
 
-import com.mysql.cj.MysqlConnection;
+//import com.mysql.cj.MysqlConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -16,7 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.config.DBConnect;
+import model.config.DBContext;
+//import model.config.DBConnect;
 
 /**
  *
@@ -63,33 +64,40 @@ public class ActiveAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
+        ResultSet rs = null;
+
         String email = request.getParameter("key1");
         String hash = request.getParameter("key2");
-        String query = "Select email, hashkey, active from users where email = ? and hashkey = ? and active = '0' ";
-        String query1 = "update users set active = '1' where email =? and hashkey = ?";
-           
-        try(Connection conn = DBConnect.getConnection()) {
-            
-            
-            PreparedStatement ps = conn.prepareStatement(query);
+        String sql = "Select email, hashkey, active from users where email = ? and hashkey = ? and active = '0' ";
+        String sql1 = "update users set active = '1' where email =? and hashkey = ?";
+
+//        try(Connection conn = DBConnect.getConnection()) {
+        try {
+            con = (Connection) new DBContext().getConnection();
+            ps = con.prepareStatement(sql);
+//            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, hash);
-            
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                PreparedStatement ps1 = conn.prepareStatement(query1);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                ps1 = con.prepareStatement(sql1);
+//                PreparedStatement ps1 = conn.prepareStatement(query1);
                 ps1.setString(1, email);
                 ps1.setString(2, hash);
                 int i = ps1.executeUpdate();
-                if(i == 1){
+                if (i == 1) {
                     response.sendRedirect("login");
-                }else{
+                } else {
                     response.sendRedirect("register");
                 }
             }
-            
+
         } catch (Exception e) {
-            System.err.println("ActiveAccount File:: " +e);
+            System.err.println("ActiveAccount File:: " + e);
         }
     }
 

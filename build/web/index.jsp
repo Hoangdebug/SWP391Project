@@ -151,8 +151,6 @@
                 <div class="col-md-2 text-left" >
                    <span style="color: black; font-weight: bold; font-size: 23px;">VH</span><span style="color: var(--teal);font-weight: bold;font-size: 23px;F">Express</span>
                 </div>
-
-                
                 <div class="col-md-10 text-right" >
                     <a href="${pageContext.request.contextPath}/login" class="btn btn-success"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
                     <a href="${pageContext.request.contextPath}/register" class="btn btn-primary text-white"><i class="fa-solid fa-user-plus"></i> Đăng ký</a>
@@ -174,21 +172,21 @@
             <!-- Slides -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="images/1.jpg" alt="Image 1" class="img-fluid">
+                    <img src="images/img1.webp" alt="Image 1" class="img-fluid">
                     <div class="carousel-caption">
                         <h3>Slide 1</h3>
                         <p>Some text for slide 1.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/2.jpg" alt="Image 2" class="img-fluid">
+                    <img src="images/img2.jpeg" alt="Image 2" class="img-fluid">
                     <div class="carousel-caption">
                         <h3>Slide 2</h3>
                         <p>Some text for slide 2.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/3.jpg" alt="Image 3" class="img-fluid">
+                    <img src="images/img3.jpeg" alt="Image 3" class="img-fluid">
                     <div class="carousel-caption">
                         <h3>Slide 3</h3>
                         <p>Some text for slide 3.</p>
@@ -208,17 +206,17 @@
         <!-- CAROUSEL-->
         <div class="container">
             <div class="box-search">
-                <form>
+                <form action="listcarroute">
                     <table width="100%" cellspacing="0" class="table-search">
                         <tbody>
                             <tr>
                                 <td><select class="form-control col-sm-12">
                                         <option value="Điểm đi" selected>Điểm đi</option>
-                                        <option>Sài gòn</option>
+                                        <option>Kon Tum</option>
                                     </select></td>
                                 <td><select class="form-control col-sm-12">
                                         <option value="Điểm đến" selected>Điểm đến</option>
-                                        <option>Cà Mau</option>
+                                        <option>Quảng Bình</option>
                                     </select></td>
                                 <td class="date"><input class="form-control col-sm-12"
                                                         type="date"></td>
@@ -323,12 +321,8 @@
                 </div>
             </div>
         </footer>
-
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
 </html>
