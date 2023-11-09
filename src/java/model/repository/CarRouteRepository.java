@@ -76,13 +76,13 @@ public class CarRouteRepository {
     }
     
     public void createCarroutes(Carroutes c) {
-        
-        String sql = "INSERT INTO carroutes (car_id, 'from', 'to', price, start, end, datestart, user_id)\n" +
-"VALUES (?, ?, ?, ?, ?, ?, ?,?);";
-        try{
+
+        String sql = "INSERT INTO carroutes (car_id, `from`, `to`, price, start, end, datestart, user_id)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?,?);";
+        try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
-            
+
             ps.setInt(1, c.getCar_id());
             ps.setInt(2, c.getFrom());
             ps.setInt(3, c.getTo());

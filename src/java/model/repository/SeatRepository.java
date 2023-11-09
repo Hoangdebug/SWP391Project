@@ -113,23 +113,20 @@ public class SeatRepository {
         }
     }
 
-    public static int totalIncomeFromSoldTickets() {
-        int totalIncome = 0;
-        try (Connection conn = DBConnect.getConnection()) {
-            // Giả sử mỗi vé có một trường giá riêng
-            String query = "SELECT SUM(price) AS total_income FROM tickets WHERE status = 2";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+    public static int calculateTotalRevenueFromOrders() {
+        int totalRevenue = 0;
+        String query = "SELECT SUM(total_price) AS total_revenue FROM orders";
+        try (Connection conn = DBConnect.getConnection()){
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                totalIncome = rs.getInt("total_income");
+                totalRevenue = rs.getInt("total_revenue");
             }
-            rs.close();
-            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Có lỗi khi tính tổng số tiền từ vé đã bán.");
+            System.out.println("Error calculating the total revenue from orders.");
         }
-        return totalIncome;
+        return totalRevenue;
     }
 
     public static void main(String[] args) {

@@ -98,7 +98,7 @@
                 <p>Carroutes <i class="fa-solid fa-route"></i></p>
             </div>
             <div class="stats-box">
-                <h3>${totalAmount.totalIncomeFromSoldTickets()}</h3>
+                <h3>${totalAmount.calculateTotalRevenueFromOrders()}</h3>
                 <p>Total Amount <i class="fa-solid fa-money-bill"></i></p>
             </div>
             <div class="stats-box">

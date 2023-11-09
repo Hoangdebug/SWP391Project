@@ -132,8 +132,9 @@
                         <label for="authority">Authority : </label>
                         <select name="authority" id="authority">
                             <option value="ROLE_STAFF">STAFF</option>
-                            <option value="ROLE_ADMIN">ADMIN</option> 
+                            <option value="ROLE_MEMBER">MEMBER</option> 
                             <option value="ROLE_DRIVER">DRIVER</option>
+                            <option value="ROLE_ADMIN">ADMIN</option>
                         </select>
                     </div>
                     <div class="form-items-select">

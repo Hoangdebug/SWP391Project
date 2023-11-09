@@ -226,7 +226,23 @@
         </form>
 
 
-        <!-- Delete Confirmation Modal -->
+       
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            // Add an event listener to all "Update" buttons
+            const updateButtons = document.querySelectorAll('.update-carroute');
+            updateButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    const carId = button.getAttribute('data-carroute-id');
+                    const idInput = document.getElementById('idInput');
+                    idInput.value = carId;
+                });
+            });
+        </script>
+         <!-- Delete Confirmation Modal -->
         <div class="modal" id="deleteConfirmModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -246,22 +262,6 @@
                 </div>
             </div>
         </div>
-
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script>
-            // Add an event listener to all "Update" buttons
-            const updateButtons = document.querySelectorAll('.update-carroute');
-            updateButtons.forEach(function (button) {
-                button.addEventListener('click', function (event) {
-                    const carId = button.getAttribute('data-carroute-id');
-                    const idInput = document.getElementById('idInput');
-                    idInput.value = carId;
-                });
-            });
-        </script>
 
         <script>
             // Thêm một event listener vào tất cả các nút "Delete"
