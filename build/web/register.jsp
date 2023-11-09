@@ -20,10 +20,7 @@
     <body>
         <!--        <form action="register" method="POST">
                     <div class="container">
-        <%-- Hiển thị thông báo lỗi nếu có --%>
-        <div class="error-message">
-        <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
-    </div>
+        
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
@@ -56,8 +53,11 @@
                              class="img-fluid" alt="Sample image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                        <form action="register" method="POST">
-
+                        <form action="register" method="POST" onsubmit="return validateEmail();">
+                            <%-- Hiển thị thông báo lỗi nếu có --%>
+                            <div class="error-message">
+                                <%= (emailExistsMessage != null) ? emailExistsMessage : ""%>
+                            </div>
                             <p class="text-center font-weight-bold mb-0 me-3 ">Sign up</p>
 
                             <!-- Full name input -->
@@ -67,7 +67,7 @@
                                 <!-- <label class="form-label" for="form3Example3"></label> -->
                             </div>
 
-                          
+
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="email" id="form3Example3" name="email"class="form-control form-control-lg "
@@ -154,11 +154,26 @@
 
 
 
-    
+
 
     </body>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validateEmail() {
+            var emailInput = document.getElementById("form3Example3");
+            var email = emailInput.value;
+            var emailFormat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!email.match(emailFormat)) {
+                alert("Email không hợp lệ. Vui lòng nhập đúng định dạng email.");
+                emailInput.focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+
 </html>

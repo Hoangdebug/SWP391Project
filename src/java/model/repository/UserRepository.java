@@ -204,42 +204,41 @@ public class UserRepository {
     }
 
     public ArrayList<Users> getUserByName(String name) {
-    ArrayList<Users> userList = new ArrayList<>();
-    String sql = "SELECT * FROM users WHERE fullname = ?";
+        ArrayList<Users> userList = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE fullname = ?";
 
-    try {
-        con = DBConnect.getConnection();
-        ps = con.prepareStatement(sql);
-        ps.setString(1, name);
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
 
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            Users user = new Users(
-                rs.getInt("id"),
-                rs.getString("fullname"),
-                rs.getString("email"),
-                rs.getString("age"),
-                rs.getString("phone"),
-                rs.getString("authority"),
-                rs.getString("address"),
-                rs.getString("gender")
-            );
-            userList.add(user);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Users user = new Users(
+                        rs.getInt("id"),
+                        rs.getString("fullname"),
+                        rs.getString("email"),
+                        rs.getString("age"),
+                        rs.getString("phone"),
+                        rs.getString("authority"),
+                        rs.getString("address"),
+                        rs.getString("gender")
+                );
+                userList.add(user);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error while retrieving user by name");
         }
-
-        rs.close();
-        ps.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Error while retrieving user by name");
+        return userList;
     }
-    return userList;
-}
-
 
     public ArrayList<Users> getListUser() {
         ArrayList<Users> list = new ArrayList<>();
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM users WHERE authority IN ('ROLE_MEMBER', 'ROLE_STAFF', 'ROLE_DRIVER')";
 
         try {
             con = DBConnect.getConnection();
@@ -269,6 +268,35 @@ public class UserRepository {
     public ArrayList<Users> getListStaff() {
         ArrayList<Users> list = new ArrayList<>();
         String sql = "SELECT * FROM users";
+
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("id");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String age = rs.getString("age");
+                String phone = rs.getString("phone");
+                String authority = rs.getString("authority");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                Users users = new Users(idUser, email, fullname, age, phone, authority, address, gender);
+                list.add(users);
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println(e);
+            System.out.println("Lỗi list trong User repo");
+        }
+        return null;
+    }
+
+    public ArrayList<Users> getListDriver() {
+        ArrayList<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM users where authority = 'ROLE_DRIVER' ";
 
         try {
             con = DBConnect.getConnection();
@@ -386,17 +414,16 @@ public class UserRepository {
 
     public static void updateUser(Users user) {
         try (Connection conn = DBConnect.getConnection()) {
-            String query = "UPDATE users SET fullname = ?, email = ?, age = ?, phone = ?, authority = ?, address = ?, gender = ? WHERE id = ?";
+            String query = "UPDATE users SET fullname = ?, age = ?, phone = ?, authority = ?, address = ?, gender = ? WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(query);
 
             ps.setString(1, user.getFullname());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getAge());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getAuthority());
-            ps.setString(6, user.getAddress());
-            ps.setString(7, user.getGender());
-            ps.setInt(8, user.getId());
+            ps.setString(2, user.getAge());
+            ps.setString(3, user.getPhone());
+            ps.setString(4, user.getAuthority());
+            ps.setString(5, user.getAddress());
+            ps.setString(6, user.getGender());
+            ps.setInt(7, user.getId());
 
             ps.executeUpdate();
             ps.close();
@@ -418,6 +445,57 @@ public class UserRepository {
             System.out.println(e);
             System.out.println("----------LOI Delete User trong UserRepository------------");
         }
+    }
+
+    public static int totalStaff() {
+        int totalStaff = 0;
+        String query = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_STAFF'";
+        try (Connection conn = DBConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                totalStaff = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số nhân viên.");
+        }
+        return totalStaff;
+    }
+
+    public static int totalDrivers() {
+        int totalDrivers = 0;
+        String query = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_DRIVER'";
+        try (Connection conn = DBConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                totalDrivers = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số tài xế.");
+        }
+        return totalDrivers;
+    }
+
+    public static int totalMembers() {
+        int totalMembers = 0;
+        String query = "SELECT COUNT(*) AS total FROM users WHERE authority = 'ROLE_MEMBER'";
+        try (Connection conn = DBConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                totalMembers = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi tính tổng số thành viên.");
+        }
+        return totalMembers;
     }
 
     public static void main(String[] args) {

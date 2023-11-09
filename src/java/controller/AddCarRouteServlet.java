@@ -82,7 +82,7 @@ public class AddCarRouteServlet extends HttpServlet {
         int car_id = Integer.parseInt(request.getParameter("car_id"));
         int from = Integer.parseInt(request.getParameter("from"));
         int to = Integer.parseInt(request.getParameter("to"));
-        float price = Float.parseFloat(request.getParameter("price"));
+        int price = Integer.parseInt(request.getParameter("price"));
         String start = request.getParameter("start");
         String end = request.getParameter("end");
         Date datestart = Date.valueOf(request.getParameter("datestart"));

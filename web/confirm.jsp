@@ -30,7 +30,7 @@
             <form action="ajax" method="post">
             <input type="hidden" name="orderNumber" value="${cur_order.id}">
             <input type="hidden" name="amount" value="${cur_order.total_price}">
-            <button type="submit">Payment</button>
+            <button type="submit">Payment with VnPay </button> 
         </form>
         </div>
     </body>

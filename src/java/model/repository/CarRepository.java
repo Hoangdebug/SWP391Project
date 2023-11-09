@@ -164,7 +164,24 @@ public class CarRepository {
             System.out.println(e);
             System.out.println("----------LOI Delete Car trong CarRepository------------");
         }
+    }
 
+    public static int totalCar() {
+        int totalCars = 0;
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "SELECT COUNT(*) AS total_cars FROM cars";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCars = rs.getInt("total_cars");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi lấy tổng số xe.");
+        }
+        return totalCars;
     }
 
     public static void main(String[] args) {

@@ -36,7 +36,7 @@ public class CarRouteRepository {
                 int car_id = rs.getInt(2);
                 int from = rs.getInt(3);
                 int to = rs.getInt(4);
-                float price = rs.getFloat(5);
+                int price = rs.getInt(5);
                 String start = rs.getString(6);
                 String end = rs.getString(7);
                 Date datestart = rs.getDate(8);
@@ -64,7 +64,7 @@ public class CarRouteRepository {
 
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new Carroutes(rs.getInt("id"),rs.getInt("car_id"),rs.getInt("from_location"),rs.getInt("to_location"),rs.getFloat("price"),rs.getString("start"),rs.getString("end"),rs.getDate("datestart"),rs.getInt("user_id"));
+                return new Carroutes(rs.getInt("id"),rs.getInt("car_id"),rs.getInt("'from'"),rs.getInt("'to'"),rs.getInt("price"),rs.getString("start"),rs.getString("end"),rs.getDate("datestart"),rs.getInt("user_id"));
             }
             rs.close();
             ps.close();
@@ -76,13 +76,13 @@ public class CarRouteRepository {
     }
     
     public void createCarroutes(Carroutes c) {
-        
-        String sql = "INSERT INTO carroutes (car_id, from_location, to_location, price, start, end, datestart, user_id)\n" +
-"VALUES (?, ?, ?, ?, ?, ?, ?,?);";
-        try{
+
+        String sql = "INSERT INTO carroutes (car_id, `from`, `to`, price, start, end, datestart, user_id)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?,?);";
+        try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
-            
+
             ps.setInt(1, c.getCar_id());
             ps.setInt(2, c.getFrom());
             ps.setInt(3, c.getTo());
@@ -93,7 +93,6 @@ public class CarRouteRepository {
             ps.setInt(8, c.getUser_id());
 
             ps.executeUpdate();
-            con.commit();
             ps.close();
             con.close();
 
@@ -107,7 +106,7 @@ public class CarRouteRepository {
 
         ArrayList<Carroutes> list = new ArrayList<>();
         
-        String sql = "Select * from carroutes where from_location = ? and to_location = ? and datestart = ?";
+        String sql = "Select * from carroutes where 'from' = ? and 'to' = ? and datestart = ?";
 
         try {
             con = DBConnect.getConnection();
@@ -123,7 +122,7 @@ public class CarRouteRepository {
                 int car_id = rs.getInt(2);
                 from = rs.getInt(3);
                 to = rs.getInt(4);
-                float price = rs.getFloat(5);
+                int price = rs.getInt(5);
                 String start = rs.getString(6);
                 String end = rs.getString(7);
                 datestart = rs.getDate(8);
@@ -142,7 +141,7 @@ public class CarRouteRepository {
     
     public static void updateCarRoute(Carroutes carroute) {
     try (Connection conn = DBConnect.getConnection()) {
-        String query = "UPDATE carroutes SET car_id = ?, from_location = ?, to_location = ?, price = ?, start = ?, end = ?, datestart = ?, user_id = ? WHERE id = ?";
+        String query = "UPDATE carroutes SET car_id = ?, 'from' = ?, 'to' = ?, price = ?, start = ?, end = ?, datestart = ?, user_id = ? WHERE id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
 
         ps.setInt(1, carroute.getCar_id());
@@ -177,6 +176,24 @@ public class CarRouteRepository {
         }
     }
     
+       public static int totalCarroute() {
+        int totalCarroute = 0;
+        try (Connection conn = DBConnect.getConnection()) {
+            String query = "SELECT COUNT(*) AS total_carroutes FROM carroutes";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalCarroute = rs.getInt("total_carroutes");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Có lỗi khi lấy tổng số chuyến xe.");
+        }
+        return totalCarroute;
+    }
+    
     public static void main(String[] args) {
         CarRouteRepository crr = new CarRouteRepository();
 //        System.out.println(crr.getListCarroutes());
@@ -184,7 +201,7 @@ public class CarRouteRepository {
         int car_id = 2;
         int from = 3;
         int to = 4;
-        float price = (float) 500.000;
+        int price = (int) 500.000;
         String start = "09:00:00";
         String end = "15:00:00";
         Date datestart = Date.valueOf("2023-12-26");

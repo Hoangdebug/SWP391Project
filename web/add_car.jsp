@@ -128,7 +128,6 @@
                         <label for="type">Loai xe:</label>
                         <select name="type" id="type">
                             <option value="VIP">VIP</option>
-                            <option value="ECONOMY">ECONOMY</option>
                             <option value="STANDARD">STANDARD</option>
                         </select>
                     </div>
@@ -136,7 +135,6 @@
                         <label for="countseat">Số ghế:</label>
                         <select name="countseat" id="countseat">
                             <option value="22">22</option>
-                            <option value="35">35</option>
                             <option value="45">45</option>
                         </select>
                     </div>

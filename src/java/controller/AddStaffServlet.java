@@ -87,7 +87,7 @@ public class AddStaffServlet extends HttpServlet {
             Users u = new Users(email, fullname, age, phone, authority, address, gender);
             UserRepository ur = new UserRepository();
             ur.insertStaff(u);
-            request.getRequestDispatcher("listuser").forward(request, response);
+            response.sendRedirect("listuser");
 
         } catch (Exception e) {
             System.out.println(e);

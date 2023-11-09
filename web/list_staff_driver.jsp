@@ -112,7 +112,7 @@
                     <div class="modal-content">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Update Car</h4>
+                            <h4 class="modal-title">Update Staff/Driver</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
@@ -120,8 +120,8 @@
                             <div class="container-fluid">
                                 <input name="id" type="text" class="form-control" id="idInput" hidden>
                                 <div class="form-group">
-                                    <label for="nameInput">Full Name</label>
-                                    <input name="name" type="text" class="form-control" id="nameInput" placeholder="Enter name">
+                                    <label for="nameInput">FullName</label>
+                                    <input name="name" type="text" class="form-control" id="nameInput" >
                                 </div>
                                 <div class="form-group">
                                     <label for="authoInput">Authority</label>
@@ -141,7 +141,7 @@
                                     <input name="phone" class="form-control" id="phoneInput" placeholder="Enter phone"> 
                                 </div>
                                 <div class="form-group">
-                                    <label for="genderInput">Active</label>
+                                    <label for="genderInput">Gender</label>
                                     <Select name="gender" class="form-control" id="genderInput" placeholder="Enter gender">
                                         <option value="">--Option--</option>
                                         <option value="MALE">MALE</option>
@@ -150,7 +150,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="addressInput">License Plate</label>
+                                    <label for="addressInput">Address</label>
                                     <input name="address" type="text" class="form-control" id="addressInput" placeholder="Enter Address">
                                 </div>
                             </div>
